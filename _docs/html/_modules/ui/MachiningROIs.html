@@ -1,0 +1,492 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ui.MachiningROIs &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ui.MachiningROIs</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 06.02.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1">#initialize logging</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="k">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtWidgets</span>
+<span class="kn">from</span> <span class="nn">pyqtgraph</span> <span class="k">import</span> <span class="n">ROI</span><span class="p">,</span> <span class="n">Point</span><span class="p">,</span> <span class="n">mkPen</span><span class="p">,</span> <span class="n">mkBrush</span>
+<span class="kn">from</span> <span class="nn">Base</span> <span class="k">import</span> <span class="n">Utility</span>
+
+
+<div class="viewcode-block" id="MachiningROI"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI">[docs]</a><span class="k">class</span> <span class="nc">MachiningROI</span><span class="p">(</span><span class="n">ROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for MachiningROIs, handles drawing and general behavior.</span>
+
+<span class="sd">    ======================  ==========================================================================</span>
+<span class="sd">    **Signals**</span>
+<span class="sd">    ======================  ==========================================================================</span>
+<span class="sd">    sigGotoActionTriggered  Emitted when the &quot;Go to position&quot; context menu entry is clicked.</span>
+<span class="sd">                            Carries a dictionary {&quot;pos&quot;: (x, y) coordinates of the ROI}</span>
+<span class="sd">    sigRef1ActionTriggered  Emitted when the &quot;Set reference 1&quot; context menu entry is clicked.</span>
+<span class="sd">                            Carries a dictionary {&quot;pos&quot;: (x, y) coordinates of the ROI, &quot;type&quot;:&quot;ref1&quot;}</span>
+<span class="sd">    sigRef2ActionTriggered  Emitted when the &quot;Set reference 1&quot; context menu entry is clicked.</span>
+<span class="sd">                            Carries a dictionary {&quot;pos&quot;: (x, y) coordinates of the ROI, &quot;type&quot;:&quot;ref2&quot;}</span>
+<span class="sd">    ======================  ==========================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">sigGotoActionTriggered</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">sigRef1ActionTriggered</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">sigRef2ActionTriggered</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">highlightpen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">strokewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">contextmenu</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">brush</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+
+<span class="sd">        :param pos: (float, float) Position of the ROI&#39;s origin</span>
+<span class="sd">        :param highlightpen: (QtPen) Used for highlighting on hover.</span>
+<span class="sd">                             Default is mkPen(255, 0, 0, width=1.5)</span>
+<span class="sd">        :param strokewidth: (float) Thickness of the stroke used for mouse hover detection.</span>
+<span class="sd">        :param contextmenu: (bool) Determines if the ROI has a context menu</span>
+<span class="sd">        :param \*\*kargs: Arguments passed to ROI.__init__()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;pen&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;pen&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mkPen</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;movable&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;movable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_outline</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">highlightpen</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">highlightpen</span> <span class="o">=</span> <span class="n">mkPen</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">highlightpen</span> <span class="o">=</span> <span class="n">highlightpen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strokewidth</span> <span class="o">=</span> <span class="n">strokewidth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentBrush</span> <span class="o">=</span> <span class="n">brush</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contextmenu</span> <span class="o">=</span> <span class="n">contextmenu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuActive</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">contextmenu</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setAcceptedMouseButtons</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RightButton</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigRegionChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">invalidate</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ref1Action</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ref2Action</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gotoAction</span> <span class="o">=</span> <span class="kc">None</span>
+        
+
+    <span class="k">def</span> <span class="nf">_makePen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the pen color for this ROI based on its current state (e.g. hover).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouseHovering</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuActive</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">highlightpen</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pen</span>
+    
+            
+<div class="viewcode-block" id="MachiningROI.boundingRect"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.boundingRect">[docs]</a>    <span class="k">def</span> <span class="nf">boundingRect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        (override) Calculates the bounding rectangle for drawing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">()</span></div>
+    
+    
+<div class="viewcode-block" id="MachiningROI.invalidate"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.invalidate">[docs]</a>    <span class="k">def</span> <span class="nf">invalidate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        (override) Causes a redraw of the ROI.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_outline</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prepareGeometryChange</span><span class="p">()</span></div>
+        
+        
+<div class="viewcode-block" id="MachiningROI.outline"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.outline">[docs]</a>    <span class="k">def</span> <span class="nf">outline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a QPainterPath marking the outline of the ROI.</span>
+<span class="sd">        Is overridden by subclasses to define their geometry.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainterPath</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">p</span></div>
+    
+    
+<div class="viewcode-block" id="MachiningROI.shape"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.shape">[docs]</a>    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        (override) Uses self.outline() to define the shape of the ROI (e.g. for mouse hover detection).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_outline</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_outline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outline</span><span class="p">()</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_outline</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapToDevice</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">stroker</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainterPathStroker</span><span class="p">()</span>
+        <span class="n">stroker</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strokewidth</span><span class="p">)</span>
+        <span class="n">outline</span> <span class="o">=</span> <span class="n">stroker</span><span class="o">.</span><span class="n">createStroke</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapFromDevice</span><span class="p">(</span><span class="n">outline</span><span class="p">)</span>     
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span></div>
+    
+    
+<div class="viewcode-block" id="MachiningROI.paint"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.paint">[docs]</a>    <span class="k">def</span> <span class="nf">paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        (override) Draws the ROI.</span>
+
+<span class="sd">        :param p: (QPainter) Painter used for drawing.</span>
+<span class="sd">        :param \*args: Unused (TODO ??)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_outline</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_outline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outline</span><span class="p">()</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">Antialiasing</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currentPen</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentBrush</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currentBrush</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_outline</span><span class="p">)</span></div>
+        
+        
+<div class="viewcode-block" id="MachiningROI.contextMenuEnabled"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.contextMenuEnabled">[docs]</a>    <span class="k">def</span> <span class="nf">contextMenuEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        (override) Determines if the ROI has a context menu.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">contextmenu</span></div>
+    
+    
+<div class="viewcode-block" id="MachiningROI.getMenu"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.getMenu">[docs]</a>    <span class="k">def</span> <span class="nf">getMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        (override) Returns the ROIs context menu.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMenu</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gotoAction</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Move to position&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gotoAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gotoAction_triggered</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref1Action</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Set as origin&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref1Action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref1Action_triggered</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref2Action</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Set as reference&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref2Action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref2Action_triggered</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gotoAction</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref1Action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref2Action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">aboutToShow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_aboutToShow</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">aboutToHide</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_aboutToHide</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu</span></div>
+    
+    
+<div class="viewcode-block" id="MachiningROI.enableMenuItems"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.enableMenuItems">[docs]</a>    <span class="k">def</span> <span class="nf">enableMenuItems</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goto</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ref1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ref2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enables/disables context menu items. &quot;None&quot; arguments are ignored.</span>
+
+<span class="sd">        :param goto: (bool) Enable &quot;Go to position&quot; menu item</span>
+<span class="sd">        :param ref1: (bool) Enable &quot;Set as reference 1&quot; menu item</span>
+<span class="sd">        :param ref2: (bool) Enable &quot;Set as reference 2&quot; menu item</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">goto</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gotoAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">goto</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ref1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref1Action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">ref1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ref2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref2Action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">ref2</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="MachiningROI.menu_aboutToShow"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.menu_aboutToShow">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">menu_aboutToShow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuActive</span> <span class="o">=</span> <span class="kc">True</span></div>
+    
+<div class="viewcode-block" id="MachiningROI.menu_aboutToHide"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.menu_aboutToHide">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">menu_aboutToHide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuActive</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMouseHover</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMouseHover</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="MachiningROI.gotoAction_triggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.gotoAction_triggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">gotoAction_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigGotoActionTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">({</span><span class="s1">&#39;pos&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">()})</span></div>
+        
+<div class="viewcode-block" id="MachiningROI.ref1Action_triggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.ref1Action_triggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">ref1Action_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigRef1ActionTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">({</span><span class="s1">&#39;pos&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">(),</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;ref1&#39;</span><span class="p">})</span></div>
+        
+<div class="viewcode-block" id="MachiningROI.ref2Action_triggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachiningROI.ref2Action_triggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">ref2Action_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigRef2ActionTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">({</span><span class="s1">&#39;pos&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">(),</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;ref2&#39;</span><span class="p">})</span></div></div>
+        
+        
+
+<div class="viewcode-block" id="HoleROI"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.HoleROI">[docs]</a><span class="k">class</span> <span class="nc">HoleROI</span><span class="p">(</span><span class="n">MachiningROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pyqtgraph ROI for holes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diameter</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">crsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+
+<span class="sd">        :param diameter: (float) Diameter of the hole.</span>
+<span class="sd">        :param pos: (float, float) Position of the hole center.</span>
+<span class="sd">        :param crsize: (float) Size of the crosshair arms. Default (None): crsize=diameter</span>
+<span class="sd">        :param \*\*kargs: Arguments passed to MachiningROI.__init__()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">crsize</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">crsize</span> <span class="o">=</span> <span class="n">diameter</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">diameter</span><span class="p">,</span> <span class="n">crsize</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">diameter</span><span class="p">,</span> <span class="n">crsize</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diameter</span> <span class="o">=</span> <span class="n">diameter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crsize</span> <span class="o">=</span> <span class="n">crsize</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+    
+    
+<div class="viewcode-block" id="HoleROI.outline"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.HoleROI.outline">[docs]</a>    <span class="k">def</span> <span class="nf">outline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See MachiningROI.outline()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainterPath</span><span class="p">()</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">crsize</span><span class="p">))</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">lineTo</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">crsize</span><span class="p">))</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">crsize</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">lineTo</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">crsize</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">addEllipse</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRectF</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">diameter</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">diameter</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diameter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diameter</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">p</span></div></div>
+        
+        
+    
+<div class="viewcode-block" id="StraightMillingROI"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.StraightMillingROI">[docs]</a><span class="k">class</span> <span class="nc">StraightMillingROI</span><span class="p">(</span><span class="n">MachiningROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pyqtgraph ROI for straight milling paths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">infeed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">outfeed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+
+<span class="sd">        :param start: (float, float) Coordinates of the start point.</span>
+<span class="sd">        :param end: (float, float) Coordinates of the end point.</span>
+<span class="sd">        :param infeed: (bool) Draw infeed marker.</span>
+<span class="sd">        :param outfeed: (bool) Draw outfeed marker.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># origin is starting point</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;contextmenu&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;contextmenu&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infeed</span> <span class="o">=</span> <span class="n">infeed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outfeed</span> <span class="o">=</span> <span class="n">outfeed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_endPoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">))</span>
+    
+    
+<div class="viewcode-block" id="StraightMillingROI.outline"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.StraightMillingROI.outline">[docs]</a>    <span class="k">def</span> <span class="nf">outline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See MachiningROI.outline()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainterPath</span><span class="p">()</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">lineTo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_endPoint</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">infeed</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">addPolygon</span><span class="p">(</span><span class="n">Utility</span><span class="o">.</span><span class="n">createSimpleTriangle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfeed</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">addPolygon</span><span class="p">(</span><span class="n">Utility</span><span class="o">.</span><span class="n">createSimpleTriangle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_endPoint</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">p</span></div></div>
+
+             
+            
+<div class="viewcode-block" id="ArcMillingROI"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.ArcMillingROI">[docs]</a><span class="k">class</span> <span class="nc">ArcMillingROI</span><span class="p">(</span><span class="n">MachiningROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pyqtgraph ROI for arc milling paths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">ccw</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">infeed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">outfeed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        Full circles have start = end. Causes an error if end does not lie on the circle.</span>
+
+<span class="sd">        :param start: (float, float) Coordinates of the start point</span>
+<span class="sd">        :param end: (float, float) Coordinates of the end point</span>
+<span class="sd">        :param center: (float, float) Coordinates of the arc&#39;s center</span>
+<span class="sd">        :param angle: (float) absolute value of the arc&#39;s opening angle</span>
+<span class="sd">        :param ccw: (bool) States if the arc path is to be drawn counterclockwise (default: True)</span>
+<span class="sd">        :param infeed: (bool) Draw infeed marker (default: False)</span>
+<span class="sd">        :param outfeed: (bool) Draw outfeed marker (default: False)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># origin is arc center</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">center</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;contextmenu&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;contextmenu&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infeed</span> <span class="o">=</span> <span class="n">infeed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outfeed</span> <span class="o">=</span> <span class="n">outfeed</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_startrel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_endrel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_startrel</span><span class="p">)</span>
+        
+        <span class="c1"># NOTE:</span>
+        <span class="c1"># Despite the Qt docs claiming otherwise, angles seem to be measured CLOCKWISE in Qt!</span>
+        <span class="c1"># This means the starting angle as well as the angle length have to be negated as</span>
+        <span class="c1"># the arctan2 function (and I) use the usual counterclockwise measurement.</span>
+        <span class="c1"># I do not know why the behavior differs from the documented one, might also be hidden in pyqtgraph...</span>
+        <span class="c1"># Note also, that Qt measures angles in deg (unusual, but documented).</span>
+        
+        <span class="c1"># calculate angle between x-axis and start leg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_startangle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_startrel</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_startrel</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># np.arccos(self._startrel.dot((1, 0))/self._radius)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_startangle</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_startangle</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_startangleQt</span> <span class="o">=</span> <span class="o">-</span><span class="n">Utility</span><span class="o">.</span><span class="n">radToDeg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_startangle</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_anglelengthQt</span> <span class="o">=</span> <span class="n">Utility</span><span class="o">.</span><span class="n">radToDeg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
+        <span class="c1"># counterclockwise -&gt; negative angle</span>
+        <span class="k">if</span> <span class="n">ccw</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_anglelengthQt</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+
+
+<div class="viewcode-block" id="ArcMillingROI.outline"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.ArcMillingROI.outline">[docs]</a>    <span class="k">def</span> <span class="nf">outline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See MachiningROI.outline()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Drawing arc from </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2"> -(</span><span class="si">%s</span><span class="s2">)-&gt; </span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_startrel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_endrel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_startangleQt</span><span class="p">,</span> 
+                     <span class="bp">self</span><span class="o">.</span><span class="n">_anglelengthQt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_startangleQt</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">_anglelengthQt</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainterPath</span><span class="p">()</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_startrel</span><span class="p">))</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRectF</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_radius</span><span class="p">,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_radius</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_radius</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_radius</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">arcTo</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_startangleQt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_anglelengthQt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">infeed</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">addPolygon</span><span class="p">(</span><span class="n">Utility</span><span class="o">.</span><span class="n">createSimpleTriangle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_startrel</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfeed</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">addPolygon</span><span class="p">(</span><span class="n">Utility</span><span class="o">.</span><span class="n">createSimpleTriangle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_endrel</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">p</span></div></div>
+    
+    
+    
+<div class="viewcode-block" id="MachinePositionROI"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachinePositionROI">[docs]</a><span class="k">class</span> <span class="nc">MachinePositionROI</span><span class="p">(</span><span class="n">MachiningROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pyqtgraph ROI indicating current machine position</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">theight</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">twidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;contextmenu&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;contextmenu&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;pen&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;pen&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mkPen</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;466646&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;brush&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;brush&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mkBrush</span><span class="p">(</span><span class="s2">&quot;466646&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theight</span> <span class="o">=</span> <span class="n">theight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">twidth</span> <span class="o">=</span> <span class="n">twidth</span>
+        
+        
+<div class="viewcode-block" id="MachinePositionROI.outline"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.MachinePositionROI.outline">[docs]</a>    <span class="k">def</span> <span class="nf">outline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See MachiningROI.outline()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainterPath</span><span class="p">()</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">addPolygon</span><span class="p">(</span><span class="n">Utility</span><span class="o">.</span><span class="n">createSimpleTriangle</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theight</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">twidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theight</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;down&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">p</span></div></div>
+    
+    
+<div class="viewcode-block" id="WorkpieceOutlineROI"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.WorkpieceOutlineROI">[docs]</a><span class="k">class</span> <span class="nc">WorkpieceOutlineROI</span><span class="p">(</span><span class="n">MachiningROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pyqtgraph ROI indicating the workpiece (board) outlines.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boardsize</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;contextmenu&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;contextmenu&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;pen&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;pen&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mkPen</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;AAA&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boardsize</span> <span class="o">=</span> <span class="n">boardsize</span><span class="p">[:]</span>
+        
+    
+<div class="viewcode-block" id="WorkpieceOutlineROI.setBoardsize"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.WorkpieceOutlineROI.setBoardsize">[docs]</a>    <span class="k">def</span> <span class="nf">setBoardsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param size: (float, float) (width, height) of the workpiece (board)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boardsize</span> <span class="o">=</span> <span class="n">size</span><span class="p">[:]</span></div>
+        
+        
+<div class="viewcode-block" id="WorkpieceOutlineROI.outline"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MachiningROIs.WorkpieceOutlineROI.outline">[docs]</a>    <span class="k">def</span> <span class="nf">outline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See MachiningROI.outline()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainterPath</span><span class="p">()</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">addRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">boardsize</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">p</span></div></div>
+    
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,331 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ui.ControlWidget &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ui.ControlWidget</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 03.03.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="k">import</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">Base.AppBase</span> <span class="k">import</span> <span class="n">AppBase</span>
+<span class="kn">from</span> <span class="nn">ui.templates.Ui_ControlWidget</span> <span class="k">import</span> <span class="n">Ui_ControlWidget</span>
+
+<div class="viewcode-block" id="ControlWidget"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget">[docs]</a><span class="k">class</span> <span class="nc">ControlWidget</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">,</span> <span class="n">Ui_ControlWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Machine control widget for the main window.</span>
+
+<span class="sd">    ========================  =============================================================================</span>
+<span class="sd">    **Signals**</span>
+<span class="sd">    ========================  =============================================================================</span>
+<span class="sd">    sigLaserCrosshairChanged  Emitted when the laser crosshair checkbox is changed.</span>
+<span class="sd">                              Carries a bool indicating the checkbox state.</span>
+<span class="sd">    ========================  =============================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">sigLaserCrosshairChanged</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__initialized</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="c1"># Button Icons</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogUp</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Arrow_Up.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogRightUp</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Arrow_Right_Up.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogRight</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Arrow_Right.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogRightDown</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Arrow_Right_Down.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogDown</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Arrow_Down.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeftDown</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Arrow_Left_Down.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeft</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Arrow_Left.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeftUp</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Arrow_Left_Up.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogZUp</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Arrow_Z_Up.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogZDown</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Arrow_Z_Down.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnStop</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/root/images/Stop.png&quot;</span><span class="p">))</span>
+        
+        <span class="c1"># set validators for coordinate inputs</span>
+        <span class="n">validator</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtGotoX</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtGotoY</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtGotoZ</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+        
+        <span class="c1"># Jog buttons</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogUp</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogUp_pressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogRightUp</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogRightUp_pressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogRight</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogRight_pressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogRightDown</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogRightDown_pressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogDown</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogDown_pressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeftDown</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeftDown_pressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeft</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeft_pressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeftUp</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeftUp_pressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogZUp</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogZUp_pressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogZDown</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogZDown_pressed</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogUp</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogXXX_released</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogRightUp</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogXXX_released</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogRight</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogXXX_released</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogRightDown</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogXXX_released</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogDown</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogXXX_released</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeftDown</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogXXX_released</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeft</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogXXX_released</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogLeftUp</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogXXX_released</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogZUp</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogXXX_released</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnJogZDown</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnJogXXX_released</span><span class="p">)</span>
+        
+        <span class="c1"># Stop button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnStop</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnStop_clicked</span><span class="p">)</span>
+        
+        <span class="c1"># Goto controls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtGotoX</span><span class="o">.</span><span class="n">sigFocus</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txtGotoX</span><span class="o">.</span><span class="n">selectAll</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtGotoY</span><span class="o">.</span><span class="n">sigFocus</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txtGotoY</span><span class="o">.</span><span class="n">selectAll</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtGotoZ</span><span class="o">.</span><span class="n">sigFocus</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txtGotoZ</span><span class="o">.</span><span class="n">selectAll</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnGoto</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnGoto_clicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnGotoBoardOrigin</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnGotoBoardOrigin_clicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnGotoParkPos</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnGotoParkPos_clicked</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">chkSpindle</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chkSpindle_clicked</span><span class="p">)</span>
+        
+        <span class="c1"># calibration controls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnHomingCycle</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnHomingCycle_clicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chkLaserCrosshair</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chkLaserCrosshair_clicked</span><span class="p">)</span>
+        
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">sigMachineChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_sigMachineChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_sigMachineChanged</span><span class="p">()</span>
+    
+    
+<div class="viewcode-block" id="ControlWidget.jog"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.jog">[docs]</a>    <span class="k">def</span> <span class="nf">jog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directions</span><span class="p">):</span>
+        <span class="n">stepsize</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">radio1mm</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="n">stepsize</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">radio01mm</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="n">stepsize</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">radio005mm</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="n">stepsize</span> <span class="o">=</span> <span class="mf">0.05</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">jog</span><span class="p">(</span><span class="n">directions</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">)</span></div>
+        
+        
+<div class="viewcode-block" id="ControlWidget.goto"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.goto">[docs]</a>    <span class="k">def</span> <span class="nf">goto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">absolute</span><span class="p">):</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">goTo</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">absolute</span><span class="p">)</span></div>
+        
+        
+<div class="viewcode-block" id="ControlWidget.updateCorrectionStatus"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.updateCorrectionStatus">[docs]</a>    <span class="k">def</span> <span class="nf">updateCorrectionStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">rotation</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chkOriginCorrected</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chkRotationCorrected</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span></div>
+        <span class="c1">#if origin:</span>
+        <span class="c1">#    self.txtCurrentBoardX.setEnabled(True)</span>
+        <span class="c1">#    self.txtCurrentBoardY.setEnabled(True)</span>
+        <span class="c1">#    self.txtCurrentBoardZ.setEnabled(True)</span>
+        <span class="c1">#    self.radioGotoBoard.setEnabled(True)</span>
+        <span class="c1">#    self.btnGotoBoardOrigin.setEnabled(True)</span>
+        <span class="c1">#    self.chkOriginCorrected.setChecked(True)</span>
+        <span class="c1">#else:</span>
+        <span class="c1">#    self.txtCurrentBoardX.setEnabled(False)</span>
+        <span class="c1">#    self.txtCurrentBoardY.setEnabled(False)</span>
+        <span class="c1">#    self.txtCurrentBoardZ.setEnabled(False)</span>
+        <span class="c1">#    self.radioGotoBoard.setEnabled(False)</span>
+        <span class="c1">#    self.btnGotoBoardOrigin.setEnabled(False)</span>
+    
+    
+<div class="viewcode-block" id="ControlWidget.showEvent"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.showEvent">[docs]</a>    <span class="k">def</span> <span class="nf">showEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">showEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__initialized</span><span class="p">:</span>
+            <span class="c1"># MainWindow signals</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">getMainwindow</span><span class="p">()</span><span class="o">.</span><span class="n">sigNewWorkpiece</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mainwindow_sigNewWorkpiece</span><span class="p">)</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">getMainwindow</span><span class="p">()</span><span class="o">.</span><span class="n">sigCorrectionChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mainwindow_sigCorrectionChanged</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__initialized</span> <span class="o">=</span> <span class="kc">True</span></div>
+            
+            
+<div class="viewcode-block" id="ControlWidget.enableLaserCrosshair"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.enableLaserCrosshair">[docs]</a>    <span class="k">def</span> <span class="nf">enableLaserCrosshair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enables/disables the laser crosshair.</span>
+
+<span class="sd">        :param value: (bool) enable crosshair</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">setLaserCrosshair</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chkLaserCrosshair</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigLaserCrosshairChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="ControlWidget.settings_sigMachineChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.settings_sigMachineChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">settings_sigMachineChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">machine</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">machine</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">machine</span><span class="o">.</span><span class="n">isInitialized</span><span class="p">())</span>
+        <span class="n">machine</span><span class="o">.</span><span class="n">sigNewCoordinates</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machine_sigNewCoordinates</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="ControlWidget.mainwindow_sigNewWorkpiece"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.mainwindow_sigNewWorkpiece">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mainwindow_sigNewWorkpiece</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateCorrectionStatus</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+             
+<div class="viewcode-block" id="ControlWidget.mainwindow_sigCorrectionChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.mainwindow_sigCorrectionChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">mainwindow_sigCorrectionChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateCorrectionStatus</span><span class="p">(</span><span class="n">status</span><span class="p">[</span><span class="s1">&#39;origin_corrected&#39;</span><span class="p">],</span> <span class="n">status</span><span class="p">[</span><span class="s1">&#39;rotation_corrected&#39;</span><span class="p">])</span></div>
+        
+    
+<div class="viewcode-block" id="ControlWidget.machine_sigNewCoordinates"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.machine_sigNewCoordinates">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">machine_sigNewCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtCurrentAbsoluteX</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;absolute&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtCurrentAbsoluteY</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;absolute&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtCurrentAbsoluteZ</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;absolute&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtCurrentBoardX</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;workpiece&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtCurrentBoardY</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;workpiece&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txtCurrentBoardZ</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;workpiece&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span></div>
+            
+    
+<div class="viewcode-block" id="ControlWidget.btnJogUp_pressed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogUp_pressed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogUp_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jog</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ControlWidget.btnJogRightUp_pressed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogRightUp_pressed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogRightUp_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jog</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ControlWidget.btnJogRight_pressed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogRight_pressed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogRight_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jog</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ControlWidget.btnJogRightDown_pressed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogRightDown_pressed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogRightDown_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jog</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ControlWidget.btnJogDown_pressed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogDown_pressed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogDown_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jog</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ControlWidget.btnJogLeftDown_pressed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogLeftDown_pressed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogLeftDown_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jog</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ControlWidget.btnJogLeft_pressed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogLeft_pressed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogLeft_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jog</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ControlWidget.btnJogLeftUp_pressed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogLeftUp_pressed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogLeftUp_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jog</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ControlWidget.btnJogZUp_pressed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogZUp_pressed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogZUp_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jog</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ControlWidget.btnJogZDown_pressed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogZDown_pressed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogZDown_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jog</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ControlWidget.btnJogXXX_released"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnJogXXX_released">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnJogXXX_released</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">radioContinuous</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="ControlWidget.btnStop_clicked"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnStop_clicked">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnStop_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="ControlWidget.btnGoto_clicked"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnGoto_clicked">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnGoto_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txtGotoX</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span>
+               <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txtGotoY</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span>
+               <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txtGotoZ</span><span class="o">.</span><span class="n">text</span><span class="p">())]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">radioGotoAbsolute</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">goto</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">radioGotoBoard</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">goto</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">radioGotoRelative</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="n">curpos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">getPosition</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">goto</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">curpos</span> <span class="o">+</span> <span class="n">pos</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="ControlWidget.btnGotoBoardOrigin_clicked"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnGotoBoardOrigin_clicked">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnGotoBoardOrigin_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">goToDefaultOrigin</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="ControlWidget.btnGotoParkPos_clicked"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnGotoParkPos_clicked">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnGotoParkPos_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">goToParkPosition</span><span class="p">()</span></div>
+        
+    
+<div class="viewcode-block" id="ControlWidget.chkSpindle_clicked"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.chkSpindle_clicked">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">chkSpindle_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="p">):</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">setSpindle</span><span class="p">(</span><span class="n">enable</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="ControlWidget.btnHomingCycle_clicked"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.btnHomingCycle_clicked">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnHomingCycle_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">homingCycle</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="ControlWidget.chkLaserCrosshair_clicked"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.ControlWidget.ControlWidget.chkLaserCrosshair_clicked">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">chkLaserCrosshair_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enableLaserCrosshair</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

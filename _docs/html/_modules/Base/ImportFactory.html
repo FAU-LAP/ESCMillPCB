@@ -1,0 +1,165 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Base.ImportFactory &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for Base.ImportFactory</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 04.02.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">Base.AppBase</span> <span class="k">import</span> <span class="n">AppBase</span>
+<span class="kn">from</span> <span class="nn">Base</span> <span class="k">import</span> <span class="n">Utility</span>
+<span class="kn">from</span> <span class="nn">Base</span> <span class="k">import</span> <span class="n">MachiningObjects</span> <span class="k">as</span> <span class="n">mo</span>
+<span class="kn">from</span> <span class="nn">Base.Workpiece</span> <span class="k">import</span> <span class="n">Workpiece</span>
+
+<span class="kn">from</span> <span class="nn">EagleImport.EagleBrd</span> <span class="k">import</span> <span class="n">EagleBrd</span>
+
+<div class="viewcode-block" id="ImportFactory"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.ImportFactory.ImportFactory">[docs]</a><span class="k">class</span> <span class="nc">ImportFactory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Static class that imports boards into ESCMillPCB classes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+    
+    
+<div class="viewcode-block" id="ImportFactory.importFile"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.ImportFactory.ImportFactory.importFile">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">importFile</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filetype</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Imports a board file and returns the resulting workpiece.</span>
+
+<span class="sd">        :param str filepath: Absolute path to the file</span>
+<span class="sd">        :param str filetype: Containing the type of file to import (see table below)</span>
+
+<span class="sd">        Valid filetypes:</span>
+
+<span class="sd">        =============  ===================================================================</span>
+<span class="sd">        **Value**      **Description**</span>
+<span class="sd">        =============  ===================================================================</span>
+<span class="sd">        &quot;eagle&quot;        Eagle \*.brd files</span>
+<span class="sd">        =============  ===================================================================</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s2">&quot;eagle&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Importing file </span><span class="si">%s</span><span class="s2"> as Eagle Board.&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+            <span class="n">brd</span> <span class="o">=</span> <span class="n">EagleBrd</span><span class="p">()</span>
+            <span class="n">brd</span><span class="o">.</span><span class="n">importBrd</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_importEagleBrd</span><span class="p">(</span><span class="n">brd</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid type.&quot;</span><span class="p">)</span></div>
+        
+        
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_importEagleBrd</span><span class="p">(</span><span class="n">brd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Imports an EagleBrd class.</span>
+
+<span class="sd">        :param EagleImport.EagleBrd.EagleBrd brd: Object to import from</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">workpiece</span> <span class="o">=</span> <span class="n">Workpiece</span><span class="p">()</span>
+        <span class="c1"># import holes</span>
+        <span class="k">for</span> <span class="n">eaglehole</span> <span class="ow">in</span> <span class="n">brd</span><span class="o">.</span><span class="n">getDrillsAbsolute</span><span class="p">():</span>
+            <span class="n">hole</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">Hole</span><span class="p">(</span><span class="n">eaglehole</span><span class="o">.</span><span class="n">drillsize</span><span class="p">,</span> <span class="n">eaglehole</span><span class="o">.</span><span class="n">position</span><span class="p">[:])</span>
+            <span class="n">workpiece</span><span class="o">.</span><span class="n">appendHole</span><span class="p">(</span><span class="n">hole</span><span class="p">)</span>
+        <span class="c1"># import millings</span>
+        <span class="k">for</span> <span class="n">linemill</span> <span class="ow">in</span> <span class="n">brd</span><span class="o">.</span><span class="n">lineMillings</span><span class="p">:</span>
+            <span class="n">milling</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">Milling</span><span class="p">()</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">linemill</span><span class="o">.</span><span class="n">curve</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">StraightPath</span><span class="p">(</span><span class="n">linemill</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">linemill</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">curve</span> <span class="o">=</span> <span class="n">Utility</span><span class="o">.</span><span class="n">degToRad</span><span class="p">(</span><span class="n">linemill</span><span class="o">.</span><span class="n">curve</span><span class="p">)</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">ArcPath</span><span class="o">.</span><span class="n">createArc</span><span class="p">(</span><span class="n">linemill</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">linemill</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">curve</span><span class="p">),</span> <span class="n">curve</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">milling</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">workpiece</span><span class="o">.</span><span class="n">appendMilling</span><span class="p">(</span><span class="n">milling</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">circlemill</span> <span class="ow">in</span> <span class="n">brd</span><span class="o">.</span><span class="n">circleMillings</span><span class="p">:</span>
+            <span class="n">milling</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">Milling</span><span class="p">()</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">ArcPath</span><span class="o">.</span><span class="n">createCircle</span><span class="p">(</span><span class="n">circlemill</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">circlemill</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+            <span class="n">milling</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">workpiece</span><span class="o">.</span><span class="n">appendMilling</span><span class="p">(</span><span class="n">milling</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">workpiece</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

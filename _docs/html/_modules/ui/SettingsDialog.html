@@ -1,0 +1,187 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ui.SettingsDialog &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ui.SettingsDialog</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 05.03.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="k">import</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtCore</span>
+<span class="kn">from</span> <span class="nn">Base.AppBase</span> <span class="k">import</span> <span class="n">AppBase</span>
+
+<span class="kn">from</span> <span class="nn">ui.templates.Ui_SettingsDialog</span> <span class="k">import</span> <span class="n">Ui_SettingsDialog</span>
+
+
+<div class="viewcode-block" id="SettingsDialog"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.SettingsDialog.SettingsDialog">[docs]</a><span class="k">class</span> <span class="nc">SettingsDialog</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">,</span> <span class="n">Ui_SettingsDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main settings dialog.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CustomizeWindowHint</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowTitleHint</span><span class="p">);</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">copySettings</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">paramsSoftwareSettings</span><span class="o">.</span><span class="n">addParameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s2">&quot;General&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">paramsSoftwareSettings</span><span class="o">.</span><span class="n">addParameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s2">&quot;Optimizers&quot;</span><span class="p">))</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">paramsMachineBasic</span><span class="o">.</span><span class="n">setParameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s2">&quot;MachineBase&quot;</span><span class="p">),</span> <span class="n">showTop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnApplyMachineParams</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnApplyMachineParams_clicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnReadMachineParams</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnReadMachineParams_clicked</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">sigTreeStateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_changed</span><span class="p">)</span>
+        
+        <span class="n">machine</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">machineName</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">machine</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">machineName</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">comboMachine</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">machines</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comboMachine</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machineName</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comboMachine</span><span class="o">.</span><span class="n">currentTextChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comboMachine_textChanged</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">machineChanged</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settingsChanged</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateMachineParams</span><span class="p">()</span>
+        
+    
+<div class="viewcode-block" id="SettingsDialog.updateMachineParams"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.SettingsDialog.SettingsDialog.updateMachineParams">[docs]</a>    <span class="k">def</span> <span class="nf">updateMachineParams</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">machineName</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">machineName</span> <span class="o">!=</span> <span class="s2">&quot;None&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Updating machine params for machine </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">machineName</span><span class="p">)</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachineType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machineName</span><span class="p">)</span><span class="o">.</span><span class="n">updateComParameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s2">&quot;MachineCom&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">machineName</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paramsMachineCom</span><span class="o">.</span><span class="n">setParameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s2">&quot;MachineCom&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">machineName</span><span class="p">),</span> <span class="n">showTop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paramsMachineAdvanced</span><span class="o">.</span><span class="n">setParameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s2">&quot;MachineParams&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">machineName</span><span class="p">),</span> <span class="n">showTop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paramsMachineCom</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paramsMachineAdvanced</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+             
+    
+<div class="viewcode-block" id="SettingsDialog.checkMachineChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.SettingsDialog.SettingsDialog.checkMachineChanged">[docs]</a>    <span class="k">def</span> <span class="nf">checkMachineChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">machine</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span>
+        <span class="n">machineName</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">machine</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">machineName</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">machineName</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">machineName</span> <span class="ow">or</span> <span class="s1">&#39;MachineCom&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settingsChanged</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">machineChanged</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">machineChanged</span> <span class="o">=</span> <span class="kc">False</span></div>
+        
+<div class="viewcode-block" id="SettingsDialog.comboMachine_textChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.SettingsDialog.SettingsDialog.comboMachine_textChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">comboMachine_textChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">machineName</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">machineName</span> <span class="o">=</span> <span class="n">machineName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkMachineChanged</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateMachineParams</span><span class="p">()</span></div>
+        
+        
+<div class="viewcode-block" id="SettingsDialog.btnApplyMachineParams_clicked"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.SettingsDialog.SettingsDialog.btnApplyMachineParams_clicked">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnApplyMachineParams_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">apply</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">isInitialized</span><span class="p">():</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Connect to machine&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;The machine is not initialized.</span><span class="se">\n</span><span class="s2">Intialize now?&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span><span class="p">:</span>
+                <span class="n">AppBase</span><span class="o">.</span><span class="n">changeMachine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machineName</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">setup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">apply</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">apply</span><span class="p">:</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">setupMachine</span><span class="p">()</span></div>
+        
+    
+<div class="viewcode-block" id="SettingsDialog.btnReadMachineParams_clicked"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.SettingsDialog.SettingsDialog.btnReadMachineParams_clicked">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnReadMachineParams_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">retrieveParameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;MachineParams&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">saveState</span><span class="p">())</span></div>
+        
+    
+<div class="viewcode-block" id="SettingsDialog.params_changed"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.SettingsDialog.SettingsDialog.params_changed">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">params_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">changes</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">change</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">changes</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">childPath</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settingsChanged</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">settingsChanged</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

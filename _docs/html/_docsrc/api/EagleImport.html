@@ -1,0 +1,282 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>EagleImport package &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Machines package" href="Machines.html" />
+    <link rel="prev" title="ESCMillPCB module" href="ESCMillPCB.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Machines.html" title="Machines package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ESCMillPCB.html" title="ESCMillPCB module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">ESCMillPCB</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="eagleimport-package">
+<h1>EagleImport package<a class="headerlink" href="#eagleimport-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-EagleImport.EagleBrd">
+<span id="eagleimport-eaglebrd-module"></span><h2>EagleImport.EagleBrd module<a class="headerlink" href="#module-EagleImport.EagleBrd" title="Permalink to this headline">¶</a></h2>
+<p>Created on 31.01.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="EagleImport.EagleBrd.EagleBrd">
+<em class="property">class </em><code class="descclassname">EagleImport.EagleBrd.</code><code class="descname">EagleBrd</code><a class="reference internal" href="../../_modules/EagleImport/EagleBrd.html#EagleBrd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleBrd.EagleBrd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an Eagle board</p>
+<dl class="method">
+<dt id="EagleImport.EagleBrd.EagleBrd.getDevice">
+<code class="descname">getDevice</code><span class="sig-paren">(</span><em>library</em>, <em>device</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleBrd.html#EagleBrd.getDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleBrd.EagleBrd.getDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an EagleDevice from the library</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>library</strong> (<em>str</em>) – Name of the library</li>
+<li><strong>device</strong> (<em>str</em>) – Name of the device</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">device from library</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#EagleImport.EagleObjects.EagleDevice" title="EagleImport.EagleObjects.EagleDevice">EagleImport.EagleObjects.EagleDevice</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EagleImport.EagleBrd.EagleBrd.getDrillsAbsolute">
+<code class="descname">getDrillsAbsolute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleBrd.html#EagleBrd.getDrillsAbsolute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleBrd.EagleBrd.getDrillsAbsolute" title="Permalink to this definition">¶</a></dt>
+<dd><p>:returns list of EagleDrill objects with all drills on the board (devices, stand-alone drills and vias)
+with absolute positions
+:rtype: list(EagleImport.EagleObjects.EagleDrill)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EagleImport.EagleBrd.EagleBrd.importBrd">
+<code class="descname">importBrd</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleBrd.html#EagleBrd.importBrd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleBrd.EagleBrd.importBrd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import Eagle *.brd XML file, the file contents will be added to the EagleBrd object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> (<em>str</em>) – Absolute path to the brd file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-EagleImport.EagleObjects">
+<span id="eagleimport-eagleobjects-module"></span><h2>EagleImport.EagleObjects module<a class="headerlink" href="#module-EagleImport.EagleObjects" title="Permalink to this headline">¶</a></h2>
+<p>Created on 31.01.2018</p>
+<p>&#64;author: christian</p>
+<dl class="class">
+<dt id="EagleImport.EagleObjects.EagleCircleMilling">
+<em class="property">class </em><code class="descclassname">EagleImport.EagleObjects.</code><code class="descname">EagleCircleMilling</code><span class="sig-paren">(</span><em>radius</em>, <em>center</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleObjects.html#EagleCircleMilling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleObjects.EagleCircleMilling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains circle milling information (center and radius)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="EagleImport.EagleObjects.EagleDevice">
+<em class="property">class </em><code class="descclassname">EagleImport.EagleObjects.</code><code class="descname">EagleDevice</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleObjects.html#EagleDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleObjects.EagleDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains package information, especially EagleDrill objects.
+EagleDevice is meant as an abstract device entry for EagleDeviceLibraries,
+occurrences of the device are given by EagleDevicePosition objects.</p>
+<dl class="method">
+<dt id="EagleImport.EagleObjects.EagleDevice.addDrill">
+<code class="descname">addDrill</code><span class="sig-paren">(</span><em>size</em>, <em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleObjects.html#EagleDevice.addDrill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleObjects.EagleDevice.addDrill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add drill to Eagle device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>size</strong> (<em>float</em>) – (float) Drill size in mm</li>
+<li><strong>position</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – (x, y) coordinates</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EagleImport.EagleObjects.EagleDeviceLibrary">
+<em class="property">class </em><code class="descclassname">EagleImport.EagleObjects.</code><code class="descname">EagleDeviceLibrary</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleObjects.html#EagleDeviceLibrary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleObjects.EagleDeviceLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains dictionary of devices (packages)</p>
+<dl class="method">
+<dt id="EagleImport.EagleObjects.EagleDeviceLibrary.addDevice">
+<code class="descname">addDevice</code><span class="sig-paren">(</span><em>eagledev</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleObjects.html#EagleDeviceLibrary.addDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleObjects.EagleDeviceLibrary.addDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add Eagle device to library</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>eagldev</strong> (<a class="reference internal" href="#EagleImport.EagleObjects.EagleDevice" title="EagleImport.EagleObjects.EagleDevice"><em>EagleDevice</em></a>) – Object to append</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EagleImport.EagleObjects.EagleDeviceLibrary.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>eagledevlib</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleObjects.html#EagleDeviceLibrary.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleObjects.EagleDeviceLibrary.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add Eagle device library entries to library</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>eagledevlib</strong> (<a class="reference internal" href="#EagleImport.EagleObjects.EagleDeviceLibrary" title="EagleImport.EagleObjects.EagleDeviceLibrary"><em>EagleDeviceLibrary</em></a>) – Object to append</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EagleImport.EagleObjects.EagleDevicePosition">
+<em class="property">class </em><code class="descclassname">EagleImport.EagleObjects.</code><code class="descname">EagleDevicePosition</code><span class="sig-paren">(</span><em>library</em>, <em>device</em>, <em>position</em>, <em>rotation=0</em>, <em>mirrored=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleObjects.html#EagleDevicePosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleObjects.EagleDevicePosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Links EagleDevice entries in an EagleLibrary to occurrences of the package
+on the board by specifying library and device name and position.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="EagleImport.EagleObjects.EagleDrill">
+<em class="property">class </em><code class="descclassname">EagleImport.EagleObjects.</code><code class="descname">EagleDrill</code><span class="sig-paren">(</span><em>size</em>, <em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleObjects.html#EagleDrill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleObjects.EagleDrill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains drill information (drill size and position).
+Inside of EagleDevice objects the drill position is relative to the device position.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="EagleImport.EagleObjects.EagleLineMilling">
+<em class="property">class </em><code class="descclassname">EagleImport.EagleObjects.</code><code class="descname">EagleLineMilling</code><span class="sig-paren">(</span><em>start</em>, <em>end</em>, <em>curve=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/EagleImport/EagleObjects.html#EagleLineMilling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EagleImport.EagleObjects.EagleLineMilling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains line milling information (start and end position, curve)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-EagleImport">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-EagleImport" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../docindex.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">EagleImport package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-EagleImport.EagleBrd">EagleImport.EagleBrd module</a></li>
+<li><a class="reference internal" href="#module-EagleImport.EagleObjects">EagleImport.EagleObjects module</a></li>
+<li><a class="reference internal" href="#module-EagleImport">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ESCMillPCB.html"
+                        title="previous chapter">ESCMillPCB module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Machines.html"
+                        title="next chapter">Machines package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/_docsrc/api/EagleImport.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Machines.html" title="Machines package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ESCMillPCB.html" title="ESCMillPCB module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >ESCMillPCB</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

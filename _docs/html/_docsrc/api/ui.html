@@ -1,0 +1,1016 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ui package &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="conf module" href="conf.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="conf.html" title="conf module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">ESCMillPCB</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ui-package">
+<h1>ui package<a class="headerlink" href="#ui-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ui.ControlWidget">
+<span id="ui-controlwidget-module"></span><h2>ui.ControlWidget module<a class="headerlink" href="#module-ui.ControlWidget" title="Permalink to this headline">¶</a></h2>
+<p>Created on 03.03.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="ui.ControlWidget.ControlWidget">
+<em class="property">class </em><code class="descclassname">ui.ControlWidget.</code><code class="descname">ControlWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ui.templates.Ui_ControlWidget.Ui_ControlWidget</span></code></p>
+<p>Machine control widget for the main window.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigLaserCrosshairChanged</td>
+<td>Emitted when the laser crosshair checkbox is changed.
+Carries a bool indicating the checkbox state.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnGotoBoardOrigin_clicked">
+<code class="descname">btnGotoBoardOrigin_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnGotoBoardOrigin_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnGotoBoardOrigin_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnGotoParkPos_clicked">
+<code class="descname">btnGotoParkPos_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnGotoParkPos_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnGotoParkPos_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnGoto_clicked">
+<code class="descname">btnGoto_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnGoto_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnGoto_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnHomingCycle_clicked">
+<code class="descname">btnHomingCycle_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnHomingCycle_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnHomingCycle_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogDown_pressed">
+<code class="descname">btnJogDown_pressed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogDown_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogDown_pressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogLeftDown_pressed">
+<code class="descname">btnJogLeftDown_pressed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogLeftDown_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogLeftDown_pressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogLeftUp_pressed">
+<code class="descname">btnJogLeftUp_pressed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogLeftUp_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogLeftUp_pressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogLeft_pressed">
+<code class="descname">btnJogLeft_pressed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogLeft_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogLeft_pressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogRightDown_pressed">
+<code class="descname">btnJogRightDown_pressed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogRightDown_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogRightDown_pressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogRightUp_pressed">
+<code class="descname">btnJogRightUp_pressed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogRightUp_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogRightUp_pressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogRight_pressed">
+<code class="descname">btnJogRight_pressed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogRight_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogRight_pressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogUp_pressed">
+<code class="descname">btnJogUp_pressed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogUp_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogUp_pressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogXXX_released">
+<code class="descname">btnJogXXX_released</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogXXX_released"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogXXX_released" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogZDown_pressed">
+<code class="descname">btnJogZDown_pressed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogZDown_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogZDown_pressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnJogZUp_pressed">
+<code class="descname">btnJogZUp_pressed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnJogZUp_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnJogZUp_pressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.btnStop_clicked">
+<code class="descname">btnStop_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.btnStop_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.btnStop_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.chkLaserCrosshair_clicked">
+<code class="descname">chkLaserCrosshair_clicked</code><span class="sig-paren">(</span><em>checked</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.chkLaserCrosshair_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.chkLaserCrosshair_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.chkSpindle_clicked">
+<code class="descname">chkSpindle_clicked</code><span class="sig-paren">(</span><em>enable</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.chkSpindle_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.chkSpindle_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.enableLaserCrosshair">
+<code class="descname">enableLaserCrosshair</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.enableLaserCrosshair"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.enableLaserCrosshair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables/disables the laser crosshair.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> – (bool) enable crosshair</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.goto">
+<code class="descname">goto</code><span class="sig-paren">(</span><em>position</em>, <em>absolute</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.goto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.goto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.jog">
+<code class="descname">jog</code><span class="sig-paren">(</span><em>directions</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.jog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.jog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.machine_sigNewCoordinates">
+<code class="descname">machine_sigNewCoordinates</code><span class="sig-paren">(</span><em>coords</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.machine_sigNewCoordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.machine_sigNewCoordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.mainwindow_sigCorrectionChanged">
+<code class="descname">mainwindow_sigCorrectionChanged</code><span class="sig-paren">(</span><em>status</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.mainwindow_sigCorrectionChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.mainwindow_sigCorrectionChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.mainwindow_sigNewWorkpiece">
+<code class="descname">mainwindow_sigNewWorkpiece</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.mainwindow_sigNewWorkpiece"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.mainwindow_sigNewWorkpiece" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.settings_sigMachineChanged">
+<code class="descname">settings_sigMachineChanged</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.settings_sigMachineChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.settings_sigMachineChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.showEvent">
+<code class="descname">showEvent</code><span class="sig-paren">(</span><em>self</em>, <em>QShowEvent</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.showEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.showEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.ControlWidget.ControlWidget.sigLaserCrosshairChanged">
+<code class="descname">sigLaserCrosshairChanged</code><a class="headerlink" href="#ui.ControlWidget.ControlWidget.sigLaserCrosshairChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.ControlWidget.ControlWidget.updateCorrectionStatus">
+<code class="descname">updateCorrectionStatus</code><span class="sig-paren">(</span><em>origin</em>, <em>rotation</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/ControlWidget.html#ControlWidget.updateCorrectionStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.ControlWidget.ControlWidget.updateCorrectionStatus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ui.CoordinatesSetupWidget">
+<span id="ui-coordinatessetupwidget-module"></span><h2>ui.CoordinatesSetupWidget module<a class="headerlink" href="#module-ui.CoordinatesSetupWidget" title="Permalink to this headline">¶</a></h2>
+<p>Created on 03.03.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget">
+<em class="property">class </em><code class="descclassname">ui.CoordinatesSetupWidget.</code><code class="descname">CoordinatesSetupWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ui.templates.Ui_CoordinatesSetupWidget.Ui_CoordinatesSetupWidget</span></code></p>
+<p>Basic setup widget for main window.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigBoardMirroredChanged</td>
+<td>Emitted when the “Board Mirrored” checkbox has changed
+Carries a boolean with the checkbox state</td>
+</tr>
+<tr class="row-odd"><td>sigBoardOutlinesChanged</td>
+<td>Emitted when the “Show Outlines” checkbox or the board size has changed
+Carries a dictionary {“show”:(bool), “size”:(float, float)}</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnApplyBoardOrigin_clicked">
+<code class="descname">btnApplyBoardOrigin_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.btnApplyBoardOrigin_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnApplyBoardOrigin_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnApplyBoardSize_clicked">
+<code class="descname">btnApplyBoardSize_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.btnApplyBoardSize_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnApplyBoardSize_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnApplyParkPos_clicked">
+<code class="descname">btnApplyParkPos_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.btnApplyParkPos_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnApplyParkPos_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnGotoBoardOrigin_clicked">
+<code class="descname">btnGotoBoardOrigin_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.btnGotoBoardOrigin_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnGotoBoardOrigin_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnGotoParkPosition_clicked">
+<code class="descname">btnGotoParkPosition_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.btnGotoParkPosition_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnGotoParkPosition_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnNewBoardSetCurrent_clicked">
+<code class="descname">btnNewBoardSetCurrent_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.btnNewBoardSetCurrent_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnNewBoardSetCurrent_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnNewParkPosSetCurrent_clicked">
+<code class="descname">btnNewParkPosSetCurrent_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.btnNewParkPosSetCurrent_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.btnNewParkPosSetCurrent_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.chkBoardMirrored_clicked">
+<code class="descname">chkBoardMirrored_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.chkBoardMirrored_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.chkBoardMirrored_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.chkBoardOutlines_clicked">
+<code class="descname">chkBoardOutlines_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.chkBoardOutlines_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.chkBoardOutlines_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.chkHoles_clicked">
+<code class="descname">chkHoles_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.chkHoles_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.chkHoles_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.chkMillings_clicked">
+<code class="descname">chkMillings_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.chkMillings_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.chkMillings_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.settings_sigMachineChanged">
+<code class="descname">settings_sigMachineChanged</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.settings_sigMachineChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.settings_sigMachineChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.sigBoardMirroredChanged">
+<code class="descname">sigBoardMirroredChanged</code><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.sigBoardMirroredChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.sigBoardOutlinesChanged">
+<code class="descname">sigBoardOutlinesChanged</code><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.sigBoardOutlinesChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.CoordinatesSetupWidget.CoordinatesSetupWidget.updatePositions">
+<code class="descname">updatePositions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/CoordinatesSetupWidget.html#CoordinatesSetupWidget.updatePositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.CoordinatesSetupWidget.CoordinatesSetupWidget.updatePositions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ui.FocusLineEdit">
+<span id="ui-focuslineedit-module"></span><h2>ui.FocusLineEdit module<a class="headerlink" href="#module-ui.FocusLineEdit" title="Permalink to this headline">¶</a></h2>
+<p>Created on 06.03.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="ui.FocusLineEdit.FocusLineEdit">
+<em class="property">class </em><code class="descclassname">ui.FocusLineEdit.</code><code class="descname">FocusLineEdit</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/FocusLineEdit.html#FocusLineEdit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.FocusLineEdit.FocusLineEdit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QLineEdit</span></code></p>
+<p>QLineEdit that has a clicked signal.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigClicked</td>
+<td>Emitted when the LineEdit is clicked (on mouseRelease)</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="ui.FocusLineEdit.FocusLineEdit.focusInEvent">
+<code class="descname">focusInEvent</code><span class="sig-paren">(</span><em>self</em>, <em>QFocusEvent</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/FocusLineEdit.html#FocusLineEdit.focusInEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.FocusLineEdit.FocusLineEdit.focusInEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.FocusLineEdit.FocusLineEdit.sigFocus">
+<code class="descname">sigFocus</code><a class="headerlink" href="#ui.FocusLineEdit.FocusLineEdit.sigFocus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ui.MachiningROIs">
+<span id="ui-machiningrois-module"></span><h2>ui.MachiningROIs module<a class="headerlink" href="#module-ui.MachiningROIs" title="Permalink to this headline">¶</a></h2>
+<p>Created on 06.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="ui.MachiningROIs.ArcMillingROI">
+<em class="property">class </em><code class="descclassname">ui.MachiningROIs.</code><code class="descname">ArcMillingROI</code><span class="sig-paren">(</span><em>start</em>, <em>end</em>, <em>center</em>, <em>angle</em>, <em>ccw=True</em>, <em>infeed=False</em>, <em>outfeed=False</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#ArcMillingROI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.ArcMillingROI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ui.MachiningROIs.MachiningROI" title="ui.MachiningROIs.MachiningROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">ui.MachiningROIs.MachiningROI</span></code></a></p>
+<p>pyqtgraph ROI for arc milling paths.</p>
+<dl class="method">
+<dt id="ui.MachiningROIs.ArcMillingROI.outline">
+<code class="descname">outline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#ArcMillingROI.outline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.ArcMillingROI.outline" title="Permalink to this definition">¶</a></dt>
+<dd><p>See MachiningROI.outline()</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ui.MachiningROIs.HoleROI">
+<em class="property">class </em><code class="descclassname">ui.MachiningROIs.</code><code class="descname">HoleROI</code><span class="sig-paren">(</span><em>diameter</em>, <em>pos</em>, <em>crsize=None</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#HoleROI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.HoleROI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ui.MachiningROIs.MachiningROI" title="ui.MachiningROIs.MachiningROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">ui.MachiningROIs.MachiningROI</span></code></a></p>
+<p>pyqtgraph ROI for holes</p>
+<dl class="method">
+<dt id="ui.MachiningROIs.HoleROI.outline">
+<code class="descname">outline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#HoleROI.outline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.HoleROI.outline" title="Permalink to this definition">¶</a></dt>
+<dd><p>See MachiningROI.outline()</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ui.MachiningROIs.MachinePositionROI">
+<em class="property">class </em><code class="descclassname">ui.MachiningROIs.</code><code class="descname">MachinePositionROI</code><span class="sig-paren">(</span><em>pos=(0</em>, <em>0)</em>, <em>theight=4</em>, <em>twidth=1</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachinePositionROI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachinePositionROI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ui.MachiningROIs.MachiningROI" title="ui.MachiningROIs.MachiningROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">ui.MachiningROIs.MachiningROI</span></code></a></p>
+<p>pyqtgraph ROI indicating current machine position</p>
+<dl class="method">
+<dt id="ui.MachiningROIs.MachinePositionROI.outline">
+<code class="descname">outline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachinePositionROI.outline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachinePositionROI.outline" title="Permalink to this definition">¶</a></dt>
+<dd><p>See MachiningROI.outline()</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ui.MachiningROIs.MachiningROI">
+<em class="property">class </em><code class="descclassname">ui.MachiningROIs.</code><code class="descname">MachiningROI</code><span class="sig-paren">(</span><em>pos</em>, <em>highlightpen=None</em>, <em>strokewidth=1</em>, <em>contextmenu=True</em>, <em>brush=None</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyqtgraph.graphicsItems.ROI.ROI</span></code></p>
+<p>Base class for MachiningROIs, handles drawing and general behavior.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigGotoActionTriggered</td>
+<td>Emitted when the “Go to position” context menu entry is clicked.
+Carries a dictionary {“pos”: (x, y) coordinates of the ROI}</td>
+</tr>
+<tr class="row-odd"><td>sigRef1ActionTriggered</td>
+<td>Emitted when the “Set reference 1” context menu entry is clicked.
+Carries a dictionary {“pos”: (x, y) coordinates of the ROI, “type”:”ref1”}</td>
+</tr>
+<tr class="row-even"><td>sigRef2ActionTriggered</td>
+<td>Emitted when the “Set reference 1” context menu entry is clicked.
+Carries a dictionary {“pos”: (x, y) coordinates of the ROI, “type”:”ref2”}</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.boundingRect">
+<code class="descname">boundingRect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.boundingRect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.boundingRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>(override) Calculates the bounding rectangle for drawing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.contextMenuEnabled">
+<code class="descname">contextMenuEnabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.contextMenuEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.contextMenuEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>(override) Determines if the ROI has a context menu.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.enableMenuItems">
+<code class="descname">enableMenuItems</code><span class="sig-paren">(</span><em>goto=None</em>, <em>ref1=None</em>, <em>ref2=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.enableMenuItems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.enableMenuItems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables/disables context menu items. “None” arguments are ignored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>goto</strong> – (bool) Enable “Go to position” menu item</li>
+<li><strong>ref1</strong> – (bool) Enable “Set as reference 1” menu item</li>
+<li><strong>ref2</strong> – (bool) Enable “Set as reference 2” menu item</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.getMenu">
+<code class="descname">getMenu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.getMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.getMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>(override) Returns the ROIs context menu.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.gotoAction_triggered">
+<code class="descname">gotoAction_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.gotoAction_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.gotoAction_triggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.invalidate">
+<code class="descname">invalidate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.invalidate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.invalidate" title="Permalink to this definition">¶</a></dt>
+<dd><p>(override) Causes a redraw of the ROI.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.menu_aboutToHide">
+<code class="descname">menu_aboutToHide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.menu_aboutToHide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.menu_aboutToHide" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.menu_aboutToShow">
+<code class="descname">menu_aboutToShow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.menu_aboutToShow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.menu_aboutToShow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.outline">
+<code class="descname">outline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.outline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.outline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a QPainterPath marking the outline of the ROI.
+Is overridden by subclasses to define their geometry.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.paint">
+<code class="descname">paint</code><span class="sig-paren">(</span><em>p</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.paint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.paint" title="Permalink to this definition">¶</a></dt>
+<dd><p>(override) Draws the ROI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>p</strong> – (QPainter) Painter used for drawing.</li>
+<li><strong>*args</strong> – Unused (TODO ??)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.ref1Action_triggered">
+<code class="descname">ref1Action_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.ref1Action_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.ref1Action_triggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.ref2Action_triggered">
+<code class="descname">ref2Action_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.ref2Action_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.ref2Action_triggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.MachiningROI.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#MachiningROI.shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>(override) Uses self.outline() to define the shape of the ROI (e.g. for mouse hover detection).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ui.MachiningROIs.MachiningROI.sigGotoActionTriggered">
+<code class="descname">sigGotoActionTriggered</code><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.sigGotoActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.MachiningROIs.MachiningROI.sigRef1ActionTriggered">
+<code class="descname">sigRef1ActionTriggered</code><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.sigRef1ActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.MachiningROIs.MachiningROI.sigRef2ActionTriggered">
+<code class="descname">sigRef2ActionTriggered</code><a class="headerlink" href="#ui.MachiningROIs.MachiningROI.sigRef2ActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ui.MachiningROIs.StraightMillingROI">
+<em class="property">class </em><code class="descclassname">ui.MachiningROIs.</code><code class="descname">StraightMillingROI</code><span class="sig-paren">(</span><em>start</em>, <em>end</em>, <em>infeed=False</em>, <em>outfeed=False</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#StraightMillingROI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.StraightMillingROI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ui.MachiningROIs.MachiningROI" title="ui.MachiningROIs.MachiningROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">ui.MachiningROIs.MachiningROI</span></code></a></p>
+<p>pyqtgraph ROI for straight milling paths.</p>
+<dl class="method">
+<dt id="ui.MachiningROIs.StraightMillingROI.outline">
+<code class="descname">outline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#StraightMillingROI.outline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.StraightMillingROI.outline" title="Permalink to this definition">¶</a></dt>
+<dd><p>See MachiningROI.outline()</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ui.MachiningROIs.WorkpieceOutlineROI">
+<em class="property">class </em><code class="descclassname">ui.MachiningROIs.</code><code class="descname">WorkpieceOutlineROI</code><span class="sig-paren">(</span><em>boardsize=(0</em>, <em>0)</em>, <em>pos=(0</em>, <em>0)</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#WorkpieceOutlineROI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.WorkpieceOutlineROI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ui.MachiningROIs.MachiningROI" title="ui.MachiningROIs.MachiningROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">ui.MachiningROIs.MachiningROI</span></code></a></p>
+<p>pyqtgraph ROI indicating the workpiece (board) outlines.</p>
+<dl class="method">
+<dt id="ui.MachiningROIs.WorkpieceOutlineROI.outline">
+<code class="descname">outline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#WorkpieceOutlineROI.outline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.WorkpieceOutlineROI.outline" title="Permalink to this definition">¶</a></dt>
+<dd><p>See MachiningROI.outline()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.MachiningROIs.WorkpieceOutlineROI.setBoardsize">
+<code class="descname">setBoardsize</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MachiningROIs.html#WorkpieceOutlineROI.setBoardsize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MachiningROIs.WorkpieceOutlineROI.setBoardsize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> – (float, float) (width, height) of the workpiece (board)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ui.MainWindow">
+<span id="ui-mainwindow-module"></span><h2>ui.MainWindow module<a class="headerlink" href="#module-ui.MainWindow" title="Permalink to this headline">¶</a></h2>
+<p>Created on 03.03.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="ui.MainWindow.MainWindow">
+<em class="property">class </em><code class="descclassname">ui.MainWindow.</code><code class="descname">MainWindow</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QMainWindow</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ui.templates.Ui_MainWindow.Ui_MainWindow</span></code></p>
+<p>Main window of the program.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigNewWorkpiece</td>
+<td>Emitted when the workpiece changes</td>
+</tr>
+<tr class="row-odd"><td>sigCorrectionChanged</td>
+<td>Emitted when workpiece coordinate system origin or rotation corretion status
+has changed. Carries a dictionary
+{“origin_corrected”:(bool) workpiece coordinate system is origin corrected,
+“rotation_corrected”:(bool) workpiece coordinate system is rotation corrected}</td>
+</tr>
+<tr class="row-even"><td>sigLaserCrosshairChanged</td>
+<td>Emitted when the laser crosshair checkbox is changed.
+Carries a bool indicating the checkbox state.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.btnStartCycle_clicked">
+<code class="descname">btnStartCycle_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.btnStartCycle_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.btnStartCycle_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.closeEvent">
+<code class="descname">closeEvent</code><span class="sig-paren">(</span><em>self</em>, <em>QCloseEvent</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.closeEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.machine_sigCycleCompleted">
+<code class="descname">machine_sigCycleCompleted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.machine_sigCycleCompleted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.machine_sigCycleCompleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.machine_sigStatusUpdate">
+<code class="descname">machine_sigStatusUpdate</code><span class="sig-paren">(</span><em>status</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.machine_sigStatusUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.machine_sigStatusUpdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.mnuAbout_triggered">
+<code class="descname">mnuAbout_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.mnuAbout_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.mnuAbout_triggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.mnuApplyMachineParams_triggered">
+<code class="descname">mnuApplyMachineParams_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.mnuApplyMachineParams_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.mnuApplyMachineParams_triggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.mnuCloseMachine_triggered">
+<code class="descname">mnuCloseMachine_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.mnuCloseMachine_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.mnuCloseMachine_triggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.mnuDocumentation_triggered">
+<code class="descname">mnuDocumentation_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.mnuDocumentation_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.mnuDocumentation_triggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.mnuInitMachine_triggered">
+<code class="descname">mnuInitMachine_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.mnuInitMachine_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.mnuInitMachine_triggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.mnuOpenEagleBrd_triggered">
+<code class="descname">mnuOpenEagleBrd_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.mnuOpenEagleBrd_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.mnuOpenEagleBrd_triggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.mnuSettings_triggered">
+<code class="descname">mnuSettings_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.mnuSettings_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.mnuSettings_triggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.setWorkpiece">
+<code class="descname">setWorkpiece</code><span class="sig-paren">(</span><em>workpiece</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.setWorkpiece"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.setWorkpiece" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.settings_sigMachineChanged">
+<code class="descname">settings_sigMachineChanged</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.settings_sigMachineChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.settings_sigMachineChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.settings_sigSettingsChanged">
+<code class="descname">settings_sigSettingsChanged</code><span class="sig-paren">(</span><em>changed</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.settings_sigSettingsChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.settings_sigSettingsChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.showEvent">
+<code class="descname">showEvent</code><span class="sig-paren">(</span><em>self</em>, <em>QShowEvent</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.showEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.showEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.MainWindow.MainWindow.sigCorrectionChanged">
+<code class="descname">sigCorrectionChanged</code><a class="headerlink" href="#ui.MainWindow.MainWindow.sigCorrectionChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.MainWindow.MainWindow.sigLaserCrosshairChanged">
+<code class="descname">sigLaserCrosshairChanged</code><a class="headerlink" href="#ui.MainWindow.MainWindow.sigLaserCrosshairChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.MainWindow.MainWindow.sigMachineChanged">
+<code class="descname">sigMachineChanged</code><a class="headerlink" href="#ui.MainWindow.MainWindow.sigMachineChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.MainWindow.MainWindow.sigNewWorkpiece">
+<code class="descname">sigNewWorkpiece</code><a class="headerlink" href="#ui.MainWindow.MainWindow.sigNewWorkpiece" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.updateMachineMenu">
+<code class="descname">updateMachineMenu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.updateMachineMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.updateMachineMenu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.wdgControl_sigLaserCrosshairChanged">
+<code class="descname">wdgControl_sigLaserCrosshairChanged</code><span class="sig-paren">(</span><em>checked</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.wdgControl_sigLaserCrosshairChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.wdgControl_sigLaserCrosshairChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.wdgCoordinateSetup_sigBoardMirroredChanged">
+<code class="descname">wdgCoordinateSetup_sigBoardMirroredChanged</code><span class="sig-paren">(</span><em>mirrored</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.wdgCoordinateSetup_sigBoardMirroredChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.wdgCoordinateSetup_sigBoardMirroredChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.wdgCoordinateSetup_sigBoardOutlinesChanged">
+<code class="descname">wdgCoordinateSetup_sigBoardOutlinesChanged</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.wdgCoordinateSetup_sigBoardOutlinesChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.wdgCoordinateSetup_sigBoardOutlinesChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.workpieceViewer_sigGotoActionTriggered">
+<code class="descname">workpieceViewer_sigGotoActionTriggered</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.workpieceViewer_sigGotoActionTriggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.workpieceViewer_sigGotoActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.workpieceViewer_sigRef1ActionTriggered">
+<code class="descname">workpieceViewer_sigRef1ActionTriggered</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.workpieceViewer_sigRef1ActionTriggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.workpieceViewer_sigRef1ActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.MainWindow.MainWindow.workpieceViewer_sigRef2ActionTriggered">
+<code class="descname">workpieceViewer_sigRef2ActionTriggered</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/MainWindow.html#MainWindow.workpieceViewer_sigRef2ActionTriggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.MainWindow.MainWindow.workpieceViewer_sigRef2ActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ui.SettingsDialog">
+<span id="ui-settingsdialog-module"></span><h2>ui.SettingsDialog module<a class="headerlink" href="#module-ui.SettingsDialog" title="Permalink to this headline">¶</a></h2>
+<p>Created on 05.03.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="ui.SettingsDialog.SettingsDialog">
+<em class="property">class </em><code class="descclassname">ui.SettingsDialog.</code><code class="descname">SettingsDialog</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/SettingsDialog.html#SettingsDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.SettingsDialog.SettingsDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDialog</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ui.templates.Ui_SettingsDialog.Ui_SettingsDialog</span></code></p>
+<p>Main settings dialog.</p>
+<dl class="method">
+<dt id="ui.SettingsDialog.SettingsDialog.btnApplyMachineParams_clicked">
+<code class="descname">btnApplyMachineParams_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/SettingsDialog.html#SettingsDialog.btnApplyMachineParams_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.SettingsDialog.SettingsDialog.btnApplyMachineParams_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.SettingsDialog.SettingsDialog.btnReadMachineParams_clicked">
+<code class="descname">btnReadMachineParams_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/SettingsDialog.html#SettingsDialog.btnReadMachineParams_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.SettingsDialog.SettingsDialog.btnReadMachineParams_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.SettingsDialog.SettingsDialog.checkMachineChanged">
+<code class="descname">checkMachineChanged</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/SettingsDialog.html#SettingsDialog.checkMachineChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.SettingsDialog.SettingsDialog.checkMachineChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.SettingsDialog.SettingsDialog.comboMachine_textChanged">
+<code class="descname">comboMachine_textChanged</code><span class="sig-paren">(</span><em>machineName</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/SettingsDialog.html#SettingsDialog.comboMachine_textChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.SettingsDialog.SettingsDialog.comboMachine_textChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.SettingsDialog.SettingsDialog.params_changed">
+<code class="descname">params_changed</code><span class="sig-paren">(</span><em>param</em>, <em>changes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/SettingsDialog.html#SettingsDialog.params_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.SettingsDialog.SettingsDialog.params_changed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.SettingsDialog.SettingsDialog.updateMachineParams">
+<code class="descname">updateMachineParams</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/SettingsDialog.html#SettingsDialog.updateMachineParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.SettingsDialog.SettingsDialog.updateMachineParams" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ui.WorkpieceWidget">
+<span id="ui-workpiecewidget-module"></span><h2>ui.WorkpieceWidget module<a class="headerlink" href="#module-ui.WorkpieceWidget" title="Permalink to this headline">¶</a></h2>
+<p>Created on 15.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget">
+<em class="property">class </em><code class="descclassname">ui.WorkpieceWidget.</code><code class="descname">WorkpieceWidget</code><span class="sig-paren">(</span><em>parent=None</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyqtgraph.widgets.PlotWidget.PlotWidget</span></code></p>
+<p>Plot widget to view machining objects.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigGotoActionTriggered</td>
+<td>Emitted when the “Go to position” context menu entry is clicked.
+Carries a dictionary {“pos”: (x, y) coordinates of the ROI}</td>
+</tr>
+<tr class="row-odd"><td>sigRef1ActionTriggered</td>
+<td>Emitted when the “Set reference 1” context menu entry is clicked.
+Carries a dictionary {“pos”: (x, y) coordinates of the ROI, “type”:”ref1”}</td>
+</tr>
+<tr class="row-even"><td>sigRef2ActionTriggered</td>
+<td>Emitted when the “Set reference 1” context menu entry is clicked.
+Carries a dictionary {“pos”: (x, y) coordinates of the ROI, “type”:”ref2”}</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.machine_sigNewCoordinates">
+<code class="descname">machine_sigNewCoordinates</code><span class="sig-paren">(</span><em>coords</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.machine_sigNewCoordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.machine_sigNewCoordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.machiningROI_sigGotoActionTriggered">
+<code class="descname">machiningROI_sigGotoActionTriggered</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.machiningROI_sigGotoActionTriggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.machiningROI_sigGotoActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.machiningROI_sigRef1ActionTriggered">
+<code class="descname">machiningROI_sigRef1ActionTriggered</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.machiningROI_sigRef1ActionTriggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.machiningROI_sigRef1ActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.machiningROI_sigRef2ActionTriggered">
+<code class="descname">machiningROI_sigRef2ActionTriggered</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.machiningROI_sigRef2ActionTriggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.machiningROI_sigRef2ActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.mainwindow_sigCorrectionChanged">
+<code class="descname">mainwindow_sigCorrectionChanged</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.mainwindow_sigCorrectionChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.mainwindow_sigCorrectionChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.mainwindow_sigLaserCrosshairChanged">
+<code class="descname">mainwindow_sigLaserCrosshairChanged</code><span class="sig-paren">(</span><em>checked</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.mainwindow_sigLaserCrosshairChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.mainwindow_sigLaserCrosshairChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.refresh">
+<code class="descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refreshes the workpiece widget, i.e. the machining ROIs are deleted and recreated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.setBoardOutlineVisible">
+<code class="descname">setBoardOutlineVisible</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.setBoardOutlineVisible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.setBoardOutlineVisible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets if the workpiece (board) outlines are visible.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> – (bool) outlines visible</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.setWorkpiece">
+<code class="descname">setWorkpiece</code><span class="sig-paren">(</span><em>workpiece</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.setWorkpiece"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.setWorkpiece" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a new workpiece.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>workpiece</strong> – (Base.Workpiece) New workpiece</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.settings_sigMachineChanged">
+<code class="descname">settings_sigMachineChanged</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.settings_sigMachineChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.settings_sigMachineChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.settings_sigSettingsChanged">
+<code class="descname">settings_sigSettingsChanged</code><span class="sig-paren">(</span><em>changed</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.settings_sigSettingsChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.settings_sigSettingsChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.showEvent">
+<code class="descname">showEvent</code><span class="sig-paren">(</span><em>self</em>, <em>QShowEvent</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ui/WorkpieceWidget.html#WorkpieceWidget.showEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.showEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.sigGotoActionTriggered">
+<code class="descname">sigGotoActionTriggered</code><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.sigGotoActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.sigRef1ActionTriggered">
+<code class="descname">sigRef1ActionTriggered</code><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.sigRef1ActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ui.WorkpieceWidget.WorkpieceWidget.sigRef2ActionTriggered">
+<code class="descname">sigRef2ActionTriggered</code><a class="headerlink" href="#ui.WorkpieceWidget.WorkpieceWidget.sigRef2ActionTriggered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ui">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ui" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../docindex.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ui package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ui.ControlWidget">ui.ControlWidget module</a></li>
+<li><a class="reference internal" href="#module-ui.CoordinatesSetupWidget">ui.CoordinatesSetupWidget module</a></li>
+<li><a class="reference internal" href="#module-ui.FocusLineEdit">ui.FocusLineEdit module</a></li>
+<li><a class="reference internal" href="#module-ui.MachiningROIs">ui.MachiningROIs module</a></li>
+<li><a class="reference internal" href="#module-ui.MainWindow">ui.MainWindow module</a></li>
+<li><a class="reference internal" href="#module-ui.SettingsDialog">ui.SettingsDialog module</a></li>
+<li><a class="reference internal" href="#module-ui.WorkpieceWidget">ui.WorkpieceWidget module</a></li>
+<li><a class="reference internal" href="#module-ui">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="conf.html"
+                        title="previous chapter">conf module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/_docsrc/api/ui.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="conf.html" title="conf module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >ESCMillPCB</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,280 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ui.WorkpieceWidget &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ui.WorkpieceWidget</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 15.02.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="k">import</span> <span class="n">QtCore</span>
+<span class="kn">import</span> <span class="nn">pyqtgraph</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">ui</span> <span class="k">import</span> <span class="n">MachiningROIs</span> <span class="k">as</span> <span class="n">mroi</span>
+<span class="kn">from</span> <span class="nn">Base</span> <span class="k">import</span> <span class="n">MachiningObjects</span> <span class="k">as</span> <span class="n">mo</span>
+<span class="kn">from</span> <span class="nn">Base.AppBase</span> <span class="k">import</span> <span class="n">AppBase</span>
+
+<div class="viewcode-block" id="WorkpieceWidget"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget">[docs]</a><span class="k">class</span> <span class="nc">WorkpieceWidget</span><span class="p">(</span><span class="n">pg</span><span class="o">.</span><span class="n">PlotWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot widget to view machining objects.</span>
+
+<span class="sd">    ======================  ==========================================================================</span>
+<span class="sd">    **Signals**</span>
+<span class="sd">    ======================  ==========================================================================</span>
+<span class="sd">    sigGotoActionTriggered  Emitted when the &quot;Go to position&quot; context menu entry is clicked.</span>
+<span class="sd">                            Carries a dictionary {&quot;pos&quot;: (x, y) coordinates of the ROI}</span>
+<span class="sd">    sigRef1ActionTriggered  Emitted when the &quot;Set reference 1&quot; context menu entry is clicked.</span>
+<span class="sd">                            Carries a dictionary {&quot;pos&quot;: (x, y) coordinates of the ROI, &quot;type&quot;:&quot;ref1&quot;}</span>
+<span class="sd">    sigRef2ActionTriggered  Emitted when the &quot;Set reference 1&quot; context menu entry is clicked.</span>
+<span class="sd">                            Carries a dictionary {&quot;pos&quot;: (x, y) coordinates of the ROI, &quot;type&quot;:&quot;ref2&quot;}</span>
+<span class="sd">    ======================  ==========================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">sigGotoActionTriggered</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">sigRef1ActionTriggered</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">sigRef2ActionTriggered</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">machiningROIs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAspectLocked</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;showgrid&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;showgrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;gridalpha&quot;</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;gridalpha&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.2</span>
+        <span class="k">if</span> <span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;showgrid&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">showGrid</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">kargs</span><span class="p">[</span><span class="s2">&quot;gridalpha&quot;</span><span class="p">])</span>
+        
+        <span class="c1"># remove Plot Options and Export from context menu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotItem</span><span class="o">.</span><span class="n">ctrlMenu</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">contextMenu</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">laserActive</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">laserOffset</span> <span class="o">=</span> <span class="p">(</span><span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;MachineBase&quot;</span><span class="p">,</span> <span class="s2">&quot;laser_offset_x&quot;</span><span class="p">),</span>
+                            <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;MachineBase&quot;</span><span class="p">,</span> <span class="s2">&quot;laser_offset_y&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">machinePosROI</span> <span class="o">=</span> <span class="n">mroi</span><span class="o">.</span><span class="n">MachinePositionROI</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">laserPosROI</span> <span class="o">=</span> <span class="n">mroi</span><span class="o">.</span><span class="n">MachinePositionROI</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">brush</span><span class="o">=</span><span class="n">pg</span><span class="o">.</span><span class="n">mkBrush</span><span class="p">(</span><span class="s2">&quot;A00&quot;</span><span class="p">),</span> <span class="n">pen</span><span class="o">=</span><span class="n">pg</span><span class="o">.</span><span class="n">mkPen</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;A00&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boardOutlineROI</span> <span class="o">=</span> <span class="n">mroi</span><span class="o">.</span><span class="n">WorkpieceOutlineROI</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outlineVisible</span> <span class="o">=</span> <span class="kc">False</span>
+    
+    
+<div class="viewcode-block" id="WorkpieceWidget.setWorkpiece"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.setWorkpiece">[docs]</a>    <span class="k">def</span> <span class="nf">setWorkpiece</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workpiece</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets a new workpiece.</span>
+
+<span class="sd">        :param workpiece: (Base.Workpiece) New workpiece</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span> <span class="o">=</span> <span class="n">workpiece</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+        
+    
+<div class="viewcode-block" id="WorkpieceWidget.setBoardOutlineVisible"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.setBoardOutlineVisible">[docs]</a>    <span class="k">def</span> <span class="nf">setBoardOutlineVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets if the workpiece (board) outlines are visible.</span>
+
+<span class="sd">        :param value: (bool) outlines visible</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outlineVisible</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+        
+    
+<div class="viewcode-block" id="WorkpieceWidget.refresh"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Refreshes the workpiece widget, i.e. the machining ROIs are deleted and recreated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">machiningROIs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">boardOutlineROI</span><span class="o">.</span><span class="n">setPos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span><span class="o">.</span><span class="n">getPosition</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">boardOutlineROI</span><span class="o">.</span><span class="n">setBoardsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span><span class="o">.</span><span class="n">getSize</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">boardOutlineROI</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_addHoles</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_addMillings</span><span class="p">()</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machinePosROI</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">laserActive</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">laserPosROI</span><span class="p">)</span></div>
+
+    
+    
+    <span class="k">def</span> <span class="nf">_addHoles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds hole ROIs to widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span><span class="o">.</span><span class="n">holeList</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span><span class="o">.</span><span class="n">holeList</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">hole</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span><span class="o">.</span><span class="n">holeList</span><span class="p">):</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">mroi</span><span class="o">.</span><span class="n">HoleROI</span><span class="p">(</span><span class="n">hole</span><span class="o">.</span><span class="n">diameter</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">hole</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="n">strokewidth</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">sigGotoActionTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machiningROI_sigGotoActionTriggered</span><span class="p">)</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">sigRef1ActionTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machiningROI_sigRef1ActionTriggered</span><span class="p">)</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">sigRef2ActionTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machiningROI_sigRef2ActionTriggered</span><span class="p">)</span>
+            <span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">,]</span> <span class="o">=</span> <span class="n">hole</span><span class="o">.</span><span class="n">center</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">machiningROIs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getPlotItem</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">pen</span><span class="o">=</span><span class="n">pg</span><span class="o">.</span><span class="n">mkPen</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">))</span>
+        
+    
+    <span class="k">def</span> <span class="nf">_addMillings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds milling ROIs to widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span><span class="o">.</span><span class="n">millingList</span><span class="p">),</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">milling</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workpiece</span><span class="o">.</span><span class="n">millingList</span><span class="p">):</span>
+            <span class="n">infeed</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">outfeed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">,]</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">milling</span><span class="o">.</span><span class="n">getStart</span><span class="p">(),</span> <span class="o">*</span><span class="n">milling</span><span class="o">.</span><span class="n">getEnd</span><span class="p">()]</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">milling</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">milling</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">outfeed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mo</span><span class="o">.</span><span class="n">StraightPath</span><span class="p">):</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="n">mroi</span><span class="o">.</span><span class="n">StraightMillingROI</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">infeed</span><span class="p">,</span> <span class="n">outfeed</span><span class="p">,</span> <span class="n">strokewidth</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mo</span><span class="o">.</span><span class="n">ArcPath</span><span class="p">):</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="n">mroi</span><span class="o">.</span><span class="n">ArcMillingROI</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">ccw</span><span class="p">,</span> <span class="n">infeed</span><span class="p">,</span> <span class="n">outfeed</span><span class="p">,</span> <span class="n">strokewidth</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+                <span class="n">infeed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getPlotItem</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">pen</span><span class="o">=</span><span class="n">pg</span><span class="o">.</span><span class="n">mkPen</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">))</span>
+    
+          
+<div class="viewcode-block" id="WorkpieceWidget.showEvent"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.showEvent">[docs]</a>    <span class="k">def</span> <span class="nf">showEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">showEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="c1"># MainWindow signals</span>
+        <span class="c1">#AppBase.getMainwindow().sigNewWorkpiece.connect(self.mainwindow_sigNewWorkpiece)</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMainwindow</span><span class="p">()</span><span class="o">.</span><span class="n">sigCorrectionChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mainwindow_sigCorrectionChanged</span><span class="p">)</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">sigMachineChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_sigMachineChanged</span><span class="p">)</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">sigSettingsChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_sigSettingsChanged</span><span class="p">)</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMainwindow</span><span class="p">()</span><span class="o">.</span><span class="n">sigLaserCrosshairChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mainwindow_sigLaserCrosshairChanged</span><span class="p">)</span></div>
+    
+        
+<div class="viewcode-block" id="WorkpieceWidget.machiningROI_sigGotoActionTriggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.machiningROI_sigGotoActionTriggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">machiningROI_sigGotoActionTriggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigGotoActionTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="WorkpieceWidget.machiningROI_sigRef1ActionTriggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.machiningROI_sigRef1ActionTriggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">machiningROI_sigRef1ActionTriggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigRef1ActionTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="WorkpieceWidget.machiningROI_sigRef2ActionTriggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.machiningROI_sigRef2ActionTriggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">machiningROI_sigRef2ActionTriggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigRef2ActionTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+        
+    
+<div class="viewcode-block" id="WorkpieceWidget.machine_sigNewCoordinates"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.machine_sigNewCoordinates">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">machine_sigNewCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">machinePosROI</span><span class="o">.</span><span class="n">setPos</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;workpiece&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">laserPosROI</span><span class="o">.</span><span class="n">setPos</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;workpiece&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">laserOffset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="s1">&#39;workpiece&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">laserOffset</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+                 
+<div class="viewcode-block" id="WorkpieceWidget.mainwindow_sigLaserCrosshairChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.mainwindow_sigLaserCrosshairChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">mainwindow_sigLaserCrosshairChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">laserActive</span> <span class="o">=</span> <span class="n">checked</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+        
+        
+<div class="viewcode-block" id="WorkpieceWidget.mainwindow_sigCorrectionChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.mainwindow_sigCorrectionChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mainwindow_sigCorrectionChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+        
+    
+<div class="viewcode-block" id="WorkpieceWidget.settings_sigMachineChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.settings_sigMachineChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">settings_sigMachineChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">machine</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">machine</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">machine</span><span class="o">.</span><span class="n">sigNewCoordinates</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machine_sigNewCoordinates</span><span class="p">)</span></div>
+            
+            
+<div class="viewcode-block" id="WorkpieceWidget.settings_sigSettingsChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.WorkpieceWidget.WorkpieceWidget.settings_sigSettingsChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">settings_sigSettingsChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">changed</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;MachineBase&#39;</span> <span class="ow">in</span> <span class="n">changed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">laserOffset</span> <span class="o">=</span> <span class="p">(</span><span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;MachineBase&#39;</span><span class="p">,</span> <span class="s1">&#39;laser_offset_x&#39;</span><span class="p">),</span>
+                                <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;MachineBase&#39;</span><span class="p">,</span> <span class="s1">&#39;laser_offset_y&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

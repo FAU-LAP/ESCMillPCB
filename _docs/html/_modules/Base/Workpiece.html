@@ -1,0 +1,217 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Base.Workpiece &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for Base.Workpiece</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 14.02.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">Base</span> <span class="k">import</span> <span class="n">MachiningObjects</span> <span class="k">as</span> <span class="n">mo</span>
+<span class="kn">from</span> <span class="nn">Base</span> <span class="k">import</span> <span class="n">BaseOptimizers</span> <span class="k">as</span> <span class="n">bo</span>
+
+
+<div class="viewcode-block" id="Workpiece"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece">[docs]</a><span class="k">class</span> <span class="nc">Workpiece</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Central class managing the workpiece.</span>
+<span class="sd">    Contains machining objects and handles coordinate corrections system.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+ 
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+
+<span class="sd">        :param size: (width, height) size of the board</span>
+<span class="sd">        :type size: tuple(float, float)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holeList</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">HoleList</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holeList</span><span class="o">.</span><span class="n">appendOptimizer</span><span class="p">(</span><span class="n">bo</span><span class="o">.</span><span class="n">HoleOrderOptimizer</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">MillingList</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">appendOptimizer</span><span class="p">(</span><span class="n">bo</span><span class="o">.</span><span class="n">MillingCombinationOptimizer</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">appendOptimizer</span><span class="p">(</span><span class="n">bo</span><span class="o">.</span><span class="n">BreakoutOptimizer</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">appendOptimizer</span><span class="p">(</span><span class="n">bo</span><span class="o">.</span><span class="n">MillingOrderOptimizer</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        
+    
+<div class="viewcode-block" id="Workpiece.getPosition"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.getPosition">[docs]</a>    <span class="k">def</span> <span class="nf">getPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :returns: coordinates of the lower left corner of the board outlines</span>
+<span class="sd">        :rtype: tuple(float, float)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">[:]</span></div>
+    
+<div class="viewcode-block" id="Workpiece.getSize"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.getSize">[docs]</a>    <span class="k">def</span> <span class="nf">getSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :returns: (width, height) size of the board outlines</span>
+<span class="sd">        :rtype: tuple(float, float)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">[:]</span></div>
+    
+<div class="viewcode-block" id="Workpiece.setSize"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.setSize">[docs]</a>    <span class="k">def</span> <span class="nf">setSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param size: (width, height) size of the board outlines</span>
+<span class="sd">        :type size: tuple(float, float)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">[:]</span></div>
+        
+        
+<div class="viewcode-block" id="Workpiece.appendHole"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.appendHole">[docs]</a>    <span class="k">def</span> <span class="nf">appendHole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hole</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add hole to the workpiece&#39;s hole list</span>
+
+<span class="sd">        :param Base.MachiningObjects.Hole hole: Hole object to append</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holeList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hole</span><span class="p">)</span></div>
+        
+        
+<div class="viewcode-block" id="Workpiece.appendMilling"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.appendMilling">[docs]</a>    <span class="k">def</span> <span class="nf">appendMilling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">milling</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add milling to the workpiece&#39;s hole list</span>
+
+<span class="sd">        :param Base.MachiningObjects.Milling milling: Milling object to append</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">milling</span><span class="p">)</span></div>
+        
+        
+<div class="viewcode-block" id="Workpiece.optimize"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.optimize">[docs]</a>    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs all optimizers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holeList</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span></div>
+        
+        
+<div class="viewcode-block" id="Workpiece.planMachining"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.planMachining">[docs]</a>    <span class="k">def</span> <span class="nf">planMachining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">machine</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plan machining.</span>
+
+<span class="sd">        :param Base.MachineBase.MachineBase machine: Active machine</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">machine</span><span class="o">.</span><span class="n">preparePlanner</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holeList</span><span class="o">.</span><span class="n">planMotion</span><span class="p">(</span><span class="n">machine</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">planMotion</span><span class="p">(</span><span class="n">machine</span><span class="p">)</span>
+        <span class="n">machine</span><span class="o">.</span><span class="n">finalizePlanner</span><span class="p">()</span></div>
+        
+        
+<div class="viewcode-block" id="Workpiece.updateOptimizers"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.updateOptimizers">[docs]</a>    <span class="k">def</span> <span class="nf">updateOptimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update parameters of all optimizers.</span>
+
+<span class="sd">        :param pyqtgraph.GroupParameter params: GroupParameter containing the optimizer parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holeList</span><span class="o">.</span><span class="n">updateOptimizers</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">updateOptimizers</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
+        
+        
+<div class="viewcode-block" id="Workpiece.translate"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.translate">[docs]</a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Translates all machining objects by a given offset.</span>
+
+<span class="sd">        :param offset: (x, y) offset for translation</span>
+<span class="sd">        :type offset: tuple(float, float)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holeList</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">offset</span></div>
+        
+        
+<div class="viewcode-block" id="Workpiece.transform"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transforms all machining objects with a transformation matrix.</span>
+
+<span class="sd">        :param matrix: (2x2) transformation matrix</span>
+<span class="sd">        :rtype: np.ndarray(float)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holeList</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span></div>
+        
+        
+<div class="viewcode-block" id="Workpiece.mirror"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.Workpiece.Workpiece.mirror">[docs]</a>    <span class="k">def</span> <span class="nf">mirror</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mirrors all machining objects around the y-axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holeList</span><span class="o">.</span><span class="n">mirror</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">mirror</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holeList</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">getSize</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">millingList</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">getSize</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,2722 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Base package &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ESCMillPCB module" href="ESCMillPCB.html" />
+    <link rel="prev" title="Algorithms package" href="Algorithms.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ESCMillPCB.html" title="ESCMillPCB module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Algorithms.html" title="Algorithms package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">ESCMillPCB</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="base-package">
+<h1>Base package<a class="headerlink" href="#base-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-Base.AppBase">
+<span id="base-appbase-module"></span><h2>Base.AppBase module<a class="headerlink" href="#module-Base.AppBase" title="Permalink to this headline">¶</a></h2>
+<p>Created on 06.03.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="Base.AppBase.AppBase">
+<em class="property">class </em><code class="descclassname">Base.AppBase.</code><code class="descname">AppBase</code><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This static class handles base application variables and functions.</p>
+<dl class="attribute">
+<dt id="Base.AppBase.AppBase.appdata">
+<code class="descname">appdata</code><em class="property"> = None</em><a class="headerlink" href="#Base.AppBase.AppBase.appdata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.applicationLoaded">
+<em class="property">classmethod </em><code class="descname">applicationLoaded</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.applicationLoaded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.applicationLoaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by the main window when the application is done loading.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.changeMachine">
+<em class="property">classmethod </em><code class="descname">changeMachine</code><span class="sig-paren">(</span><em>machine</em>, <em>init=False</em>, <em>setup=False</em>, <em>signal=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.changeMachine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.changeMachine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the current active machine and sets another machine as currently active.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>machine</strong> (<em>str</em>) – Name of the new machine</li>
+<li><strong>init</strong> (<em>bool</em>) – Initialize new machine</li>
+<li><strong>setup</strong> (<em>bool</em>) – Apply machine parameters after initialization</li>
+<li><strong>signal</strong> (<em>bool</em>) – Emit AppSettings.sigMachineChanged signal</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.closeMachine">
+<em class="property">classmethod </em><code class="descname">closeMachine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.closeMachine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.closeMachine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finalizes machine.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.finalize">
+<em class="property">classmethod </em><code class="descname">finalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.finalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.finalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finalize base application and save application settings.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.getDocumentationPath">
+<em class="property">classmethod </em><code class="descname">getDocumentationPath</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.getDocumentationPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.getDocumentationPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the path to the HTML documentation index file.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.getMachine">
+<em class="property">classmethod </em><code class="descname">getMachine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.getMachine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.getMachine" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(Base.MachineBase) Current active machine</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#Base.MachineBase.MachineBase" title="Base.MachineBase.MachineBase">Base.MachineBase.MachineBase</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.getMachineType">
+<em class="property">classmethod </em><code class="descname">getMachineType</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.getMachineType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.getMachineType" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) – Machine name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Machine class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">class</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.getMainwindow">
+<em class="property">classmethod </em><code class="descname">getMainwindow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.getMainwindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.getMainwindow" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Main window instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="ui.html#ui.MainWindow.MainWindow" title="ui.MainWindow.MainWindow">ui.MainWindow.MainWindow</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.getSettings">
+<em class="property">classmethod </em><code class="descname">getSettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.getSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.getSettings" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Current application settings</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#Base.AppSettings.AppSettings" title="Base.AppSettings.AppSettings">Base.AppSettings.AppSettings</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.getWorkpiece">
+<em class="property">classmethod </em><code class="descname">getWorkpiece</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.getWorkpiece"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.getWorkpiece" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Current workpiece</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#Base.Workpiece.Workpiece" title="Base.Workpiece.Workpiece">Base.Workpiece.Workpiece</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.initMachine">
+<em class="property">classmethod </em><code class="descname">initMachine</code><span class="sig-paren">(</span><em>setup=False</em>, <em>signal=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.initMachine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.initMachine" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Re-)Initializes the current active machine</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>setup</strong> (<em>bool</em>) – Apply machine parameters after initialization</li>
+<li><strong>signal</strong> (<em>bool</em>) – Emit AppSettings.sigMachineChanged signal</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.initialize">
+<em class="property">classmethod </em><code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize base application and read application settings.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppBase.AppBase.machine">
+<code class="descname">machine</code><em class="property"> = &lt;Base.MachineBase.MachineBase object&gt;</em><a class="headerlink" href="#Base.AppBase.AppBase.machine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppBase.AppBase.mainwindow">
+<code class="descname">mainwindow</code><em class="property"> = None</em><a class="headerlink" href="#Base.AppBase.AppBase.mainwindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.setDefaultOrigin">
+<em class="property">classmethod </em><code class="descname">setDefaultOrigin</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.setDefaultOrigin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.setDefaultOrigin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the default origin.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>)</em>) – (x, y, z) coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.setMainwindow">
+<em class="property">classmethod </em><code class="descname">setMainwindow</code><span class="sig-paren">(</span><em>mainwindow</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.setMainwindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.setMainwindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores the application’s main window instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mainwindow</strong> (<a class="reference internal" href="ui.html#ui.MainWindow.MainWindow" title="ui.MainWindow.MainWindow"><em>ui.MainWindow.MainWindow</em></a>) – Main window instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.setParkPosition">
+<em class="property">classmethod </em><code class="descname">setParkPosition</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.setParkPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.setParkPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the park position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>)</em>) – (x, y, z) coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.setWorkpiece">
+<em class="property">classmethod </em><code class="descname">setWorkpiece</code><span class="sig-paren">(</span><em>workpiece</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.setWorkpiece"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.setWorkpiece" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set new workpiece. When setting the workpiece, optimizer parameters are updated
+and the workpiece is optimized.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>workpiece</strong> (<a class="reference internal" href="#Base.Workpiece.Workpiece" title="Base.Workpiece.Workpiece"><em>Base.Workpiece.Workpiece</em></a>) – New workpiece</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.setWorkpieceMirrored">
+<em class="property">classmethod </em><code class="descname">setWorkpieceMirrored</code><span class="sig-paren">(</span><em>mirror</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.setWorkpieceMirrored"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.setWorkpieceMirrored" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mirror</strong> (<em>bool</em>) – new mirror status</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">mirror status changed</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppBase.AppBase.settings">
+<code class="descname">settings</code><em class="property"> = &lt;Base.AppSettings.AppSettings object&gt;</em><a class="headerlink" href="#Base.AppBase.AppBase.settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.AppBase.AppBase.setupMachine">
+<em class="property">classmethod </em><code class="descname">setupMachine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppBase.html#AppBase.setupMachine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppBase.AppBase.setupMachine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies machine parameters.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppBase.AppBase.version">
+<code class="descname">version</code><em class="property"> = '1.3 Build 022'</em><a class="headerlink" href="#Base.AppBase.AppBase.version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppBase.AppBase.workpiece">
+<code class="descname">workpiece</code><em class="property"> = None</em><a class="headerlink" href="#Base.AppBase.AppBase.workpiece" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppBase.AppBase.workpieceMirrored">
+<code class="descname">workpieceMirrored</code><em class="property"> = False</em><a class="headerlink" href="#Base.AppBase.AppBase.workpieceMirrored" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppBase.AppBase.workpieceOriginal">
+<code class="descname">workpieceOriginal</code><em class="property"> = None</em><a class="headerlink" href="#Base.AppBase.AppBase.workpieceOriginal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Base.AppSettings">
+<span id="base-appsettings-module"></span><h2>Base.AppSettings module<a class="headerlink" href="#module-Base.AppSettings" title="Permalink to this headline">¶</a></h2>
+<p>Created on 16.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="Base.AppSettings.AppSettings">
+<em class="property">class </em><code class="descclassname">Base.AppSettings.</code><code class="descname">AppSettings</code><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtCore.QObject</span></code></p>
+<p>This class handles application settings.
+It acts as a settings database and stores/restores settings when exiting/starting the application.
+The application settings are stored in a pyqtgraph.parametertree.parameterTypes.GroupParameter object.</p>
+<p>This class derives from QObject to support Qt signals.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigSettingsChanged</td>
+<td>Emitted when a setting has changed.
+Carries a list with the names of the root setting nodes which are affected</td>
+</tr>
+<tr class="row-odd"><td>sigMachineChanged</td>
+<td>Emitted when the active machine has changed</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.child">
+<code class="descname">child</code><span class="sig-paren">(</span><em>*names</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access parameter nodes, equivalent to AppSettings.settings.child(*names).
+See pyqtgrapgh.parametertree.Parameter.child()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*names</strong> (<em>str</em>) – path, to, child</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.copySettings">
+<code class="descname">copySettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.copySettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.copySettings" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a copy of the settings</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#Base.AppSettings.AppSettings" title="Base.AppSettings.AppSettings">AppSettings</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Base.AppSettings.AppSettings.generalSettings">
+<em class="property">static </em><code class="descname">generalSettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.generalSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.generalSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the general settings parameters and their default values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">general settings parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyqtgraph.GroupParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.loadDefaults">
+<code class="descname">loadDefaults</code><span class="sig-paren">(</span><em>signal=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.loadDefaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.loadDefaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears all settings and reverts them to default.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>signal</strong> (<em>bool</em>) – Can be used to suppress the sigSettingsChanged signal</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.loadSettings">
+<code class="descname">loadSettings</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.loadSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.loadSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load settings from a previously saved JSON file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>str</em>) – Path to the settings file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppSettings.AppSettings.machines">
+<code class="descname">machines</code><em class="property"> = {'None': &lt;class 'Base.MachineBase.MachineBase'&gt;, 'TinyG': &lt;class 'Machines.TinyG.TinyG'&gt;}</em><a class="headerlink" href="#Base.AppSettings.AppSettings.machines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppSettings.AppSettings.optimizers">
+<code class="descname">optimizers</code><em class="property"> = [&lt;class 'Base.BaseOptimizers.HoleOrderOptimizer'&gt;, &lt;class 'Base.BaseOptimizers.MillingCombinationOptimizer'&gt;, &lt;class 'Base.BaseOptimizers.BreakoutOptimizer'&gt;, &lt;class 'Base.BaseOptimizers.MillingOrderOptimizer'&gt;]</em><a class="headerlink" href="#Base.AppSettings.AppSettings.optimizers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.restoreQtGeometry">
+<code class="descname">restoreQtGeometry</code><span class="sig-paren">(</span><em>widget</em>, <em>*names</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.restoreQtGeometry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.restoreQtGeometry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore the state of a QWidget from a string parameter.
+The state is only restored if the string parameter is not an empty string,
+otherwise false is returned.
+If the restore operation fails, a warning is written to the log and false is returned.
+If the restore operation was perfomed and successful, true is returned</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>widget</strong> (<em>QWidget</em>) – Widget with state to store</li>
+<li><strong>*names</strong> (<em>str</em>) – Name of child or tuple (path, to, child)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.restoreQtState">
+<code class="descname">restoreQtState</code><span class="sig-paren">(</span><em>qobject</em>, <em>*names</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.restoreQtState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.restoreQtState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore the state of a QObject which supports restoreState() from a string parameter.
+The state is only restored if the string parameter is not an empty string,
+otherwise false is returned.
+If the restore operation fails, a warning is written to the log and false is returned.
+If the restore operation was perfomed and successful, true is returned</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>qobject</strong> (<em>QObject</em>) – Object with state to store</li>
+<li><strong>*names</strong> (<em>str</em>) – Name of child or tuple (path, to, child)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.saveSettings">
+<code class="descname">saveSettings</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.saveSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.saveSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save settings as JSON file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>str</em>) – Path to the settings file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.setValue">
+<code class="descname">setValue</code><span class="sig-paren">(</span><em>value</em>, <em>*names</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.setValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.setValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set parameter values, equivalent to AppSettings.settings.child(*names).setValue(value)
+See pyqtgrapgh.parametertree.Parameter.child(), pyqtgrapgh.parametertree.Parameter.value()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> – Value of the parameter</li>
+<li><strong>*names</strong> (<em>str</em>) – path, to, child</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppSettings.AppSettings.settings">
+<code class="descname">settings</code><em class="property"> = &lt;GroupParameter 'Settings'&gt;</em><a class="headerlink" href="#Base.AppSettings.AppSettings.settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppSettings.AppSettings.sigMachineChanged">
+<code class="descname">sigMachineChanged</code><a class="headerlink" href="#Base.AppSettings.AppSettings.sigMachineChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Base.AppSettings.AppSettings.sigSettingsChanged">
+<code class="descname">sigSettingsChanged</code><a class="headerlink" href="#Base.AppSettings.AppSettings.sigSettingsChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.storeQtGeometry">
+<code class="descname">storeQtGeometry</code><span class="sig-paren">(</span><em>widget</em>, <em>*names</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.storeQtGeometry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.storeQtGeometry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store the geometry of a QWidget to a string parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>widget</strong> (<em>QWidget</em>) – (QWidget) Widget with geometry to store</li>
+<li><strong>*names</strong> (<em>str</em>) – Name of child or tuple (path, to, child)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.storeQtState">
+<code class="descname">storeQtState</code><span class="sig-paren">(</span><em>qobject</em>, <em>*names</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.storeQtState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.storeQtState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store the state of a QObject which supports saveState() to a string parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>qobject</strong> (<em>QObject</em>) – Object with state to store</li>
+<li><strong>*names</strong> (<em>str</em>) – Name of child or tuple (path, to, child)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Base.AppSettings.AppSettings.uiSettings">
+<em class="property">static </em><code class="descname">uiSettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.uiSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.uiSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the UI settings parameters and their default values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">UI settings parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyqtgraph.GroupParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.updateSettings">
+<code class="descname">updateSettings</code><span class="sig-paren">(</span><em>newsettings</em>, <em>settingsChanged</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.updateSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.updateSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update current application settings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>newsettigns</strong> (<em>pyqtgraph.GroupParameter</em>) – Parameter containing new settings</li>
+<li><strong>settingsChanged</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – List with names of parameters which have changed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.AppSettings.AppSettings.value">
+<code class="descname">value</code><span class="sig-paren">(</span><em>*names</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/AppSettings.html#AppSettings.value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.AppSettings.AppSettings.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read parameter values, equivalent to AppSettings.settings.child(*names).value()
+See pyqtgrapgh.parametertree.Parameter.child(), pyqtgrapgh.parametertree.Parameter.value()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*names</strong> (<em>str</em>) – (strings) path, to, child</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Parameter value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Base.BaseOptimizers">
+<span id="base-baseoptimizers-module"></span><h2>Base.BaseOptimizers module<a class="headerlink" href="#module-Base.BaseOptimizers" title="Permalink to this headline">¶</a></h2>
+<p>Created on 04.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="Base.BaseOptimizers.BreakoutOptimizer">
+<em class="property">class </em><code class="descclassname">Base.BaseOptimizers.</code><code class="descname">BreakoutOptimizer</code><span class="sig-paren">(</span><em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#BreakoutOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.BreakoutOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer" title="Base.BaseOptimizers.MachiningOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.BaseOptimizers.MachiningOptimizer</span></code></a></p>
+<p>Adds breakouts to millings.</p>
+<dl class="staticmethod">
+<dt id="Base.BaseOptimizers.BreakoutOptimizer.getParameters">
+<em class="property">static </em><code class="descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#BreakoutOptimizer.getParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.BreakoutOptimizer.getParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer.getParameters" title="Base.BaseOptimizers.MachiningOptimizer.getParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningOptimizer.getParameters()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.BaseOptimizers.BreakoutOptimizer.optimize">
+<code class="descname">optimize</code><span class="sig-paren">(</span><em>millinglist</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#BreakoutOptimizer.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.BreakoutOptimizer.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert breakout bars into closed milling paths according to the following algorithm:
+First, find closed milling paths (cut-outs) that are longer than Min_cut_length.
+Then check if the path is longer than Min_number * (Distance + Size),
+otherwise divide the cut equally. If it is longer, set a breakout bar after every
+(Distance + Size) distance. Ignore the last possible breakout bar.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>millinglist</strong> (<a class="reference internal" href="#Base.MachiningObjects.MillingList" title="Base.MachiningObjects.MillingList"><em>Base.MachiningObjects.MillingList</em></a>) – MillingList to optimize</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.BaseOptimizers.BreakoutOptimizer.updateParameters">
+<code class="descname">updateParameters</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#BreakoutOptimizer.updateParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.BreakoutOptimizer.updateParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer.updateParameters" title="Base.BaseOptimizers.MachiningOptimizer.updateParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningOptimizer.updateParameters()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.BaseOptimizers.HoleOrderOptimizer">
+<em class="property">class </em><code class="descclassname">Base.BaseOptimizers.</code><code class="descname">HoleOrderOptimizer</code><span class="sig-paren">(</span><em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#HoleOrderOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.HoleOrderOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer" title="Base.BaseOptimizers.MachiningOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.BaseOptimizers.MachiningOptimizer</span></code></a></p>
+<p>Optimizer for HoleLists, minimizes the hole path.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="8%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Options</strong></th>
+<th class="head" colspan="2">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="3"><strong>algorithm</strong></td>
+<td colspan="2">(string) Default: 2opt</td>
+</tr>
+<tr class="row-odd"><td>2opt</td>
+<td>2opt algorithm starting from random start configurations
+Relatively fast with good results.
+Number of iterations defines the number of optimized start configurations,
+best result is chosen. More iterations is slower but
+statistically yields better results</td>
+</tr>
+<tr class="row-even"><td>greedy</td>
+<td>Greedy next neighbor algorithm. Fast but moderate results.</td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><strong>iterations</strong></td>
+<td colspan="2">(int) Number of iterations depending on the algorithm. Default: 5</td>
+</tr>
+<tr class="row-even"><td>2opt</td>
+<td>Number of random start configurations.</td>
+</tr>
+<tr class="row-odd"><td>greedy</td>
+<td>Not used.</td>
+</tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="Base.BaseOptimizers.HoleOrderOptimizer.getParameters">
+<em class="property">static </em><code class="descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#HoleOrderOptimizer.getParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.HoleOrderOptimizer.getParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer.getParameters" title="Base.BaseOptimizers.MachiningOptimizer.getParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningOptimizer.getParameters()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.BaseOptimizers.HoleOrderOptimizer.optimize">
+<code class="descname">optimize</code><span class="sig-paren">(</span><em>holelist</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#HoleOrderOptimizer.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.HoleOrderOptimizer.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>holelist</strong> (<a class="reference internal" href="#Base.MachiningObjects.HoleList" title="Base.MachiningObjects.HoleList"><em>Base.MachiningObjects.HoleList</em></a>) – HoleList to optimize</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.BaseOptimizers.HoleOrderOptimizer.updateParameters">
+<code class="descname">updateParameters</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#HoleOrderOptimizer.updateParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.HoleOrderOptimizer.updateParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer.updateParameters" title="Base.BaseOptimizers.MachiningOptimizer.updateParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningOptimizer.updateParameters()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.BaseOptimizers.MachiningOptimizer">
+<em class="property">class </em><code class="descclassname">Base.BaseOptimizers.</code><code class="descname">MachiningOptimizer</code><span class="sig-paren">(</span><em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MachiningOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MachiningOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for optimizers, not meant to be used directly.
+Optimizers are used to adjust machining objects, e.g. reorder, adjust sizes, etc.</p>
+<dl class="method">
+<dt id="Base.BaseOptimizers.MachiningOptimizer.getName">
+<code class="descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MachiningOptimizer.getName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MachiningOptimizer.getName" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Optimizer’s name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Base.BaseOptimizers.MachiningOptimizer.getParameters">
+<em class="property">static </em><code class="descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MachiningOptimizer.getParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MachiningOptimizer.getParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method returning the optimizer’s available parameters as a pyqtgraph ParameterGroup.
+:returns: Optimizer parameters or None if there are no available parameters
+:rtype: pyqtgraph.GroupParameter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.BaseOptimizers.MachiningOptimizer.optimize">
+<code class="descname">optimize</code><span class="sig-paren">(</span><em>machiningObject</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MachiningOptimizer.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MachiningOptimizer.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>machiningObject</strong> (<a class="reference internal" href="#Base.MachiningObjects.MachiningObject" title="Base.MachiningObjects.MachiningObject"><em>Base.MachiningObjects.MachiningObject</em></a>) – MachiningObject to optimize</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.BaseOptimizers.MachiningOptimizer.updateParameters">
+<code class="descname">updateParameters</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MachiningOptimizer.updateParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MachiningOptimizer.updateParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the optimizer’s parameters have changed. Updates the optimizers internal state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>params</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the settings</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.BaseOptimizers.MillingCombinationOptimizer">
+<em class="property">class </em><code class="descclassname">Base.BaseOptimizers.</code><code class="descname">MillingCombinationOptimizer</code><span class="sig-paren">(</span><em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MillingCombinationOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MillingCombinationOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer" title="Base.BaseOptimizers.MachiningOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.BaseOptimizers.MachiningOptimizer</span></code></a></p>
+<p>Combines adjacent millings to a single milling path.</p>
+<dl class="staticmethod">
+<dt id="Base.BaseOptimizers.MillingCombinationOptimizer.getParameters">
+<em class="property">static </em><code class="descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MillingCombinationOptimizer.getParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MillingCombinationOptimizer.getParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer.getParameters" title="Base.BaseOptimizers.MachiningOptimizer.getParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningOptimizer.getParameters()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.BaseOptimizers.MillingCombinationOptimizer.optimize">
+<code class="descname">optimize</code><span class="sig-paren">(</span><em>millinglist</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MillingCombinationOptimizer.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MillingCombinationOptimizer.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path combination: Start at first milling, go to end, search point in milling list which is equal
+to the end point and then add the path to the milling, repeat until there is no follow up point.
+Then start a new milling and repeat the procedure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>millinglist</strong> (<a class="reference internal" href="#Base.MachiningObjects.MillingList" title="Base.MachiningObjects.MillingList"><em>Base.MachiningObjects.MillingList</em></a>) – MillingList to optimize</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.BaseOptimizers.MillingCombinationOptimizer.updateParameters">
+<code class="descname">updateParameters</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MillingCombinationOptimizer.updateParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MillingCombinationOptimizer.updateParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer.updateParameters" title="Base.BaseOptimizers.MachiningOptimizer.updateParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningOptimizer.updateParameters()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.BaseOptimizers.MillingOrderOptimizer">
+<em class="property">class </em><code class="descclassname">Base.BaseOptimizers.</code><code class="descname">MillingOrderOptimizer</code><span class="sig-paren">(</span><em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MillingOrderOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MillingOrderOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer" title="Base.BaseOptimizers.MachiningOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.BaseOptimizers.MachiningOptimizer</span></code></a></p>
+<p>Minimizes the jog path between the millings.</p>
+<dl class="staticmethod">
+<dt id="Base.BaseOptimizers.MillingOrderOptimizer.getParameters">
+<em class="property">static </em><code class="descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MillingOrderOptimizer.getParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MillingOrderOptimizer.getParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer.getParameters" title="Base.BaseOptimizers.MachiningOptimizer.getParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningOptimizer.getParameters()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.BaseOptimizers.MillingOrderOptimizer.optimize">
+<code class="descname">optimize</code><span class="sig-paren">(</span><em>millinglist</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MillingOrderOptimizer.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MillingOrderOptimizer.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimizes the milling order to achieve a minimal jog path length.
+This optimizer uses a simple nearest neighbor approach.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Base.MachiningObjects.MillingList</strong> – MillingList to optimize</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.BaseOptimizers.MillingOrderOptimizer.updateParameters">
+<code class="descname">updateParameters</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/BaseOptimizers.html#MillingOrderOptimizer.updateParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.BaseOptimizers.MillingOrderOptimizer.updateParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer.updateParameters" title="Base.BaseOptimizers.MachiningOptimizer.updateParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningOptimizer.updateParameters()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Base.Errors">
+<span id="base-errors-module"></span><h2>Base.Errors module<a class="headerlink" href="#module-Base.Errors" title="Permalink to this headline">¶</a></h2>
+<p>Created on 21.03.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="exception">
+<dt id="Base.Errors.CommunicationError">
+<em class="property">exception </em><code class="descclassname">Base.Errors.</code><code class="descname">CommunicationError</code><span class="sig-paren">(</span><em>command</em>, <em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Errors.html#CommunicationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Errors.CommunicationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.Errors.MachineError" title="Base.Errors.MachineError"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.Errors.MachineError</span></code></a></p>
+<p>Errors during communication with the machine.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="Base.Errors.ESCError">
+<em class="property">exception </em><code class="descclassname">Base.Errors.</code><code class="descname">ESCError</code><a class="reference internal" href="../../_modules/Base/Errors.html#ESCError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Errors.ESCError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Base class for ESCMillPCB exceptions.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="Base.Errors.ImplementationMissing">
+<em class="property">exception </em><code class="descclassname">Base.Errors.</code><code class="descname">ImplementationMissing</code><span class="sig-paren">(</span><em>methodname</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Errors.html#ImplementationMissing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Errors.ImplementationMissing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.Errors.ESCError" title="Base.Errors.ESCError"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.Errors.ESCError</span></code></a></p>
+<p>This error is emitted when an “abstract” base class method is called which is
+mandatory to be overridden or if the implementation of the method is still missing.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="Base.Errors.InvalidArgument">
+<em class="property">exception </em><code class="descclassname">Base.Errors.</code><code class="descname">InvalidArgument</code><span class="sig-paren">(</span><em>argument</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Errors.html#InvalidArgument"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Errors.InvalidArgument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.Errors.ESCError" title="Base.Errors.ESCError"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.Errors.ESCError</span></code></a></p>
+<p>Emitted if a function argument is invalid.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="Base.Errors.MachineError">
+<em class="property">exception </em><code class="descclassname">Base.Errors.</code><code class="descname">MachineError</code><a class="reference internal" href="../../_modules/Base/Errors.html#MachineError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Errors.MachineError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.Errors.ESCError" title="Base.Errors.ESCError"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.Errors.ESCError</span></code></a></p>
+<p>Base class for machine related exceptions.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-Base.ImportFactory">
+<span id="base-importfactory-module"></span><h2>Base.ImportFactory module<a class="headerlink" href="#module-Base.ImportFactory" title="Permalink to this headline">¶</a></h2>
+<p>Created on 04.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="Base.ImportFactory.ImportFactory">
+<em class="property">class </em><code class="descclassname">Base.ImportFactory.</code><code class="descname">ImportFactory</code><a class="reference internal" href="../../_modules/Base/ImportFactory.html#ImportFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.ImportFactory.ImportFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Static class that imports boards into ESCMillPCB classes</p>
+<dl class="classmethod">
+<dt id="Base.ImportFactory.ImportFactory.importFile">
+<em class="property">classmethod </em><code class="descname">importFile</code><span class="sig-paren">(</span><em>filepath</em>, <em>filetype=''</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/ImportFactory.html#ImportFactory.importFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.ImportFactory.ImportFactory.importFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Imports a board file and returns the resulting workpiece.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filepath</strong> (<em>str</em>) – Absolute path to the file</li>
+<li><strong>filetype</strong> (<em>str</em>) – Containing the type of file to import (see table below)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Valid filetypes:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Value</strong></th>
+<th class="head"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>“eagle”</td>
+<td>Eagle *.brd files</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Base.LogHandlers">
+<span id="base-loghandlers-module"></span><h2>Base.LogHandlers module<a class="headerlink" href="#module-Base.LogHandlers" title="Permalink to this headline">¶</a></h2>
+<p>Created on 06.04.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="Base.LogHandlers.QListWidgetLogger">
+<em class="property">class </em><code class="descclassname">Base.LogHandlers.</code><code class="descname">QListWidgetLogger</code><span class="sig-paren">(</span><em>widget</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/LogHandlers.html#QListWidgetLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.LogHandlers.QListWidgetLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Handler</span></code></p>
+<p>Logging handler which prints logs into a QListWidget.</p>
+<dl class="method">
+<dt id="Base.LogHandlers.QListWidgetLogger.emit">
+<code class="descname">emit</code><span class="sig-paren">(</span><em>record</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/LogHandlers.html#QListWidgetLogger.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.LogHandlers.QListWidgetLogger.emit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do whatever it takes to actually log the specified logging record.</p>
+<p>This version is intended to be implemented by subclasses and so
+raises a NotImplementedError.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Base.LogHandlers.QListWidgetLogger.entrybrushes">
+<code class="descname">entrybrushes</code><em class="property"> = {'CRITICAL': &lt;PyQt5.QtGui.QBrush object&gt;, 'DEBUG': &lt;PyQt5.QtGui.QBrush object&gt;, 'ERROR': &lt;PyQt5.QtGui.QBrush object&gt;, 'INFO': &lt;PyQt5.QtGui.QBrush object&gt;, 'WARNING': &lt;PyQt5.QtGui.QBrush object&gt;}</em><a class="headerlink" href="#Base.LogHandlers.QListWidgetLogger.entrybrushes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.LogHandlers.TracebackFormatter">
+<em class="property">class </em><code class="descclassname">Base.LogHandlers.</code><code class="descname">TracebackFormatter</code><span class="sig-paren">(</span><em>fmt=None</em>, <em>datefmt=None</em>, <em>style='%'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/LogHandlers.html#TracebackFormatter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.LogHandlers.TracebackFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Formatter</span></code></p>
+<p>Formatter including an optional traceback for exception logging.</p>
+<dl class="method">
+<dt id="Base.LogHandlers.TracebackFormatter.format">
+<code class="descname">format</code><span class="sig-paren">(</span><em>record</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/LogHandlers.html#TracebackFormatter.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.LogHandlers.TracebackFormatter.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format the specified record as text.</p>
+<p>The record’s attribute dictionary is used as the operand to a
+string formatting operation which yields the returned string.
+Before formatting the dictionary, a couple of preparatory steps
+are carried out. The message attribute of the record is computed
+using LogRecord.getMessage(). If the formatting string uses the
+time (as determined by a call to usesTime(), formatTime() is
+called to format the event time. If there is exception information,
+it is formatted using formatException() and appended to the message.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Base.MachineBase">
+<span id="base-machinebase-module"></span><h2>Base.MachineBase module<a class="headerlink" href="#module-Base.MachineBase" title="Permalink to this headline">¶</a></h2>
+<p>Created on 24.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="Base.MachineBase.MachineBase">
+<em class="property">class </em><code class="descclassname">Base.MachineBase.</code><code class="descname">MachineBase</code><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtCore.QObject</span></code></p>
+<p><strong>Machine control concept</strong></p>
+<p>MachineBase serves as an abstract base class for machine control. It implements some
+standard behavior while hardware near operations are to be implemented by the descendants
+of this class. All methods which are marked “(abstract)” in the class documentation
+are meant to be overridden.</p>
+<p>The milling cycle of the workpiece is executed via a planner system. This class defines a
+couple of planXXX methods which are used to plan the machine motion during the cycle.
+These methods should not start machining but interface to the concrete planner system
+defined by the concrete machine class. The planned motion is then executed by
+the executeCycle() method.</p>
+<p>MachineBase inherits from QtCore.QObject to support Qt Signals.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigNewCoordinates</td>
+<td>Emitted when new coordinates are present. Carries a dictionary
+{“absolute”:(x,y,z) absolute position of the machine,
+“workpiece”:(x,y,z) position of the machine on the board}</td>
+</tr>
+<tr class="row-odd"><td>sigStatusUpdate</td>
+<td>Emitted when the machine status changed. Carries a string with the status message.</td>
+</tr>
+<tr class="row-even"><td>sigCycleCompleted</td>
+<td>Emitted when the machining cycle is finished.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.applyBasicParameters">
+<code class="descname">applyBasicParameters</code><span class="sig-paren">(</span><em>params</em>, <em>hiddenparams</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.applyBasicParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.applyBasicParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply set of basic (machine independent) parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>params</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the parameter values</li>
+<li><strong>hiddenparams</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the hidden parameter values</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.applyComParameters">
+<code class="descname">applyComParameters</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.applyComParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.applyComParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Apply set of communication parameters to the machine object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>params</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the parameter values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.applyParameters">
+<code class="descname">applyParameters</code><span class="sig-paren">(</span><em>params</em>, <em>hiddenparams=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.applyParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.applyParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Apply set of parameters to the machine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>params</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the parameter values</li>
+<li><strong>hiddenparams</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the hidden parameter values if available</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.coordinateTimer_timeout">
+<code class="descname">coordinateTimer_timeout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.coordinateTimer_timeout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.coordinateTimer_timeout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.executeCycle">
+<code class="descname">executeCycle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.executeCycle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.executeCycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Execute the planned work cycle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.feedhold">
+<code class="descname">feedhold</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.feedhold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.feedhold" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Feedhold, i.e. pause movement or cycle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.finalize">
+<code class="descname">finalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.finalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.finalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Bring machine to save state and close communication.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.finalizePlanner">
+<code class="descname">finalizePlanner</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.finalizePlanner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.finalizePlanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Finalizes the motion planner.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Base.MachineBase.MachineBase.getBasicHiddenParameters">
+<em class="property">static </em><code class="descname">getBasicHiddenParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getBasicHiddenParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getBasicHiddenParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is not meant to be overridden.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Machine independent basic hidden parameters (not shown in settings dialog)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyqtgraph.GroupParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Base.MachineBase.MachineBase.getBasicParameters">
+<em class="property">static </em><code class="descname">getBasicParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getBasicParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getBasicParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is not meant to be overridden.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Machine independent basic parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyqtgraph.GroupParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Base.MachineBase.MachineBase.getComParameters">
+<em class="property">static </em><code class="descname">getComParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getComParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getComParameters" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Communication parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyqtgraph.GroupParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.getDefaultOrigin">
+<code class="descname">getDefaultOrigin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getDefaultOrigin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getDefaultOrigin" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(x,y,z) default workpiece origin in machine coordinates</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple(float, float, float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Base.MachineBase.MachineBase.getHiddenParameters">
+<em class="property">static </em><code class="descname">getHiddenParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getHiddenParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getHiddenParameters" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Hidden machine parameters (not shown in settings dialog)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyqtgraph.GroupParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.getInfeedSpeed">
+<code class="descname">getInfeedSpeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getInfeedSpeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getInfeedSpeed" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">infeedspeed in mm/min</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.getJogSpeed">
+<code class="descname">getJogSpeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getJogSpeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getJogSpeed" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(jogspeedXY, jogspeedZ) in mm/min</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple(float, float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.getLaserOffset">
+<code class="descname">getLaserOffset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getLaserOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getLaserOffset" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(x,y) laser position offset in mm</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple(float, float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.getMachineMenu">
+<code class="descname">getMachineMenu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getMachineMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getMachineMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Machine specific menu for the main window menu bar (or None if not available)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">QtWidgets.QMenu</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.getMillSpeed">
+<code class="descname">getMillSpeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getMillSpeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getMillSpeed" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">millspeedXY in mm/min</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.getName">
+<code class="descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getName" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Machine’s name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Base.MachineBase.MachineBase.getParameters">
+<em class="property">static </em><code class="descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getParameters" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Machine parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyqtgraph.GroupParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.getParkPosition">
+<code class="descname">getParkPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getParkPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getParkPosition" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(x,y,z) park position in machine coordinates</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple(float, float, float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.getPosition">
+<code class="descname">getPosition</code><span class="sig-paren">(</span><em>absolute=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>absolute</strong> (<em>bool</em>) – If true return absolute coordinates, otherwise return workpiece coordinates</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Current position</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple(float, float, float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.getToolDiameter">
+<code class="descname">getToolDiameter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.getToolDiameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.getToolDiameter" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">tooldiameter in mm/min</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.goTo">
+<code class="descname">goTo</code><span class="sig-paren">(</span><em>position</em>, <em>absolute=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.goTo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.goTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Move to given position.
+If a z coordinate is given, z movement should be carried out in a way that the tool does not crash.
+E.g.: If the tool moves towards the workpiece, xy movement should be carried out first, otherwise
+z movement should precede.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>position</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>) or </em><em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>)</em>) – Coordinates (x, y) / (x, y, z) to move to.</li>
+<li><strong>absolute</strong> (<em>bool</em>) – Use absolute (machine) coordinate system. If False uses workpiece coordinate system</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.goToDefaultOrigin">
+<code class="descname">goToDefaultOrigin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.goToDefaultOrigin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.goToDefaultOrigin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move to default board origin.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.goToParkPosition">
+<code class="descname">goToParkPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.goToParkPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.goToParkPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move to park position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.homingCycle">
+<code class="descname">homingCycle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.homingCycle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.homingCycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Perform a homing cycle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.intialize">
+<code class="descname">intialize</code><span class="sig-paren">(</span><em>comparams</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.intialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.intialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Initialize machine, i.e. communication and base settings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>comparams</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing communication settings.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.isHomed">
+<code class="descname">isHomed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.isHomed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.isHomed" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Returns if the machine’s coordinate system is homed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.isInitialized">
+<code class="descname">isInitialized</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.isInitialized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.isInitialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the machine is already initialized.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.jog">
+<code class="descname">jog</code><span class="sig-paren">(</span><em>directions</em>, <em>stepsize=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.jog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.jog" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Jog into given directions with optional stepsize.
+If no stepsize is given, jogging will be endless (until a stop command is invoked).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directions</strong> (<em>tuple</em><em>(</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>)</em>) – Tuple of directions (x, y, z), possible entries are
+0: no jog in this direction, 1: jog in positive direction,
+-1: jog in negative direction</li>
+<li><strong>stepsize</strong> (<em>float</em>) – Size of the jogging step in mm. If none, jogging is performed
+until a stop command is invoked (or a limit switch is reached if present)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.performAngleCorrection">
+<code class="descname">performAngleCorrection</code><span class="sig-paren">(</span><em>refcoords</em>, <em>offset=(0</em>, <em>0)</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.performAngleCorrection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.performAngleCorrection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates and applies angle correction. Returns a correction matrix used for transforming the
+workpiece element coordinates.</p>
+<p>The default implementation returns a rotation matrix to rotate the workpiece elements itself to
+cancle the rotation error. If the machine supports rotation correction it might be better to use
+this instead and just return a unity matrix.</p>
+<p>A coordinate offset to the current machine position can be given which is especially needed
+to account for the laser crosshair offset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>refcoords</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – (x, y) coordinates of the workpiece reference point</li>
+<li><strong>offset</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – (x, y) coordinate offset to the current machine position</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">(2x2) rotation matrix and mismatch angle (in rad)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple(np.array(float), float)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.planInfeed">
+<code class="descname">planInfeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.planInfeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.planInfeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Plans an infeed at the current position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.planJog">
+<code class="descname">planJog</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.planJog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.planJog" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Plans jogging to the given position in the XY plane.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – Coordinates (x, y) to move to.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.planMill">
+<code class="descname">planMill</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.planMill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.planMill" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Plans straight milling to the given position in the XY plane.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – Coordinates (x, y) to move to.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.planMillArc">
+<code class="descname">planMillArc</code><span class="sig-paren">(</span><em>startposition</em>, <em>endposition</em>, <em>center</em>, <em>ccw=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.planMillArc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.planMillArc" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Plans arc milling to the given end position in the XY plane.
+This does not include jogging to the start position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>startposition</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – Coordinates (x, y) to arc from.</li>
+<li><strong>endposition</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – Coordinates (x, y) to arc to.</li>
+<li><strong>center</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – Coordinates (x, y) of the arc center.</li>
+<li><strong>ccw</strong> (<em>bool</em>) – Arc diretion, default is counterclockwise</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.planOutfeed">
+<code class="descname">planOutfeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.planOutfeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.planOutfeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Plans an outfeed at the current position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.preparePlanner">
+<code class="descname">preparePlanner</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.preparePlanner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.preparePlanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Initializes the motion planner.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.resume">
+<code class="descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Resume from feedhold.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.retrieveParameters">
+<code class="descname">retrieveParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.retrieveParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.retrieveParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Read parameters from the machine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">GroupParameter containing the parameter values</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyqtgraph.GroupParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.setDefaultOrigin">
+<code class="descname">setDefaultOrigin</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.setDefaultOrigin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.setDefaultOrigin" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>)</em>) – (x,y,z) default workpiece origin in machine coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.setLaserCrosshair">
+<code class="descname">setLaserCrosshair</code><span class="sig-paren">(</span><em>enable</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.setLaserCrosshair"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.setLaserCrosshair" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract, optional)</p>
+<p>Enables the laser crosshair if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enable</strong> (<em>bool</em>) – Enable or disable laser crosshair</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.setParkPosition">
+<code class="descname">setParkPosition</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.setParkPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.setParkPosition" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>)</em>) – (x,y,z) park position in machine coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.setSpindle">
+<code class="descname">setSpindle</code><span class="sig-paren">(</span><em>enable</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.setSpindle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.setSpindle" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Set spindle state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enable</strong> (<em>bool</em>) – Enable or disable spindle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.setWorkpieceOrigin">
+<code class="descname">setWorkpieceOrigin</code><span class="sig-paren">(</span><em>offset=(0</em>, <em>0)</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.setWorkpieceOrigin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.setWorkpieceOrigin" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Sets the current position as workpiece origin.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>offset</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – (x, y) offset of the new origin to the current position</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Base.MachineBase.MachineBase.sigCycleCompleted">
+<code class="descname">sigCycleCompleted</code><a class="headerlink" href="#Base.MachineBase.MachineBase.sigCycleCompleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Base.MachineBase.MachineBase.sigNewCoordinates">
+<code class="descname">sigNewCoordinates</code><a class="headerlink" href="#Base.MachineBase.MachineBase.sigNewCoordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Base.MachineBase.MachineBase.sigStatusUpdate">
+<code class="descname">sigStatusUpdate</code><a class="headerlink" href="#Base.MachineBase.MachineBase.sigStatusUpdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.startCoordinateTimer">
+<code class="descname">startCoordinateTimer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.startCoordinateTimer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.startCoordinateTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the coordinate update timer which is used by GUI elements displaying the current position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachineBase.MachineBase.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>(abstract)</p>
+<p>Feedhold and abort movement/cycle.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Base.MachineBase.MachineBase.updateComParameters">
+<em class="property">static </em><code class="descname">updateComParameters</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachineBase.html#MachineBase.updateComParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachineBase.MachineBase.updateComParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the com parameters (e.g. rescanns COM ports)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>params</strong> – Com parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyqtgraph.GroupParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Base.MachiningObjects">
+<span id="base-machiningobjects-module"></span><h2>Base.MachiningObjects module<a class="headerlink" href="#module-Base.MachiningObjects" title="Permalink to this headline">¶</a></h2>
+<p>Created on 04.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="Base.MachiningObjects.ArcPath">
+<em class="property">class </em><code class="descclassname">Base.MachiningObjects.</code><code class="descname">ArcPath</code><span class="sig-paren">(</span><em>start</em>, <em>end</em>, <em>center</em>, <em>angle</em>, <em>ccw=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.MachiningObjects.MachiningPath" title="Base.MachiningObjects.MachiningPath"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.MachiningObjects.MachiningPath</span></code></a></p>
+<p>Represents an arc milling path (circle or circle segment)</p>
+<dl class="classmethod">
+<dt id="Base.MachiningObjects.ArcPath.createArc">
+<em class="property">classmethod </em><code class="descname">createArc</code><span class="sig-paren">(</span><em>start</em>, <em>end</em>, <em>angle</em>, <em>ccw=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath.createArc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath.createArc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factory method ArcPath.createArc(start, end, angle, ccw),
+constructs ArcPath for a partial circle in Eagle parameterization
+(given start point, end point and opening angle).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – Starting point coordinates of the arc</li>
+<li><strong>end</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – End point coordinates of the arc</li>
+<li><strong>angle</strong> (<em>float</em>) – Opening angle of the circle segment in radiant</li>
+<li><strong>ccw</strong> (<em>bool</em>) – States if the arc path is to be drawn counterclockwise (default: True)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">created arc path</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Base.MachiningObjects.ArcPath" title="Base.MachiningObjects.ArcPath">ArcPath</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.MachiningObjects.ArcPath.createArc2">
+<em class="property">classmethod </em><code class="descname">createArc2</code><span class="sig-paren">(</span><em>center</em>, <em>start</em>, <em>angle</em>, <em>ccw=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath.createArc2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath.createArc2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factory method ArcPath.createArc2(center, start, angle, ccw),
+constructs ArcPath for a partial circle given center point, start point and opening angle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>center</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – Center point coordinates of the arc</li>
+<li><strong>start</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – Starting point coordinates of the arc</li>
+<li><strong>angle</strong> (<em>float</em>) – Opening angle of the circle segment in radiant</li>
+<li><strong>ccw</strong> (<em>bool</em>) – States if the arc path is to be drawn counterclockwise (default: True)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">created arc path</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Base.MachiningObjects.ArcPath" title="Base.MachiningObjects.ArcPath">ArcPath</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Base.MachiningObjects.ArcPath.createCircle">
+<em class="property">classmethod </em><code class="descname">createCircle</code><span class="sig-paren">(</span><em>radius</em>, <em>center</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath.createCircle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath.createCircle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factory method ArcPath.createCircle(radius, center),
+constructs ArcPath for a full circle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>radius</strong> (<em>float</em>) – Radius of the circle</li>
+<li><strong>center</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – Center coordinates of the circle</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">created arc path</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Base.MachiningObjects.ArcPath" title="Base.MachiningObjects.ArcPath">ArcPath</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.ArcPath.mirror">
+<code class="descname">mirror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.mirror()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.ArcPath.pathLength">
+<code class="descname">pathLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath.pathLength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath.pathLength" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.pathLength" title="Base.MachiningObjects.MachiningPath.pathLength"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.pathLength()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.ArcPath.planMotion">
+<code class="descname">planMotion</code><span class="sig-paren">(</span><em>machine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath.planMotion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath.planMotion" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.reverse" title="Base.MachiningObjects.MachiningPath.reverse"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.reverse()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.ArcPath.reverse">
+<code class="descname">reverse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath.reverse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath.reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.reverse" title="Base.MachiningObjects.MachiningPath.reverse"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.reverse()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.ArcPath.splitPath">
+<code class="descname">splitPath</code><span class="sig-paren">(</span><em>start</em>, <em>distance</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath.splitPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath.splitPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.splitPath" title="Base.MachiningObjects.MachiningPath.splitPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.splitPath()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.ArcPath.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.transform" title="Base.MachiningObjects.MachiningPath.transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.transform()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.ArcPath.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#ArcPath.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.ArcPath.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.translate" title="Base.MachiningObjects.MachiningPath.translate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.translate()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.MachiningObjects.Hole">
+<em class="property">class </em><code class="descclassname">Base.MachiningObjects.</code><code class="descname">Hole</code><span class="sig-paren">(</span><em>diameter</em>, <em>center</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Hole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Hole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.MachiningObjects.MachiningObject" title="Base.MachiningObjects.MachiningObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.MachiningObjects.MachiningObject</span></code></a></p>
+<p>MachiningObject representing a drill hole</p>
+<dl class="method">
+<dt id="Base.MachiningObjects.Hole.mirror">
+<code class="descname">mirror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Hole.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Hole.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.mirror" title="Base.MachiningObjects.MachiningObject.mirror"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.mirror()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Hole.planMotion">
+<code class="descname">planMotion</code><span class="sig-paren">(</span><em>machine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Hole.planMotion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Hole.planMotion" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.planMotion" title="Base.MachiningObjects.MachiningObject.planMotion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.planMotion()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Hole.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Hole.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Hole.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.transform" title="Base.MachiningObjects.MachiningObject.transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.transform()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Hole.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Hole.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Hole.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.translate" title="Base.MachiningObjects.MachiningObject.translate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.translate()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.MachiningObjects.HoleList">
+<em class="property">class </em><code class="descclassname">Base.MachiningObjects.</code><code class="descname">HoleList</code><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#HoleList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.HoleList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.MachiningObjects.MachiningObject" title="Base.MachiningObjects.MachiningObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.MachiningObjects.MachiningObject</span></code></a></p>
+<p>Represents a set of holes</p>
+<dl class="method">
+<dt id="Base.MachiningObjects.HoleList.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>hole</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#HoleList.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.HoleList.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add hole to the HoleList</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hole</strong> (<a class="reference internal" href="#Base.MachiningObjects.Hole" title="Base.MachiningObjects.Hole"><em>Hole</em></a>) – Hole object to append</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.HoleList.mirror">
+<code class="descname">mirror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#HoleList.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.HoleList.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.mirror" title="Base.MachiningObjects.MachiningObject.mirror"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.mirror()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.HoleList.optimize">
+<code class="descname">optimize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#HoleList.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.HoleList.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.optimize" title="Base.MachiningObjects.MachiningObject.optimize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.optimize()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.HoleList.planMotion">
+<code class="descname">planMotion</code><span class="sig-paren">(</span><em>machine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#HoleList.planMotion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.HoleList.planMotion" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.planMotion" title="Base.MachiningObjects.MachiningObject.planMotion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.planMotion()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.HoleList.reorder">
+<code class="descname">reorder</code><span class="sig-paren">(</span><em>order</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#HoleList.reorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.HoleList.reorder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reorder HoleList</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>order</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes mapping old indices to new order</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.HoleList.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#HoleList.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.HoleList.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.transform" title="Base.MachiningObjects.MachiningObject.transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.transform()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.HoleList.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#HoleList.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.HoleList.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.translate" title="Base.MachiningObjects.MachiningObject.translate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.translate()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.HoleList.updateOptimizers">
+<code class="descname">updateOptimizers</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#HoleList.updateOptimizers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.HoleList.updateOptimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.updateOptimizers" title="Base.MachiningObjects.MachiningObject.updateOptimizers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.updateOptimizers()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.MachiningObjects.MachiningObject">
+<em class="property">class </em><code class="descclassname">Base.MachiningObjects.</code><code class="descname">MachiningObject</code><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for machining objects.</p>
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningObject.appendOptimizer">
+<code class="descname">appendOptimizer</code><span class="sig-paren">(</span><em>optimizer</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningObject.appendOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningObject.appendOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append new optimizer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>optimizer</strong> (<a class="reference internal" href="#Base.BaseOptimizers.MachiningOptimizer" title="Base.BaseOptimizers.MachiningOptimizer"><em>Base.BaseOptimizers.MachiningOptimizer</em></a>) – Optimizer to append</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningObject.mirror">
+<code class="descname">mirror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningObject.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningObject.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mirrors all machining objects around the y-axis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningObject.optimize">
+<code class="descname">optimize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningObject.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningObject.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run all optimizers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningObject.planMotion">
+<code class="descname">planMotion</code><span class="sig-paren">(</span><em>machine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningObject.planMotion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningObject.planMotion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plan machining.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>machine</strong> (<a class="reference internal" href="#Base.MachineBase.MachineBase" title="Base.MachineBase.MachineBase"><em>Base.MachineBase.MachineBase</em></a>) – Active machine</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningObject.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningObject.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningObject.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms the machining object with a transformation matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>matrix</strong> (<em>np.array</em><em>(</em><em>float</em><em>)</em>) – (2x2) transformation matrix</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningObject.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningObject.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningObject.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates the machining object by a given offset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>offset</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – (x, y) offset for translation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningObject.updateOptimizers">
+<code class="descname">updateOptimizers</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningObject.updateOptimizers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningObject.updateOptimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update parameters of all optimizers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>params</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the optimizer parameters</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.MachiningObjects.MachiningPath">
+<em class="property">class </em><code class="descclassname">Base.MachiningObjects.</code><code class="descname">MachiningPath</code><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a milling path segment</p>
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningPath.pathLength">
+<code class="descname">pathLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningPath.pathLength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningPath.pathLength" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">length of the path (in mm)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningPath.planMotion">
+<code class="descname">planMotion</code><span class="sig-paren">(</span><em>machine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningPath.planMotion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningPath.planMotion" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.planMotion" title="Base.MachiningObjects.MachiningObject.planMotion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.planMotion()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningPath.reverse">
+<code class="descname">reverse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningPath.reverse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningPath.reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interchanges start and end point.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningPath.splitPath">
+<code class="descname">splitPath</code><span class="sig-paren">(</span><em>start</em>, <em>distance</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningPath.splitPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningPath.splitPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits the path into two paths.
+If start is zero, shrinks the path distance from the beginning and returns None.
+If start + distance &gt; path length, shrinks the path from the end and returns None.
+Returns an error if start is zero and distance &gt; path length.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> (<em>flaot</em>) – path length after which the path is split</li>
+<li><strong>distance</strong> (<em>float</em>) – path length (relative to split position) after which the new path starts</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">new path containing the split off part if available, None if not</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Base.MachiningObjects.MachiningPath" title="Base.MachiningObjects.MachiningPath">MachiningPath</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningPath.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningPath.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningPath.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.transform" title="Base.MachiningObjects.MachiningObject.transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.transform()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MachiningPath.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MachiningPath.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MachiningPath.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.translate" title="Base.MachiningObjects.MachiningObject.translate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.translate()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.MachiningObjects.Milling">
+<em class="property">class </em><code class="descclassname">Base.MachiningObjects.</code><code class="descname">Milling</code><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.MachiningObjects.MachiningObject" title="Base.MachiningObjects.MachiningObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.MachiningObjects.MachiningObject</span></code></a></p>
+<p>MachiningObject representing a milling.
+Contains a list of MachiningPaths which need to be adjacent and ordered.
+The starting point of the fist path is the infeed point, the end point of the last path the outfeed point.</p>
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append MachiningPath to the Milling.
+Paths need to be adjacent, i.e. path.start must be equal to self.getEnd()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference internal" href="#Base.MachiningObjects.MachiningPath" title="Base.MachiningObjects.MachiningPath"><em>MachiningPath</em></a>) – Object to append</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.appendMilling">
+<code class="descname">appendMilling</code><span class="sig-paren">(</span><em>milling</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.appendMilling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.appendMilling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append paths of a milling object to the Milling.
+Paths need to be adjacent, i.e. milling.getStart() must be equal to self.getEnd()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>milling</strong> (<a class="reference internal" href="#Base.MachiningObjects.Milling" title="Base.MachiningObjects.Milling"><em>Milling</em></a>) – Object to append</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.getEnd">
+<code class="descname">getEnd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.getEnd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.getEnd" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">end point of the milling</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple(float, float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.getStart">
+<code class="descname">getStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.getStart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.getStart" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">starting point of the milling</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple(float, float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.mirror">
+<code class="descname">mirror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.mirror" title="Base.MachiningObjects.MachiningObject.mirror"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.mirror()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.pathLength">
+<code class="descname">pathLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.pathLength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.pathLength" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">length of the milling (in mm)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.planMotion">
+<code class="descname">planMotion</code><span class="sig-paren">(</span><em>machine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.planMotion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.planMotion" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.planMotion" title="Base.MachiningObjects.MachiningObject.planMotion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.planMotion()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.reverse">
+<code class="descname">reverse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.reverse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reverses the Milling’s path list and all pathes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.splitMilling">
+<code class="descname">splitMilling</code><span class="sig-paren">(</span><em>start</em>, <em>distance</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.splitMilling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.splitMilling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits the milling into two millings.
+If the split distance would span</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> (<em>float</em>) – path length after which the milling is split</li>
+<li><strong>distance</strong> (<em>float</em>) – path length (relative to split position) after which the new milling starts</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">new milling containing the split off part</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Base.MachiningObjects.Milling" title="Base.MachiningObjects.Milling">Milling</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.transform" title="Base.MachiningObjects.MachiningObject.transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.transform()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.Milling.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#Milling.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.Milling.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.translate" title="Base.MachiningObjects.MachiningObject.translate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.translate()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.MachiningObjects.MillingList">
+<em class="property">class </em><code class="descclassname">Base.MachiningObjects.</code><code class="descname">MillingList</code><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.MachiningObjects.MachiningObject" title="Base.MachiningObjects.MachiningObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.MachiningObjects.MachiningObject</span></code></a></p>
+<p>MachiningObject representing a set of millings.</p>
+<dl class="method">
+<dt id="Base.MachiningObjects.MillingList.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>milling</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add milling to the MillingList.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>milling</strong> (<a class="reference internal" href="#Base.MachiningObjects.Milling" title="Base.MachiningObjects.Milling"><em>Milling</em></a>) – Milling object to append</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MillingList.appendList">
+<code class="descname">appendList</code><span class="sig-paren">(</span><em>millinglist</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList.appendList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList.appendList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends any iterable list of millings to the MillingList.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>millinglist</strong> (<em>list</em><em>(</em><a class="reference internal" href="#Base.MachiningObjects.Milling" title="Base.MachiningObjects.Milling"><em>Milling</em></a><em>)</em>) – Milling objects to append</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MillingList.mirror">
+<code class="descname">mirror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.mirror" title="Base.MachiningObjects.MachiningObject.mirror"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.mirror()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MillingList.optimize">
+<code class="descname">optimize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.optimize" title="Base.MachiningObjects.MachiningObject.optimize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.optimize()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MillingList.planMotion">
+<code class="descname">planMotion</code><span class="sig-paren">(</span><em>machine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList.planMotion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList.planMotion" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.planMotion" title="Base.MachiningObjects.MachiningObject.planMotion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.planMotion()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MillingList.pop">
+<code class="descname">pop</code><span class="sig-paren">(</span><em>index=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList.pop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove and return milling from MillingList.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) – Milling at this index will be removed from list and returned</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MillingList.reorder">
+<code class="descname">reorder</code><span class="sig-paren">(</span><em>order</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList.reorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList.reorder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reorder MillingList</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>order</strong> (<em>list</em><em>(</em><em>int</em><em>)</em>) – List of indexes mapping old indices to new order</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MillingList.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.transform" title="Base.MachiningObjects.MachiningObject.transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.transform()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MillingList.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.translate" title="Base.MachiningObjects.MachiningObject.translate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.translate()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.MillingList.updateOptimizers">
+<code class="descname">updateOptimizers</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#MillingList.updateOptimizers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.MillingList.updateOptimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningObject.updateOptimizers" title="Base.MachiningObjects.MachiningObject.updateOptimizers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningObject.updateOptimizers()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Base.MachiningObjects.StraightPath">
+<em class="property">class </em><code class="descclassname">Base.MachiningObjects.</code><code class="descname">StraightPath</code><span class="sig-paren">(</span><em>start</em>, <em>end</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#StraightPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.StraightPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Base.MachiningObjects.MachiningPath" title="Base.MachiningObjects.MachiningPath"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.MachiningObjects.MachiningPath</span></code></a></p>
+<p>Represents a straight milling path</p>
+<dl class="method">
+<dt id="Base.MachiningObjects.StraightPath.mirror">
+<code class="descname">mirror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#StraightPath.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.StraightPath.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.mirror()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.StraightPath.pathLength">
+<code class="descname">pathLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#StraightPath.pathLength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.StraightPath.pathLength" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.pathLength" title="Base.MachiningObjects.MachiningPath.pathLength"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.pathLength()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.StraightPath.planMotion">
+<code class="descname">planMotion</code><span class="sig-paren">(</span><em>machine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#StraightPath.planMotion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.StraightPath.planMotion" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.planMotion" title="Base.MachiningObjects.MachiningPath.planMotion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.planMotion()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.StraightPath.reverse">
+<code class="descname">reverse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#StraightPath.reverse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.StraightPath.reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.reverse" title="Base.MachiningObjects.MachiningPath.reverse"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.reverse()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.StraightPath.splitPath">
+<code class="descname">splitPath</code><span class="sig-paren">(</span><em>start</em>, <em>distance</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#StraightPath.splitPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.StraightPath.splitPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.splitPath" title="Base.MachiningObjects.MachiningPath.splitPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.splitPath()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.StraightPath.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#StraightPath.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.StraightPath.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.transform" title="Base.MachiningObjects.MachiningPath.transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.transform()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.MachiningObjects.StraightPath.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/MachiningObjects.html#StraightPath.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.MachiningObjects.StraightPath.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Base.MachiningObjects.MachiningPath.translate" title="Base.MachiningObjects.MachiningPath.translate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MachiningPath.translate()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Base.Utility">
+<span id="base-utility-module"></span><h2>Base.Utility module<a class="headerlink" href="#module-Base.Utility" title="Permalink to this headline">¶</a></h2>
+<p>Created on 13.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="function">
+<dt id="Base.Utility.calculateAngle">
+<code class="descclassname">Base.Utility.</code><code class="descname">calculateAngle</code><span class="sig-paren">(</span><em>vec1</em>, <em>vec2</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Utility.html#calculateAngle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Utility.calculateAngle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the angle between two 2-dim vectors. Note that the zero vector is invalid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vec1</strong> (<em>np.ndarray</em>) – First vector</li>
+<li><strong>vec2</strong> (<em>np.ndarray</em>) – Second vector</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">angle between the vectors</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Base.Utility.create2DRotation">
+<code class="descclassname">Base.Utility.</code><code class="descname">create2DRotation</code><span class="sig-paren">(</span><em>angle</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Utility.html#create2DRotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Utility.create2DRotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a 2D rotation matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>angle</strong> (<em>float</em>) – Angle in radiant</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">2x2 rotation matrix</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Base.Utility.createSimpleTriangle">
+<code class="descclassname">Base.Utility.</code><code class="descname">createSimpleTriangle</code><span class="sig-paren">(</span><em>center</em>, <em>width</em>, <em>height</em>, <em>orientation='up'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Utility.html#createSimpleTriangle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Utility.createSimpleTriangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a QtPolygon containing a simple triangle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>center</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – Center coordinates of the triangle’s bounding box</li>
+<li><strong>width</strong> (<em>float</em>) – Width of the triangles bounding box</li>
+<li><strong>height</strong> (<em>float</em>) – Height of the triangles bounding box</li>
+<li><strong>orientation</strong> (<em>str</em>) – Orientation of the triangle (tip direction)
+Valid values are “up”, “down”</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Base.Utility.degToRad">
+<code class="descclassname">Base.Utility.</code><code class="descname">degToRad</code><span class="sig-paren">(</span><em>angle</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Utility.html#degToRad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Utility.degToRad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms angle from degree to radiant.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ange</strong> (<em>float</em>) – angle to transform</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Base.Utility.radToDeg">
+<code class="descclassname">Base.Utility.</code><code class="descname">radToDeg</code><span class="sig-paren">(</span><em>angle</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Utility.html#radToDeg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Utility.radToDeg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms angle from radiant to degree.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ange</strong> (<em>float</em>) – angle to transform</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-Base.Workpiece">
+<span id="base-workpiece-module"></span><h2>Base.Workpiece module<a class="headerlink" href="#module-Base.Workpiece" title="Permalink to this headline">¶</a></h2>
+<p>Created on 14.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="Base.Workpiece.Workpiece">
+<em class="property">class </em><code class="descclassname">Base.Workpiece.</code><code class="descname">Workpiece</code><span class="sig-paren">(</span><em>size=(0</em>, <em>0)</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Central class managing the workpiece.
+Contains machining objects and handles coordinate corrections system.</p>
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.appendHole">
+<code class="descname">appendHole</code><span class="sig-paren">(</span><em>hole</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.appendHole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.appendHole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add hole to the workpiece’s hole list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hole</strong> (<a class="reference internal" href="#Base.MachiningObjects.Hole" title="Base.MachiningObjects.Hole"><em>Base.MachiningObjects.Hole</em></a>) – Hole object to append</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.appendMilling">
+<code class="descname">appendMilling</code><span class="sig-paren">(</span><em>milling</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.appendMilling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.appendMilling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add milling to the workpiece’s hole list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>milling</strong> (<a class="reference internal" href="#Base.MachiningObjects.Milling" title="Base.MachiningObjects.Milling"><em>Base.MachiningObjects.Milling</em></a>) – Milling object to append</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.getPosition">
+<code class="descname">getPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.getPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.getPosition" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">coordinates of the lower left corner of the board outlines</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple(float, float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.getSize">
+<code class="descname">getSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.getSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.getSize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(width, height) size of the board outlines</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple(float, float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.mirror">
+<code class="descname">mirror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mirrors all machining objects around the y-axis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.optimize">
+<code class="descname">optimize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs all optimizers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.planMachining">
+<code class="descname">planMachining</code><span class="sig-paren">(</span><em>machine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.planMachining"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.planMachining" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plan machining.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>machine</strong> (<a class="reference internal" href="#Base.MachineBase.MachineBase" title="Base.MachineBase.MachineBase"><em>Base.MachineBase.MachineBase</em></a>) – Active machine</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.setSize">
+<code class="descname">setSize</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.setSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.setSize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – (width, height) size of the board outlines</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all machining objects with a transformation matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>matrix</strong> – (2x2) transformation matrix</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray(float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates all machining objects by a given offset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>offset</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – (x, y) offset for translation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Base.Workpiece.Workpiece.updateOptimizers">
+<code class="descname">updateOptimizers</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Base/Workpiece.html#Workpiece.updateOptimizers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Base.Workpiece.Workpiece.updateOptimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update parameters of all optimizers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>params</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the optimizer parameters</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Base">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Base" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../docindex.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Base package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-Base.AppBase">Base.AppBase module</a></li>
+<li><a class="reference internal" href="#module-Base.AppSettings">Base.AppSettings module</a></li>
+<li><a class="reference internal" href="#module-Base.BaseOptimizers">Base.BaseOptimizers module</a></li>
+<li><a class="reference internal" href="#module-Base.Errors">Base.Errors module</a></li>
+<li><a class="reference internal" href="#module-Base.ImportFactory">Base.ImportFactory module</a></li>
+<li><a class="reference internal" href="#module-Base.LogHandlers">Base.LogHandlers module</a></li>
+<li><a class="reference internal" href="#module-Base.MachineBase">Base.MachineBase module</a></li>
+<li><a class="reference internal" href="#module-Base.MachiningObjects">Base.MachiningObjects module</a></li>
+<li><a class="reference internal" href="#module-Base.Utility">Base.Utility module</a></li>
+<li><a class="reference internal" href="#module-Base.Workpiece">Base.Workpiece module</a></li>
+<li><a class="reference internal" href="#module-Base">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Algorithms.html"
+                        title="previous chapter">Algorithms package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ESCMillPCB.html"
+                        title="next chapter">ESCMillPCB module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/_docsrc/api/Base.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ESCMillPCB.html" title="ESCMillPCB module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Algorithms.html" title="Algorithms package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >ESCMillPCB</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

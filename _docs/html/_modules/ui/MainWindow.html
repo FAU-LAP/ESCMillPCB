@@ -1,0 +1,379 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ui.MainWindow &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ui.MainWindow</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 03.03.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="k">import</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtCore</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">webbrowser</span>
+
+<span class="kn">from</span> <span class="nn">Base.AppBase</span> <span class="k">import</span> <span class="n">AppBase</span>
+<span class="kn">from</span> <span class="nn">Base.LogHandlers</span> <span class="k">import</span> <span class="n">QListWidgetLogger</span>
+<span class="kn">from</span> <span class="nn">Base.ImportFactory</span> <span class="k">import</span> <span class="n">ImportFactory</span>
+<span class="kn">import</span> <span class="nn">Base.Utility</span> <span class="k">as</span> <span class="nn">utils</span>
+<span class="kn">from</span> <span class="nn">ui.SettingsDialog</span> <span class="k">import</span> <span class="n">SettingsDialog</span>
+
+<span class="kn">from</span> <span class="nn">ui.templates.Ui_MainWindow</span> <span class="k">import</span> <span class="n">Ui_MainWindow</span>
+
+
+<div class="viewcode-block" id="MainWindow"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow">[docs]</a><span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="n">Ui_MainWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main window of the program.</span>
+
+<span class="sd">    ========================  ===============================================================================</span>
+<span class="sd">    **Signals**</span>
+<span class="sd">    ========================  ===============================================================================</span>
+<span class="sd">    sigNewWorkpiece           Emitted when the workpiece changes</span>
+<span class="sd">    sigCorrectionChanged      Emitted when workpiece coordinate system origin or rotation corretion status</span>
+<span class="sd">                              has changed. Carries a dictionary</span>
+<span class="sd">                              {&quot;origin_corrected&quot;:(bool) workpiece coordinate system is origin corrected,</span>
+<span class="sd">                              &quot;rotation_corrected&quot;:(bool) workpiece coordinate system is rotation corrected}</span>
+<span class="sd">    sigLaserCrosshairChanged  Emitted when the laser crosshair checkbox is changed.</span>
+<span class="sd">                              Carries a bool indicating the checkbox state.</span>
+<span class="sd">    ========================  ===============================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">sigMachineChanged</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">sigNewWorkpiece</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">sigCorrectionChanged</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">sigLaserCrosshairChanged</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__initialized</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">machineMenu</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">laserActive</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastLaserActive</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">laserOffset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;MachineBase&quot;</span><span class="p">,</span> <span class="s2">&quot;laser_offset_x&quot;</span><span class="p">),</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;MachineBase&quot;</span><span class="p">,</span> <span class="s2">&quot;laser_offset_y&quot;</span><span class="p">)</span>
+        <span class="p">])</span>
+        
+        <span class="c1"># initialize logging</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loghandler</span> <span class="o">=</span> <span class="n">QListWidgetLogger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstLog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loghandler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;General&quot;</span><span class="p">,</span> <span class="s2">&quot;loglist_level&quot;</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loghandler</span><span class="p">)</span>
+        
+        <span class="c1"># connect signals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mnuOpenEagleBrd</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnuOpenEagleBrd_triggered</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mnuQuit</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mnuSettings</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnuSettings_triggered</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mnuInitMachine</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnuInitMachine_triggered</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mnuCloseMachine</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnuCloseMachine_triggered</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mnuDocumentation</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnuDocumentation_triggered</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mnuAbout</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnuAbout_triggered</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mnuAboutQt</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">aboutQt</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">workpieceViewer</span><span class="o">.</span><span class="n">sigGotoActionTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workpieceViewer_sigGotoActionTriggered</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workpieceViewer</span><span class="o">.</span><span class="n">sigRef1ActionTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workpieceViewer_sigRef1ActionTriggered</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workpieceViewer</span><span class="o">.</span><span class="n">sigRef2ActionTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workpieceViewer_sigRef2ActionTriggered</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">wdgControl</span><span class="o">.</span><span class="n">sigLaserCrosshairChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wdgControl_sigLaserCrosshairChanged</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">wdgCoordinateSetup</span><span class="o">.</span><span class="n">sigBoardMirroredChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wdgCoordinateSetup_sigBoardMirroredChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wdgCoordinateSetup</span><span class="o">.</span><span class="n">sigBoardOutlinesChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wdgCoordinateSetup_sigBoardOutlinesChanged</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnStartCycle</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnStartCycle_clicked</span><span class="p">)</span>
+        
+        <span class="n">settings</span><span class="o">.</span><span class="n">sigSettingsChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_sigSettingsChanged</span><span class="p">)</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">sigMachineChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_sigMachineChanged</span><span class="p">)</span>
+        
+        <span class="c1"># restore settings </span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">restoreQtGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;UI&quot;</span><span class="p">,</span> <span class="s2">&quot;mainWindow_geometry&quot;</span><span class="p">)</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">restoreQtState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splitterRight</span><span class="p">,</span> <span class="s2">&quot;UI&quot;</span><span class="p">,</span> <span class="s2">&quot;splitterRight_state&quot;</span><span class="p">)</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">restoreQtState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splitterBottom</span><span class="p">,</span> <span class="s2">&quot;UI&quot;</span><span class="p">,</span> <span class="s2">&quot;splitterBottom_state&quot;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_sigMachineChanged</span><span class="p">()</span>
+    
+    
+<div class="viewcode-block" id="MainWindow.setWorkpiece"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.setWorkpiece">[docs]</a>    <span class="k">def</span> <span class="nf">setWorkpiece</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workpiece</span><span class="p">):</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">setWorkpiece</span><span class="p">(</span><span class="n">workpiece</span><span class="p">)</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">setWorkpieceMirrored</span><span class="p">(</span><span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;UI&#39;</span><span class="p">,</span> <span class="s1">&#39;board_mirrored&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workpieceViewer</span><span class="o">.</span><span class="n">setWorkpiece</span><span class="p">(</span><span class="n">workpiece</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workpieceViewer</span><span class="o">.</span><span class="n">setBoardOutlineVisible</span><span class="p">(</span><span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;UI&#39;</span><span class="p">,</span> <span class="s1">&#39;board_outlines&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigNewWorkpiece</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+        
+    
+<div class="viewcode-block" id="MainWindow.updateMachineMenu"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.updateMachineMenu">[docs]</a>    <span class="k">def</span> <span class="nf">updateMachineMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># remove old menu</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">machineMenu</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menubar</span><span class="o">.</span><span class="n">removeAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machineMenu</span><span class="o">.</span><span class="n">menuAction</span><span class="p">())</span>
+        <span class="c1"># check if machine is valid and insert new menu</span>
+        <span class="k">if</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">machineMenu</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">getMachineMenu</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">machineMenu</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">beforeAction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menubar</span><span class="o">.</span><span class="n">actions</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">menubar</span><span class="o">.</span><span class="n">insertMenu</span><span class="p">(</span><span class="n">beforeAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">machineMenu</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="MainWindow.showEvent"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.showEvent">[docs]</a>    <span class="k">def</span> <span class="nf">showEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">showEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__initialized</span><span class="p">:</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">setOverrideCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WaitCursor</span><span class="p">)</span>
+            <span class="c1"># notify base that application is loaded</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">AppBase</span><span class="o">.</span><span class="n">applicationLoaded</span><span class="p">()</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">QtWidgets</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">restoreOverrideCursor</span><span class="p">()</span>
+            <span class="c1"># perform homing cycle</span>
+            <span class="k">if</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">isInitialized</span><span class="p">():</span>
+                <span class="n">homing</span> <span class="o">=</span> <span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Homing Cycle?&quot;</span><span class="p">,</span> <span class="s2">&quot;Perform homing cycle?&quot;</span><span class="p">,</span>
+                            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">No</span><span class="p">)</span> <span class="o">==</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">homing</span><span class="p">:</span>
+                    <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">homingCycle</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__initialized</span> <span class="o">=</span> <span class="kc">True</span></div>
+        
+    
+<div class="viewcode-block" id="MainWindow.closeEvent"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">closeMachine</span><span class="p">()</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">storeQtGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;UI&quot;</span><span class="p">,</span> <span class="s2">&quot;mainWindow_geometry&quot;</span><span class="p">)</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">storeQtState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splitterRight</span><span class="p">,</span> <span class="s2">&quot;UI&quot;</span><span class="p">,</span> <span class="s2">&quot;splitterRight_state&quot;</span><span class="p">)</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">storeQtState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splitterBottom</span><span class="p">,</span> <span class="s2">&quot;UI&quot;</span><span class="p">,</span> <span class="s2">&quot;splitterBottom_state&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">closeEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="MainWindow.mnuOpenEagleBrd_triggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.mnuOpenEagleBrd_triggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mnuOpenEagleBrd_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="s1">&#39;Open board file&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;Eagle board file (*.brd);;All files (*.*)&#39;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">file</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">setOverrideCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WaitCursor</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">workpiece</span> <span class="o">=</span> <span class="n">ImportFactory</span><span class="o">.</span><span class="n">importFile</span><span class="p">(</span><span class="n">file</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">filetype</span><span class="o">=</span><span class="s2">&quot;eagle&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setWorkpiece</span><span class="p">(</span><span class="n">workpiece</span><span class="p">)</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">QtWidgets</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">restoreOverrideCursor</span><span class="p">()</span></div>
+        
+    
+<div class="viewcode-block" id="MainWindow.mnuSettings_triggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.mnuSettings_triggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mnuSettings_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dlg</span> <span class="o">=</span> <span class="n">SettingsDialog</span><span class="p">()</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">restoreQtGeometry</span><span class="p">(</span><span class="n">dlg</span><span class="p">,</span> <span class="s2">&quot;UI&quot;</span><span class="p">,</span> <span class="s2">&quot;settingsDialog_geometry&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dlg</span><span class="o">.</span><span class="n">exec</span><span class="p">():</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">updateSettings</span><span class="p">(</span><span class="n">dlg</span><span class="o">.</span><span class="n">settings</span><span class="p">,</span> <span class="n">dlg</span><span class="o">.</span><span class="n">settingsChanged</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dlg</span><span class="o">.</span><span class="n">machineChanged</span><span class="p">:</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">changeMachine</span><span class="p">(</span><span class="n">dlg</span><span class="o">.</span><span class="n">machineName</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">storeQtGeometry</span><span class="p">(</span><span class="n">dlg</span><span class="p">,</span> <span class="s2">&quot;UI&quot;</span><span class="p">,</span> <span class="s2">&quot;settingsDialog_geometry&quot;</span><span class="p">)</span></div>
+            
+        
+<div class="viewcode-block" id="MainWindow.mnuAbout_triggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.mnuAbout_triggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mnuAbout_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">about</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;About ESCMillPCB&quot;</span><span class="p">,</span> <span class="s2">&quot;ESCMillPCB v&quot;</span> <span class="o">+</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">version</span><span class="p">)</span></div>
+        
+        
+<div class="viewcode-block" id="MainWindow.mnuInitMachine_triggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.mnuInitMachine_triggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mnuInitMachine_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">isInitialized</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Reinitialize machine?&quot;</span><span class="p">,</span> <span class="s2">&quot;Do you really want to reinitialize the machine?&quot;</span><span class="p">,</span>
+                    <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">No</span><span class="p">)</span> <span class="o">==</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span><span class="p">):</span>
+                <span class="k">return</span><span class="p">;</span>
+        <span class="n">setup</span> <span class="o">=</span> <span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Setup machine?&quot;</span><span class="p">,</span> <span class="s2">&quot;Apply machine parameters?&quot;</span><span class="p">,</span>
+                    <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">No</span><span class="p">)</span> <span class="o">==</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span><span class="p">)</span>
+        <span class="n">QtWidgets</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">setOverrideCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WaitCursor</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">initMachine</span><span class="p">(</span><span class="n">setup</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">restoreOverrideCursor</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">isInitialized</span><span class="p">():</span>
+            <span class="n">homing</span> <span class="o">=</span> <span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Homing Cycle?&quot;</span><span class="p">,</span> <span class="s2">&quot;Perform homing cycle?&quot;</span><span class="p">,</span>
+                        <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">No</span><span class="p">)</span> <span class="o">==</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">homing</span><span class="p">:</span>
+                <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">homingCycle</span><span class="p">()</span></div>
+                
+<div class="viewcode-block" id="MainWindow.mnuApplyMachineParams_triggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.mnuApplyMachineParams_triggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mnuApplyMachineParams_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QtWidgets</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">setOverrideCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WaitCursor</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">setupMachine</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">restoreOverrideCursor</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="MainWindow.mnuCloseMachine_triggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.mnuCloseMachine_triggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mnuCloseMachine_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">closeMachine</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="MainWindow.mnuDocumentation_triggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.mnuDocumentation_triggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mnuDocumentation_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">helppath</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getDocumentationPath</span><span class="p">()</span>
+        <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">helppath</span><span class="p">,</span> <span class="n">new</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">autoraise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="MainWindow.workpieceViewer_sigGotoActionTriggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.workpieceViewer_sigGotoActionTriggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">workpieceViewer_sigGotoActionTriggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">laserActive</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">laserOffset</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">goTo</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="MainWindow.workpieceViewer_sigRef1ActionTriggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.workpieceViewer_sigRef1ActionTriggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">workpieceViewer_sigRef1ActionTriggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getWorkpiece</span><span class="p">()</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">laserActive</span><span class="p">:</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">setWorkpieceOrigin</span><span class="p">(</span><span class="n">offset</span><span class="o">=-</span><span class="bp">self</span><span class="o">.</span><span class="n">laserOffset</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">setWorkpieceOrigin</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting board origin to (</span><span class="si">%.3f</span><span class="s2">, </span><span class="si">%.3f</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigCorrectionChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">({</span><span class="s1">&#39;origin_corrected&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;rotation_corrected&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnStartCycle</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="MainWindow.workpieceViewer_sigRef2ActionTriggered"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.workpieceViewer_sigRef2ActionTriggered">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">workpieceViewer_sigRef2ActionTriggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">laserActive</span><span class="p">:</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">laserOffset</span>
+        <span class="n">matrix</span><span class="p">,</span> <span class="n">angle</span> <span class="o">=</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">performAngleCorrection</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">]),</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getWorkpiece</span><span class="p">()</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Performing angle correction by </span><span class="si">%.3f</span><span class="s2">°&quot;</span><span class="p">,</span> <span class="n">utils</span><span class="o">.</span><span class="n">radToDeg</span><span class="p">(</span><span class="n">angle</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigCorrectionChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">({</span><span class="s1">&#39;origin_corrected&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;rotation_corrected&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">})</span></div>
+        
+        
+<div class="viewcode-block" id="MainWindow.wdgControl_sigLaserCrosshairChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.wdgControl_sigLaserCrosshairChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wdgControl_sigLaserCrosshairChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">laserActive</span> <span class="o">=</span> <span class="n">checked</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigLaserCrosshairChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span></div>
+        
+        
+<div class="viewcode-block" id="MainWindow.wdgCoordinateSetup_sigBoardMirroredChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.wdgCoordinateSetup_sigBoardMirroredChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wdgCoordinateSetup_sigBoardMirroredChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mirrored</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">setWorkpieceMirrored</span><span class="p">(</span><span class="n">mirrored</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sigNewWorkpiece</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+        
+    
+<div class="viewcode-block" id="MainWindow.wdgCoordinateSetup_sigBoardOutlinesChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.wdgCoordinateSetup_sigBoardOutlinesChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wdgCoordinateSetup_sigBoardOutlinesChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getWorkpiece</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">AppBase</span><span class="o">.</span><span class="n">getWorkpiece</span><span class="p">()</span><span class="o">.</span><span class="n">setSize</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workpieceViewer</span><span class="o">.</span><span class="n">setBoardOutlineVisible</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">])</span></div>
+        
+        
+<div class="viewcode-block" id="MainWindow.btnStartCycle_clicked"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.btnStartCycle_clicked">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">btnStartCycle_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">isHomed</span><span class="p">():</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Machine not homed&quot;</span><span class="p">,</span> <span class="s2">&quot;The machine is not homed! Perform homing cycle first.&quot;</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastLaserActive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">laserActive</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getWorkpiece</span><span class="p">()</span><span class="o">.</span><span class="n">planMachining</span><span class="p">(</span><span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wdgControl</span><span class="o">.</span><span class="n">enableLaserCrosshair</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">executeCycle</span><span class="p">()</span></div>
+        
+        
+<div class="viewcode-block" id="MainWindow.settings_sigMachineChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.settings_sigMachineChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">settings_sigMachineChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateMachineMenu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigCorrectionChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">({</span><span class="s1">&#39;origin_corrected&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;rotation_corrected&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnStartCycle</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">sigStatusUpdate</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machine_sigStatusUpdate</span><span class="p">)</span>
+        <span class="n">AppBase</span><span class="o">.</span><span class="n">getMachine</span><span class="p">()</span><span class="o">.</span><span class="n">sigCycleCompleted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">machine_sigCycleCompleted</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="MainWindow.settings_sigSettingsChanged"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.settings_sigSettingsChanged">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">settings_sigSettingsChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">changed</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;MachineBase&#39;</span> <span class="ow">in</span> <span class="n">changed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">laserOffset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+                <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;MachineBase&#39;</span><span class="p">,</span> <span class="s1">&#39;laser_offset_x&#39;</span><span class="p">),</span>
+                <span class="n">AppBase</span><span class="o">.</span><span class="n">getSettings</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;MachineBase&#39;</span><span class="p">,</span> <span class="s1">&#39;laser_offset_y&#39;</span><span class="p">)</span>
+            <span class="p">])</span></div>
+        
+        
+<div class="viewcode-block" id="MainWindow.machine_sigStatusUpdate"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.machine_sigStatusUpdate">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">machine_sigStatusUpdate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="MainWindow.machine_sigCycleCompleted"><a class="viewcode-back" href="../../_docsrc/api/ui.html#ui.MainWindow.MainWindow.machine_sigCycleCompleted">[docs]</a>    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">machine_sigCycleCompleted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wdgControl</span><span class="o">.</span><span class="n">enableLaserCrosshair</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lastLaserActive</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

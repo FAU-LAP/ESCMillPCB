@@ -1,0 +1,213 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Overview &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Building ESCMillPCB" href="build.html" />
+    <link rel="prev" title="TinyG" href="../userdocs/tinyg.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="build.html" title="Building ESCMillPCB"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../userdocs/tinyg.html" title="TinyG"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>This part of the documentation is meant to aid future developers to orient themselves in the
+program’s structure and is an addition to the API documentation which is generated from the
+docstrings. It is by no means a complete developer documentation and the reader is strongly
+encouraged to add missing information.</p>
+<div class="section" id="source-directory">
+<h2>Source directory<a class="headerlink" href="#source-directory" title="Permalink to this headline">¶</a></h2>
+<p>The following table lists and describes files and folders in the project base directory.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">File/directory</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>_build</td>
+<td>Working directory for PyInstaller</td>
+</tr>
+<tr class="row-odd"><td>_dist</td>
+<td>Contains the freezed version of the program</td>
+</tr>
+<tr class="row-even"><td>_docs</td>
+<td>Contains this documentation</td>
+</tr>
+<tr class="row-odd"><td>_docsrc</td>
+<td>Contains the source files used to create this documentation</td>
+</tr>
+<tr class="row-even"><td>_platforms</td>
+<td>Contains additional Qt DLLs necessary to run the freezed version.
+The contents are copied to _dist/platforms during the build process.</td>
+</tr>
+<tr class="row-odd"><td>_static</td>
+<td>??</td>
+</tr>
+<tr class="row-even"><td>_templates</td>
+<td>??</td>
+</tr>
+<tr class="row-odd"><td>_test</td>
+<td>Files used for testing the program</td>
+</tr>
+<tr class="row-even"><td>Algorithm</td>
+<td>Algorithm package sources</td>
+</tr>
+<tr class="row-odd"><td>Base</td>
+<td>Base package sources</td>
+</tr>
+<tr class="row-even"><td>EagleImport</td>
+<td>EagleImport package sources</td>
+</tr>
+<tr class="row-odd"><td>Machines</td>
+<td>Machines package sources</td>
+</tr>
+<tr class="row-even"><td>pyqtgraph</td>
+<td>Modified version of the pyqtgraph library</td>
+</tr>
+<tr class="row-odd"><td>resources</td>
+<td>Additional resources which are included in the freezed exe file
+(images/icons, Qt ui files, Qt resource files)</td>
+</tr>
+<tr class="row-even"><td>ui</td>
+<td>ui package sources</td>
+</tr>
+<tr class="row-odd"><td>build.bat</td>
+<td>Batch file to run the whole build process</td>
+</tr>
+<tr class="row-even"><td>conf.py</td>
+<td>Configuration file for the Sphinx documentation builder</td>
+</tr>
+<tr class="row-odd"><td>docindex.rst</td>
+<td>Base source file of this documentation</td>
+</tr>
+<tr class="row-even"><td>ESCMillPCB.py</td>
+<td>Entry file of the program’s Python source</td>
+</tr>
+<tr class="row-odd"><td>ESCMillPCB.spec</td>
+<td>Configuration file for PyInstaller</td>
+</tr>
+<tr class="row-even"><td>makedocs.bat</td>
+<td>Batch file for building this documentation</td>
+</tr>
+<tr class="row-odd"><td>test.py</td>
+<td>Some tests used during development</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pyqtgraph">
+<h2>pyqtgraph<a class="headerlink" href="#pyqtgraph" title="Permalink to this headline">¶</a></h2>
+<p>The Python library <a class="reference external" href="http://www.pyqtgraph.org">pyqtgraph</a> by Luke Campagnola is used extensively
+for the GUI and the settings system (see <a class="reference internal" href="../api/Base.html#Base.AppSettings.AppSettings" title="Base.AppSettings.AppSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.AppSettings.AppSettings</span></code></a>). Due to some
+bugs in the used version pyqtgraph, a modified version of pyqtgraph is included in the source
+folder <em>pyqtgraph</em>. Note that using an unmodified version of pyqtgraph might not work.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../docindex.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Overview</a><ul>
+<li><a class="reference internal" href="#source-directory">Source directory</a></li>
+<li><a class="reference internal" href="#pyqtgraph">pyqtgraph</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../userdocs/tinyg.html"
+                        title="previous chapter">TinyG</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="build.html"
+                        title="next chapter">Building ESCMillPCB</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/_docsrc/developerdocs/overview.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="build.html" title="Building ESCMillPCB"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../userdocs/tinyg.html" title="TinyG"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>
