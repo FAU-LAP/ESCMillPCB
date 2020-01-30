@@ -1,0 +1,350 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TinyG &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Overview" href="../developerdocs/overview.html" />
+    <link rel="prev" title="Software Settings" href="basicconfig.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../developerdocs/overview.html" title="Overview"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="basicconfig.html" title="Software Settings"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tinyg">
+<span id="id1"></span><h1>TinyG<a class="headerlink" href="#tinyg" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general">
+<h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the usage and configuration of the TinyG controller from Synthetos (see <a class="reference external" href="https://github.com/synthetos/TinyG/wiki">here</a>),
+which is currently the only supported machine.</p>
+<p>The following features are supported:</p>
+<ul class="simple">
+<li>X, Y, Z axes are supported, where X &amp; Y axes are used for the board plane and the Z axis for in- and outfeed of the milling tool.
+Driving the A axis is <strong>not</strong> supported.</li>
+<li>Limit switches can be freely configured for all four axes (X, Y, Z, A), but only X, Y, Z axes can be used for homing of the machine.
+The A axis limit switch can be used for an emergency stop switch.</li>
+<li>The coolant signal output is used for enabling/disabling the laser crosshair.</li>
+</ul>
+</div>
+<div class="section" id="communication-settings">
+<h2>Communication settings<a class="headerlink" href="#communication-settings" title="Permalink to this headline">¶</a></h2>
+<p>Basic parameters communication with the machine.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Com Port</td>
+<td>Port identifier of the TinyG’s virtual COM port</td>
+</tr>
+<tr class="row-odd"><td>Baudrate</td>
+<td>Baudrate used for communication (default: 115200)</td>
+</tr>
+<tr class="row-even"><td>Flow Control</td>
+<td>Used type of flow control (recommended: XON/XOFF)</td>
+</tr>
+<tr class="row-odd"><td>Timeout (s)</td>
+<td>Timeout in seconds for queries (recommended: 10s)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="machine-settings">
+<h2>Machine settings<a class="headerlink" href="#machine-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="motor-settings">
+<h3>Motor settings<a class="headerlink" href="#motor-settings" title="Permalink to this headline">¶</a></h3>
+<p>In the following table, <em>n</em> = 1, 2, 3 refers to the motor index.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Motor <em>n</em> axis</td>
+<td>Axis driven by motor <em>n</em> (X, Y, Z)</td>
+</tr>
+<tr class="row-odd"><td>Motor <em>n</em> step angle (deg)</td>
+<td>Rotation angle per full motor step of motor <em>n</em> (in degrees)</td>
+</tr>
+<tr class="row-even"><td>Motor <em>n</em> travel per revolution (mm)</td>
+<td>Linear movement of the motor’s axis per revolution (in mm)</td>
+</tr>
+<tr class="row-odd"><td>Motor <em>n</em> microsteps</td>
+<td>Microsteps per full step of motor <em>n</em> (1, 2, 4, 8)</td>
+</tr>
+<tr class="row-even"><td>Motor <em>n</em> polarity</td>
+<td>Direction of motor rotation for movement in positive axis direction</td>
+</tr>
+<tr class="row-odd"><td>Motor <em>n</em> power management</td>
+<td>Condition under which the motor is powered (including active breaking)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="axis-settings">
+<span id="tinyg-axis-settings"></span><h3>Axis settings<a class="headerlink" href="#axis-settings" title="Permalink to this headline">¶</a></h3>
+<p>In the following table, <em>N</em> = X, Y, Z refers to the axis index.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>N</em> axis feed rate upper limit (mm/min)</td>
+<td>Maximal jog speed in <em>N</em> direction (in mm/min)</td>
+</tr>
+<tr class="row-odd"><td><em>N</em> axis travel minimum (mm)</td>
+<td>Minimal <em>N</em> axis position (for soft limits, in mm)</td>
+</tr>
+<tr class="row-even"><td><em>N</em> axis travel maximum (mm)</td>
+<td>Maximal <em>N</em> axis position (for soft limits, in mm)</td>
+</tr>
+<tr class="row-odd"><td><em>N</em> axis maximum jerk (mm/min^3)</td>
+<td>Maximal <em>N</em> axis jerk (jerk = (d/dt)^3 x, in mm/min^3, <strong>see warning below</strong>)</td>
+</tr>
+<tr class="row-even"><td><em>N</em> axis junction deviation (mm)</td>
+<td>Theoretical radius for cornering control.
+Larger values yield faster cornering, but more corner jerk.
+(in mm, see also the <a class="reference external" href="https://github.com/synthetos/TinyG/wiki/TinyG-Configuration-for-Firmware-Version-0.97#xjd---junction-deviation">junction deviation wiki entry</a>)</td>
+</tr>
+<tr class="row-odd"><td>Junction acceleration (mm/min^2)</td>
+<td>Global parameter affecting the cornering speed (in mm/min^2, see junction deviation)</td>
+</tr>
+<tr class="row-even"><td>Enable soft limits</td>
+<td>If enabled, minimum and maximum travel parameters are used for soft limit checking</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The controller interpretes jerk values less than 1E6 in units of 1E6, e.g. a jerk value of 100 is interpreted as 1E8 mm/min^3.</p>
+</div>
+</div>
+<div class="section" id="homing-settings">
+<h3>Homing settings<a class="headerlink" href="#homing-settings" title="Permalink to this headline">¶</a></h3>
+<p>These settings configure the homing cycle and also the limit switch roles. <em>N</em> = X, Y, Z refers to the axis index.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Switch type</td>
+<td>Global setting for the switch type (normally open, normally closed).
+Note that it is <strong>not</strong> possible to configure the switching behavior individually.</td>
+</tr>
+<tr class="row-odd"><td><em>N</em> minimum switch</td>
+<td>Role of the <em>N</em> axis minimum switch (disabled, homing, limit, homing &amp; limit)</td>
+</tr>
+<tr class="row-even"><td><em>N</em> maximum switch</td>
+<td>Role of the <em>N</em> axis maximum switch (disabled, homing, limit, homing &amp; limit)</td>
+</tr>
+<tr class="row-odd"><td><em>N</em> axis homing search velocity (mm/min)</td>
+<td>Maximal speed when searching the <em>N</em> axis homing switch.</td>
+</tr>
+<tr class="row-even"><td><em>N</em> axis homing latch velocity (mm/min)</td>
+<td>Speed with which the latching point of the homing switch is searched after it has been hit.</td>
+</tr>
+<tr class="row-odd"><td><em>N</em> axis homing jerk (mm/min^3)</td>
+<td>Maximal jerk during homing (see jerk settings and warning in <a class="reference internal" href="#tinyg-axis-settings"><span class="std std-ref">Axis settings</span></a>).</td>
+</tr>
+<tr class="row-even"><td><em>N</em> axis homing backup (mm)</td>
+<td>Distance to the switch in which the axis origin is set.</td>
+</tr>
+<tr class="row-odd"><td>A axis maximum switch</td>
+<td>Role of the A axis minimum switch (disabled, limit).</td>
+</tr>
+<tr class="row-even"><td>A axis minimum switch</td>
+<td>Role of the A axis maximum switch (disabled, limit).</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="general-settings">
+<h3>General settings<a class="headerlink" href="#general-settings" title="Permalink to this headline">¶</a></h3>
+<p>Miscellaneous settings which do not fit in the other categories.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Status report interval (ms)</td>
+<td>Interval in which the controller sends status reports to the program (in ms).
+Status reports contain current machine position, cycle status, buffer status, etc.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="machine-specific-menus-and-dialogs">
+<h2>Machine specific menus and dialogs<a class="headerlink" href="#machine-specific-menus-and-dialogs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="com-testpanel">
+<h3>Com Testpanel<a class="headerlink" href="#com-testpanel" title="Permalink to this headline">¶</a></h3>
+<p>The communication testpanel can be used to send or query commands and responses to and from the controller.
+Commands have to be given in JSON format (e.g. <em>{“gc”:”m3”}</em> to enable the spindle), the only exceptions are feedhold (<em>!</em>),
+resume (<em>~</em>) and stop (<em>%</em> or <em>!%</em>).</p>
+</div>
+<div class="section" id="reset">
+<h3>Reset<a class="headerlink" href="#reset" title="Permalink to this headline">¶</a></h3>
+<p>Performs a hardware reset. Normally the machine settings are persistent, so it usually is not necessary to reapply the machine
+settings. The homing, however, is lost, so a new homing cycle is mandatory.</p>
+</div>
+<div class="section" id="clear">
+<h3>Clear<a class="headerlink" href="#clear" title="Permalink to this headline">¶</a></h3>
+<p>Clears the machines error/alarm state. Note that only soft alarms can be cleared (e.g. violating the soft limits), hard alarms
+(e.g. hitting a limit switch) cannot be cleared and require a hardware reset.</p>
+</div>
+<div class="section" id="tinyg-cycle-control-window">
+<h3>TinyG Cycle Control Window<a class="headerlink" href="#tinyg-cycle-control-window" title="Permalink to this headline">¶</a></h3>
+<p>This window is opened during the machining cycle and shows the cycle progress. It is also possible to pause or abort the cycle.</p>
+<ul class="simple">
+<li><strong>Command buffer</strong>: GCode program executed during the cycle</li>
+<li><strong>Linebuffer</strong>: Commands buffered by the controller</li>
+<li><strong>Planner Queue</strong>: State of the controller’s planner queue (motion buffer)</li>
+<li><strong>Progress</strong>: Ratio of the already send commands to the overall command buffer length</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../docindex.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">TinyG</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#communication-settings">Communication settings</a></li>
+<li><a class="reference internal" href="#machine-settings">Machine settings</a><ul>
+<li><a class="reference internal" href="#motor-settings">Motor settings</a></li>
+<li><a class="reference internal" href="#axis-settings">Axis settings</a></li>
+<li><a class="reference internal" href="#homing-settings">Homing settings</a></li>
+<li><a class="reference internal" href="#general-settings">General settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#machine-specific-menus-and-dialogs">Machine specific menus and dialogs</a><ul>
+<li><a class="reference internal" href="#com-testpanel">Com Testpanel</a></li>
+<li><a class="reference internal" href="#reset">Reset</a></li>
+<li><a class="reference internal" href="#clear">Clear</a></li>
+<li><a class="reference internal" href="#tinyg-cycle-control-window">TinyG Cycle Control Window</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="basicconfig.html"
+                        title="previous chapter">Software Settings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../developerdocs/overview.html"
+                        title="next chapter">Overview</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/_docsrc/userdocs/tinyg.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../developerdocs/overview.html" title="Overview"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="basicconfig.html" title="Software Settings"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

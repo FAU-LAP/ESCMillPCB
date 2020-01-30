@@ -1,0 +1,343 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Software Settings &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="TinyG" href="tinyg.html" />
+    <link rel="prev" title="User Guide" href="usage.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tinyg.html" title="TinyG"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="User Guide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="software-settings">
+<span id="id1"></span><h1>Software Settings<a class="headerlink" href="#software-settings" title="Permalink to this headline">¶</a></h1>
+<p>The following section describes the available settings of the settings dialog.
+All software settings are stored Windows-user specific in <em>%localappdata%\ESCMillPCB\settings.json</em>.
+A settings file with the current default settings is included in the executable directory called
+<em>[DATE]_default_settings.json</em>.</p>
+<div class="section" id="general">
+<span id="general-settings"></span><h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<p>General software configuration.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Connect to machine on startup</td>
+<td>If activated, the configured machine is initalized on software startup</td>
+</tr>
+<tr class="row-odd"><td>Apply machine settings on startup</td>
+<td>If activated and the configured machine is initialized, the machine settings
+are applied to the machine on software startup</td>
+</tr>
+<tr class="row-even"><td>Logfile threshold level</td>
+<td>Minimal importance level of log entries which are written to the log file</td>
+</tr>
+<tr class="row-odd"><td>Logfiles to keep</td>
+<td>A new logfile is generated every day the software is run. This number denotes the
+amount of old logfiles to keep.</td>
+</tr>
+<tr class="row-even"><td>Log window threshold level</td>
+<td>Minimal importance level of log entries which are shown in the log window.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="optimizers">
+<span id="optimizer-settings"></span><h2>Optimizers<a class="headerlink" href="#optimizers" title="Permalink to this headline">¶</a></h2>
+<p>Optimizers are applied to the board objects to optimize the machining in different manners.</p>
+<div class="section" id="hole-order-optimization">
+<h3>Hole order optimization<a class="headerlink" href="#hole-order-optimization" title="Permalink to this headline">¶</a></h3>
+<p>This optimizer changes the order in which the holes are drilled such that the distance of the
+overall path is minimized.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Active</td>
+<td>(De-)activates the optimizer</td>
+</tr>
+<tr class="row-odd"><td>Algorithm</td>
+<td>Algorithm for path distance optimization. 2opt (default) gives better results,
+the simple greedy algorithm is slightly faster.</td>
+</tr>
+<tr class="row-even"><td>Iterations</td>
+<td>Number of 2opt steps (starting from random distribution of holes) of which the best
+result is used. This is not applicable to the greedy algorithm.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="combine-adjecent-millings">
+<h3>Combine adjecent millings<a class="headerlink" href="#combine-adjecent-millings" title="Permalink to this headline">¶</a></h3>
+<p>This optimizer concatenates milling paths if the end of the first path is at the same position
+as the start of the next path.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Active</td>
+<td>(De-)activates the optimizer</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="add-breakouts-to-millings">
+<h3>Add breakouts to millings<a class="headerlink" href="#add-breakouts-to-millings" title="Permalink to this headline">¶</a></h3>
+<p>This optimizer adds breakout bars (small leftover board bridges) to cut-outs, i.e. closed milling
+paths. The cut-out parts of the board can then be broken out of the board after the milling process.
+Combining adjecent millings (see above) is mandatory for this step, as otherwise closed milling paths
+are not detected correctly.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Active</td>
+<td>(De-)activates the optimizer</td>
+</tr>
+<tr class="row-odd"><td>Breakout distance (mm)</td>
+<td>Distance in mm between breakout bars</td>
+</tr>
+<tr class="row-even"><td>Breakout size (mm)</td>
+<td>Size of the breakout bars in mm (note that drill size is not accounted for!)</td>
+</tr>
+<tr class="row-odd"><td>Minimal number of breakouts per cut-out</td>
+<td>Minimal number of breakout bars per cut-out. If the cut-out path is too short,
+the breakout distance is adjusted such that the breakouts are evenly spread.</td>
+</tr>
+<tr class="row-even"><td>Minimal cut-out length for breakouts (mm)</td>
+<td>Minimal milling path length (in mm) such that breakouts are inserted</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="milling-order-optimization">
+<h3>Milling order optimization<a class="headerlink" href="#milling-order-optimization" title="Permalink to this headline">¶</a></h3>
+<p>This optimizer changes the order in which the millings are milled such that the distance of the
+overall path is minimized.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Active</td>
+<td>(De-)activates the optimizer</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="machine-settings">
+<span id="id2"></span><h1>Machine Settings<a class="headerlink" href="#machine-settings" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-machine-settings">
+<span id="basic-machine-setup"></span><h2>Basic machine settings<a class="headerlink" href="#basic-machine-settings" title="Permalink to this headline">¶</a></h2>
+<p>Basic machine parameter configuration.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>X&amp;Y axis jogging speed (mm/min)</td>
+<td>Maximal jogging speed for X and Y axis (in mm/min)</td>
+</tr>
+<tr class="row-odd"><td>Milling speed (mm/min)</td>
+<td>Maximal movement speed during milling operations for X and Y axis (in mm/min)</td>
+</tr>
+<tr class="row-even"><td>Z axis infeed depth (mm)</td>
+<td>Infeed depth for milling/drilling in mm measured from the Z axis working position
+(see also <a class="reference internal" href="usage.html#coordinate-setup"><span class="std std-ref">Setting up the coordinate system</span></a>)</td>
+</tr>
+<tr class="row-odd"><td>Z axis jogging speed (mm/min)</td>
+<td>Maximal jogging speed for Z axis (in mm/min)</td>
+</tr>
+<tr class="row-even"><td>Z axis infeed speed (mm/min)</td>
+<td>Maximal Z axis speed for infeed/outfeed (in mm/min)</td>
+</tr>
+<tr class="row-odd"><td>Z axis outfeed speed (mm/min)</td>
+<td>Maximal Z axis speed for outfeed (in mm/min)</td>
+</tr>
+<tr class="row-even"><td>Tool diameter (mm)</td>
+<td>Diameter of the drill/milling tool (in mm)</td>
+</tr>
+<tr class="row-odd"><td>Laser sight x offset</td>
+<td>Offset of the X coordinate of the laser sight to the machine position (in mm)</td>
+</tr>
+<tr class="row-even"><td>Laser sight y offset</td>
+<td>Offset of the X coordinate of the laser sight to the machine position (in mm)</td>
+</tr>
+<tr class="row-odd"><td>Coordinate update interval (ms)</td>
+<td>Machine position poll interval (in ms)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Currently the tool diameter is only used for drilling (milling holes larger than the tool).
+For millings the tool diameter is ignored and the tool is guided along the milling path.
+This is also the case for breakouts!</p>
+</div>
+</div>
+<div class="section" id="advanced-machine-settings">
+<span id="id3"></span><h2>Advanced machine settings<a class="headerlink" href="#advanced-machine-settings" title="Permalink to this headline">¶</a></h2>
+<p>Machine communication settings and machine specific settings.</p>
+<p>Machine: Type of the connected machine</p>
+<p>Communication settings and machine parameters are machine specific and documented in the machine documentation:</p>
+<ul class="simple">
+<li><a class="reference internal" href="tinyg.html#tinyg"><span class="std std-ref">TinyG</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../docindex.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Software Settings</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#optimizers">Optimizers</a><ul>
+<li><a class="reference internal" href="#hole-order-optimization">Hole order optimization</a></li>
+<li><a class="reference internal" href="#combine-adjecent-millings">Combine adjecent millings</a></li>
+<li><a class="reference internal" href="#add-breakouts-to-millings">Add breakouts to millings</a></li>
+<li><a class="reference internal" href="#milling-order-optimization">Milling order optimization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#machine-settings">Machine Settings</a><ul>
+<li><a class="reference internal" href="#basic-machine-settings">Basic machine settings</a></li>
+<li><a class="reference internal" href="#advanced-machine-settings">Advanced machine settings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage.html"
+                        title="previous chapter">User Guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tinyg.html"
+                        title="next chapter">TinyG</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/_docsrc/userdocs/basicconfig.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tinyg.html" title="TinyG"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="User Guide"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

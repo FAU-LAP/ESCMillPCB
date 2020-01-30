@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/root">
+        <file>images/Arrow_Down.png</file>
+        <file>images/Arrow_Left.png</file>
+        <file>images/Arrow_Left_Down.png</file>
+        <file>images/Arrow_Left_Up.png</file>
+        <file>images/Arrow_Right.png</file>
+        <file>images/Arrow_Right_Down.png</file>
+        <file>images/Arrow_Right_Up.png</file>
+        <file>images/Arrow_Up.png</file>
+        <file>images/Arrow_Z_Down.png</file>
+        <file>images/Arrow_Z_Up.png</file>
+        <file>images/icon.png</file>
+        <file>images/Stop.png</file>
+        <file>images/icon.ico</file>
+    </qresource>
+</RCC>

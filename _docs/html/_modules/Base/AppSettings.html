@@ -1,0 +1,452 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Base.AppSettings &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for Base.AppSettings</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 16.02.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="k">import</span> <span class="n">QtCore</span>
+<span class="kn">import</span> <span class="nn">pyqtgraph.parametertree.parameterTypes</span> <span class="k">as</span> <span class="nn">ptypes</span>
+
+<span class="kn">import</span> <span class="nn">Base.BaseOptimizers</span> <span class="k">as</span> <span class="nn">bo</span>
+<span class="kn">from</span> <span class="nn">Base.MachineBase</span> <span class="k">import</span> <span class="n">MachineBase</span>
+<span class="kn">from</span> <span class="nn">Machines</span> <span class="k">import</span> <span class="n">TinyG</span>
+
+
+<div class="viewcode-block" id="AppSettings"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings">[docs]</a><span class="k">class</span> <span class="nc">AppSettings</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class handles application settings.</span>
+<span class="sd">    It acts as a settings database and stores/restores settings when exiting/starting the application.</span>
+<span class="sd">    The application settings are stored in a pyqtgraph.parametertree.parameterTypes.GroupParameter object.</span>
+
+<span class="sd">    This class derives from QObject to support Qt signals.</span>
+
+<span class="sd">    ======================  ==========================================================================</span>
+<span class="sd">    **Signals**</span>
+<span class="sd">    ======================  ==========================================================================</span>
+<span class="sd">    sigSettingsChanged      Emitted when a setting has changed.</span>
+<span class="sd">                            Carries a list with the names of the root setting nodes which are affected</span>
+<span class="sd">    sigMachineChanged       Emitted when the active machine has changed</span>
+<span class="sd">    ======================  ==========================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Qt signals</span>
+    <span class="n">sigSettingsChanged</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">sigMachineChanged</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    
+    <span class="c1"># available optimizers</span>
+    <span class="n">optimizers</span> <span class="o">=</span> <span class="p">[</span><span class="n">bo</span><span class="o">.</span><span class="n">HoleOrderOptimizer</span><span class="p">,</span> <span class="n">bo</span><span class="o">.</span><span class="n">MillingCombinationOptimizer</span><span class="p">,</span> <span class="n">bo</span><span class="o">.</span><span class="n">BreakoutOptimizer</span><span class="p">,</span> <span class="n">bo</span><span class="o">.</span><span class="n">MillingOrderOptimizer</span><span class="p">]</span>
+    
+    <span class="c1"># available machines</span>
+    <span class="n">machines</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;None&#39;</span><span class="p">:</span><span class="n">MachineBase</span><span class="p">,</span> <span class="s1">&#39;TinyG&#39;</span><span class="p">:</span><span class="n">TinyG</span><span class="o">.</span><span class="n">TinyG</span><span class="p">}</span>
+    
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Settings&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        
+    
+<div class="viewcode-block" id="AppSettings.child"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.child">[docs]</a>    <span class="k">def</span> <span class="nf">child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Access parameter nodes, equivalent to AppSettings.settings.child(\*names).</span>
+<span class="sd">        See pyqtgrapgh.parametertree.Parameter.child()</span>
+
+<span class="sd">        :param str \*names: path, to, child</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="o">*</span><span class="n">names</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="AppSettings.value"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read parameter values, equivalent to AppSettings.settings.child(\*names).value()</span>
+<span class="sd">        See pyqtgrapgh.parametertree.Parameter.child(), pyqtgrapgh.parametertree.Parameter.value()</span>
+
+<span class="sd">        :param str \*names: (strings) path, to, child</span>
+<span class="sd">        :returns: Parameter value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="o">*</span><span class="n">names</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">()</span></div>
+    
+    
+<div class="viewcode-block" id="AppSettings.setValue"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="n">names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set parameter values, equivalent to AppSettings.settings.child(\*names).setValue(value)</span>
+<span class="sd">        See pyqtgrapgh.parametertree.Parameter.child(), pyqtgrapgh.parametertree.Parameter.value()</span>
+
+<span class="sd">        :param value: Value of the parameter</span>
+<span class="sd">        :param \*names: path, to, child</span>
+<span class="sd">        :type \*names: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="o">*</span><span class="n">names</span><span class="p">)</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="AppSettings.storeQtState"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.storeQtState">[docs]</a>    <span class="k">def</span> <span class="nf">storeQtState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qobject</span><span class="p">,</span> <span class="o">*</span><span class="n">names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Store the state of a QObject which supports saveState() to a string parameter.</span>
+
+<span class="sd">        :param QObject qobject: Object with state to store</span>
+<span class="sd">        :param str \*names: Name of child or tuple (path, to, child)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Save QObject state (&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">qobject</span><span class="o">.</span><span class="n">saveState</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">(),</span> <span class="o">*</span><span class="n">names</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="AppSettings.restoreQtState"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.restoreQtState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreQtState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qobject</span><span class="p">,</span> <span class="o">*</span><span class="n">names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restore the state of a QObject which supports restoreState() from a string parameter.</span>
+<span class="sd">        The state is only restored if the string parameter is not an empty string,</span>
+<span class="sd">        otherwise false is returned.</span>
+<span class="sd">        If the restore operation fails, a warning is written to the log and false is returned.</span>
+<span class="sd">        If the restore operation was perfomed and successful, true is returned</span>
+
+<span class="sd">        :param QObject qobject: Object with state to store</span>
+<span class="sd">        :param str \*names: Name of child or tuple (path, to, child)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Load QObject state (&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="o">*</span><span class="n">names</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">qobject</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Could not restore QObject state (&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Did not restore empty QObject state (&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+    
+<div class="viewcode-block" id="AppSettings.storeQtGeometry"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.storeQtGeometry">[docs]</a>    <span class="k">def</span> <span class="nf">storeQtGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Store the geometry of a QWidget to a string parameter.</span>
+
+<span class="sd">        :param QWidget widget: (QWidget) Widget with geometry to store</span>
+<span class="sd">        :param  str \*names: Name of child or tuple (path, to, child)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Save QWidget geometry (&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">saveGeometry</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">(),</span> <span class="o">*</span><span class="n">names</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="AppSettings.restoreQtGeometry"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.restoreQtGeometry">[docs]</a>    <span class="k">def</span> <span class="nf">restoreQtGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restore the state of a QWidget from a string parameter.</span>
+<span class="sd">        The state is only restored if the string parameter is not an empty string,</span>
+<span class="sd">        otherwise false is returned.</span>
+<span class="sd">        If the restore operation fails, a warning is written to the log and false is returned.</span>
+<span class="sd">        If the restore operation was perfomed and successful, true is returned</span>
+
+<span class="sd">        :param QWidget widget: Widget with state to store</span>
+<span class="sd">        :param str \*names: Name of child or tuple (path, to, child)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Load QWidget geometry (&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="o">*</span><span class="n">names</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">restoreGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Could not restore QWidget geometry (&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Did not restore empty QWidget geometry (&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+        
+    
+<div class="viewcode-block" id="AppSettings.loadDefaults"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.loadDefaults">[docs]</a>    <span class="k">def</span> <span class="nf">loadDefaults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears all settings and reverts them to default.</span>
+
+<span class="sd">        :param bool signal: Can be used to suppress the sigSettingsChanged signal</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">clearChildren</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">addChildren</span><span class="p">([</span>
+            <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;UI&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;General&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;MachineBase&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;MachineBaseHidden&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Optimizers&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;MachineCom&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;MachineParams&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;MachineHidden&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">}</span>
+        <span class="p">])</span>
+        
+        <span class="c1"># load UI settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;UI&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addChildren</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uiSettings</span><span class="p">()</span><span class="o">.</span><span class="n">children</span><span class="p">())</span>
+        
+        <span class="c1"># load default software settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;General&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addChildren</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generalSettings</span><span class="p">()</span><span class="o">.</span><span class="n">children</span><span class="p">())</span>
+                
+        <span class="c1"># load optimizer defaults</span>
+        <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">AppSettings</span><span class="o">.</span><span class="n">optimizers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;Optimizers&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addChild</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">getParameters</span><span class="p">())</span>
+            
+        <span class="c1"># load machine defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;MachineBase&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addChildren</span><span class="p">(</span><span class="n">MachineBase</span><span class="o">.</span><span class="n">getBasicParameters</span><span class="p">()</span><span class="o">.</span><span class="n">children</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;MachineBaseHidden&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addChildren</span><span class="p">(</span><span class="n">MachineBase</span><span class="o">.</span><span class="n">getBasicHiddenParameters</span><span class="p">()</span><span class="o">.</span><span class="n">children</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">machines</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">mparams</span> <span class="o">=</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">comparams</span> <span class="o">=</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">hiddenparams</span> <span class="o">=</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">mparams</span><span class="o">.</span><span class="n">addChildren</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">getParameters</span><span class="p">()</span><span class="o">.</span><span class="n">children</span><span class="p">())</span>
+                <span class="n">comparams</span><span class="o">.</span><span class="n">addChildren</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">getComParameters</span><span class="p">()</span><span class="o">.</span><span class="n">children</span><span class="p">())</span>
+                <span class="n">hiddenparams</span><span class="o">.</span><span class="n">addChildren</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">getHiddenParameters</span><span class="p">()</span><span class="o">.</span><span class="n">children</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;MachineParams&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addChild</span><span class="p">(</span><span class="n">mparams</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;MachineCom&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addChild</span><span class="p">(</span><span class="n">comparams</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;MachineHidden&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addChild</span><span class="p">(</span><span class="n">hiddenparams</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="n">signal</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sigSettingsChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">([</span><span class="n">ch</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">children</span><span class="p">()])</span></div>
+            
+            
+<div class="viewcode-block" id="AppSettings.loadSettings"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.loadSettings">[docs]</a>    <span class="k">def</span> <span class="nf">loadSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load settings from a previously saved JSON file.</span>
+
+<span class="sd">        :param str file: Path to the settings file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># read settings from file</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fhnd</span><span class="p">:</span>
+            <span class="n">newsettings</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fhnd</span><span class="p">)</span>
+        <span class="c1"># revert current settings to default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadDefaults</span><span class="p">(</span><span class="n">signal</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># store read settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">newsettings</span><span class="p">,</span> <span class="n">addChildren</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">removeChildren</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigSettingsChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">([</span><span class="n">ch</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">children</span><span class="p">()])</span></div>
+    
+        
+<div class="viewcode-block" id="AppSettings.saveSettings"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.saveSettings">[docs]</a>    <span class="k">def</span> <span class="nf">saveSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save settings as JSON file.</span>
+
+<span class="sd">        :param str file: Path to the settings file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fhnd</span><span class="p">:</span>
+            <span class="n">tosave</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">saveState</span><span class="p">()</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">tosave</span><span class="p">,</span> <span class="n">fhnd</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+            
+            
+<div class="viewcode-block" id="AppSettings.copySettings"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.copySettings">[docs]</a>    <span class="k">def</span> <span class="nf">copySettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :returns: a copy of the settings</span>
+<span class="sd">        :rtype: AppSettings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">copy</span> <span class="o">=</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Settings&#39;</span><span class="p">)</span>
+        <span class="n">copy</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">saveState</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">copy</span></div>
+    
+    
+<div class="viewcode-block" id="AppSettings.updateSettings"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.updateSettings">[docs]</a>    <span class="k">def</span> <span class="nf">updateSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newsettings</span><span class="p">,</span> <span class="n">settingsChanged</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update current application settings.</span>
+
+<span class="sd">        :param pyqtgraph.GroupParameter newsettigns: Parameter containing new settings</span>
+<span class="sd">        :param settingsChanged: List with names of parameters which have changed</span>
+<span class="sd">        :type settingsChanged: list[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">newsettings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigSettingsChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">settingsChanged</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="AppSettings.generalSettings"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.generalSettings">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">generalSettings</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the general settings parameters and their default values.</span>
+
+<span class="sd">        :returns: general settings parameters</span>
+<span class="sd">        :rtype: pyqtgraph.GroupParameter</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;General&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">:[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;startup_init&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Connect to machine on startup&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;startup_setup&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Apply machine settings on startup&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;logfile_level&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Logfile threshold level&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;values&#39;</span><span class="p">:{</span>
+                        <span class="s1">&#39;Debug&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="s1">&#39;Info&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="s1">&#39;Warning&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+                        <span class="s1">&#39;Error&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="s1">&#39;Critical&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span>
+                    <span class="p">},</span>
+                    <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;logfile_backups&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Logfiles to keep&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mi">10</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;loglist_level&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Log window threshold level&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;values&#39;</span><span class="p">:{</span>
+                        <span class="s1">&#39;Debug&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="s1">&#39;Info&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="s1">&#39;Warning&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+                        <span class="s1">&#39;Error&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="s1">&#39;Critical&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span>
+                    <span class="p">},</span>
+                    <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="AppSettings.uiSettings"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.AppBase.AppSettings.uiSettings">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">uiSettings</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the UI settings parameters and their default values.</span>
+
+<span class="sd">        :returns: UI settings parameters</span>
+<span class="sd">        :rtype: pyqtgraph.GroupParameter</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;UI&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">:[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;mainWindow_geometry&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;splitterRight_state&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;splitterBottom_state&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;settingsDialog_geometry&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;holes_active&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="kc">True</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;millings_active&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="kc">True</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;board_mirrored&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="kc">True</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;board_outlines&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="kc">True</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;board_size_x&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;float&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mi">100</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;board_size_y&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;float&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mi">75</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

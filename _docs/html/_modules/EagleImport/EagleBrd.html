@@ -1,0 +1,302 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>EagleImport.EagleBrd &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for EagleImport.EagleBrd</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 31.01.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># setup logging</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">math</span><span class="o">,</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="k">as</span> <span class="nn">et</span>
+
+<span class="kn">from</span> <span class="nn">EagleImport</span> <span class="k">import</span> <span class="n">EagleObjects</span> <span class="k">as</span> <span class="n">eo</span>
+
+
+<div class="viewcode-block" id="EagleBrd"><a class="viewcode-back" href="../../_docsrc/api/EagleImport.html#EagleImport.EagleBrd.EagleBrd">[docs]</a><span class="k">class</span> <span class="nc">EagleBrd</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents an Eagle board</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deviceLibraries</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devicePositions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vias</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineMillings</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circleMillings</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    
+<div class="viewcode-block" id="EagleBrd.importBrd"><a class="viewcode-back" href="../../_docsrc/api/EagleImport.html#EagleImport.EagleBrd.EagleBrd.importBrd">[docs]</a>    <span class="k">def</span> <span class="nf">importBrd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Import Eagle \*.brd XML file, the file contents will be added to the EagleBrd object</span>
+
+<span class="sd">        :param str filepath: Absolute path to the brd file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Parsing Eagle board file </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+        <span class="n">xmltree</span> <span class="o">=</span> <span class="n">et</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="n">xmltree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;eagle&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;EagleBrd.importBrd: Invalid file.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buildDeviceLibraries</span><span class="p">(</span><span class="n">xmltree</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//libraries&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_readDevicePositions</span><span class="p">(</span><span class="n">xmltree</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//elements&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_readHoles</span><span class="p">(</span><span class="n">xmltree</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//plain&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_readVias</span><span class="p">(</span><span class="n">xmltree</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//signals&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_readMillings</span><span class="p">(</span><span class="n">xmltree</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//plain&quot;</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found </span><span class="si">%s</span><span class="s2"> libraries with </span><span class="si">%s</span><span class="s2"> packages, </span><span class="si">%s</span><span class="s2"> devices, </span><span class="si">%s</span><span class="s2"> stand-alone holes, </span><span class="si">%s</span><span class="s2"> vias, </span><span class="si">%s</span><span class="s2"> millings&quot;</span><span class="p">,</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deviceLibraries</span><span class="p">),</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">lib</span><span class="p">)</span> <span class="k">for</span> <span class="n">lib</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceLibraries</span><span class="o">.</span><span class="n">values</span><span class="p">()]),</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devicePositions</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">holes</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vias</span><span class="p">),</span> 
+                    <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lineMillings</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circleMillings</span><span class="p">))</span></div>
+    
+    
+<div class="viewcode-block" id="EagleBrd.getDevice"><a class="viewcode-back" href="../../_docsrc/api/EagleImport.html#EagleImport.EagleBrd.EagleBrd.getDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">library</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an EagleDevice from the library</span>
+
+<span class="sd">        :param str library: Name of the library</span>
+<span class="sd">        :param str device: Name of the device</span>
+<span class="sd">        :returns: device from library</span>
+<span class="sd">        :rtype: EagleImport.EagleObjects.EagleDevice</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceLibraries</span><span class="p">[</span><span class="n">library</span><span class="p">]</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">device</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Device not found: </span><span class="si">{}</span><span class="s2"> (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">library</span><span class="p">))</span></div>
+    
+    
+<div class="viewcode-block" id="EagleBrd.getDrillsAbsolute"><a class="viewcode-back" href="../../_docsrc/api/EagleImport.html#EagleImport.EagleBrd.EagleBrd.getDrillsAbsolute">[docs]</a>    <span class="k">def</span> <span class="nf">getDrillsAbsolute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :returns list of EagleDrill objects with all drills on the board (devices, stand-alone drills and vias)</span>
+<span class="sd">        with absolute positions</span>
+<span class="sd">        :rtype: list(EagleImport.EagleObjects.EagleDrill)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">drills</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># iterate through devices</span>
+        <span class="k">for</span> <span class="n">devpos</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devicePositions</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">devpos</span><span class="o">.</span><span class="n">libraryName</span><span class="p">,</span> <span class="n">devpos</span><span class="o">.</span><span class="n">deviceName</span><span class="p">)</span>
+            <span class="c1"># calculate absolute drill positions (including rotation)</span>
+            <span class="k">for</span> <span class="n">drill</span> <span class="ow">in</span> <span class="n">dev</span><span class="o">.</span><span class="n">drills</span><span class="p">:</span>
+                <span class="n">rot</span> <span class="o">=</span> <span class="n">devpos</span><span class="o">.</span><span class="n">rotation</span>
+                <span class="n">posx</span> <span class="o">=</span> <span class="n">drill</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span> <span class="o">-</span> <span class="n">drill</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span>
+                <span class="n">posy</span> <span class="o">=</span> <span class="n">drill</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span> <span class="o">+</span> <span class="n">drill</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">devpos</span><span class="o">.</span><span class="n">mirrored</span><span class="p">:</span>
+                    <span class="n">posx</span> <span class="o">=</span> <span class="o">-</span><span class="n">posx</span>
+                <span class="n">newdrill</span> <span class="o">=</span> <span class="n">eo</span><span class="o">.</span><span class="n">EagleDrill</span><span class="p">(</span>
+                    <span class="n">drill</span><span class="o">.</span><span class="n">drillsize</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">devpos</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">posx</span><span class="p">,</span> <span class="n">devpos</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">posy</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">drills</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newdrill</span><span class="p">)</span>
+        <span class="c1"># iterate through stand-alone holes</span>
+        <span class="k">for</span> <span class="n">hole</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">holes</span><span class="p">:</span>
+            <span class="n">drills</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">hole</span><span class="p">))</span>
+        <span class="c1"># iterate through vias</span>
+        <span class="k">for</span> <span class="n">via</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vias</span><span class="p">:</span>
+            <span class="n">drills</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">via</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">drills</span></div>
+    
+    
+    <span class="k">def</span> <span class="nf">_buildDeviceLibraries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">librariestag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds libraries and containing packages to the EagleBrd object</span>
+
+<span class="sd">        :param librariestag: XML tag object pointing to the &lt;libraries&gt; tag</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">libs</span> <span class="o">=</span> <span class="n">librariestag</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//library&quot;</span><span class="p">)</span>
+        <span class="c1"># find all libraries</span>
+        <span class="k">for</span> <span class="n">lib</span> <span class="ow">in</span> <span class="n">libs</span><span class="p">:</span>
+            <span class="n">libname</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found library </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">libname</span><span class="p">)</span>
+            <span class="n">eagledevlib</span> <span class="o">=</span> <span class="n">eo</span><span class="o">.</span><span class="n">EagleDeviceLibrary</span><span class="p">(</span><span class="n">libname</span><span class="p">)</span>
+            <span class="n">devs</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//package&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># find all packages</span>
+            <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devs</span><span class="p">:</span>
+                <span class="n">devname</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+                <span class="n">eagledev</span> <span class="o">=</span> <span class="n">eo</span><span class="o">.</span><span class="n">EagleDevice</span><span class="p">(</span><span class="n">devname</span><span class="p">)</span>
+                <span class="n">pads</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//pad&quot;</span><span class="p">)</span>
+                <span class="c1"># find all pads (drills)</span>
+                <span class="k">for</span> <span class="n">pad</span> <span class="ow">in</span> <span class="n">pads</span><span class="p">:</span>
+                    <span class="n">eagledev</span><span class="o">.</span><span class="n">addDrill</span><span class="p">(</span>
+                        <span class="nb">float</span><span class="p">(</span><span class="n">pad</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;drill&quot;</span><span class="p">]),</span> 
+                        <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">pad</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">pad</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]))</span>
+                    <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found package </span><span class="si">%s</span><span class="s2"> containing </span><span class="si">%s</span><span class="s2"> pads&quot;</span><span class="p">,</span> <span class="n">devname</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pads</span><span class="p">))</span>
+                <span class="n">eagledevlib</span><span class="o">.</span><span class="n">addDevice</span><span class="p">(</span><span class="n">eagledev</span><span class="p">)</span>
+                
+            <span class="c1"># add to deviceLibraries</span>
+            <span class="k">if</span> <span class="n">libname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceLibraries</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">deviceLibraries</span><span class="p">[</span><span class="n">libname</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eagledevlib</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>        
+                <span class="bp">self</span><span class="o">.</span><span class="n">deviceLibraries</span><span class="p">[</span><span class="n">libname</span><span class="p">]</span> <span class="o">=</span> <span class="n">eagledevlib</span>
+    
+    
+    <span class="k">def</span> <span class="nf">_readDevicePositions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elementstag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds device positions to the EagleBrd object</span>
+
+<span class="sd">        :param elementstag: XML tag object pointing to the &lt;elements&gt; tag</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">devs</span> <span class="o">=</span> <span class="n">elementstag</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//element&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devs</span><span class="p">:</span>
+            <span class="n">rotation</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">mirrored</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="s2">&quot;rot&quot;</span> <span class="ow">in</span> <span class="n">dev</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">mirrored</span> <span class="o">=</span> <span class="p">(</span><span class="n">dev</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;rot&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">)</span>
+                <span class="n">rotation</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dev</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;rot&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;MR&quot;</span><span class="p">))</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span>
+            <span class="n">devpos</span> <span class="o">=</span> <span class="n">eo</span><span class="o">.</span><span class="n">EagleDevicePosition</span><span class="p">(</span>
+                <span class="n">dev</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;library&quot;</span><span class="p">],</span>
+                <span class="n">dev</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;package&quot;</span><span class="p">],</span>
+                <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">dev</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">dev</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])),</span>
+                <span class="n">rotation</span><span class="p">,</span>
+                <span class="n">mirrored</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found device </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">devpos</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">devicePositions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">devpos</span><span class="p">)</span>
+    
+    
+    <span class="k">def</span> <span class="nf">_readHoles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plaintag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds stand-alone holes to the EagleBrd object</span>
+
+<span class="sd">        :param plaintag: XML tag object pointing to the &lt;plain&gt; tag</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">holes</span> <span class="o">=</span> <span class="n">plaintag</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//hole&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">hole</span> <span class="ow">in</span> <span class="n">holes</span><span class="p">:</span>
+            <span class="n">drill</span> <span class="o">=</span> <span class="n">eo</span><span class="o">.</span><span class="n">EagleDrill</span><span class="p">(</span>
+                <span class="nb">float</span><span class="p">(</span><span class="n">hole</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;drill&quot;</span><span class="p">]),</span>
+                <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">hole</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">hole</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]))</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found stand-alone hole </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">drill</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">holes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">drill</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">_readVias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signalstag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds via drills to the EagleBrd object</span>
+
+<span class="sd">        :param signalstag: XML tag object pointing to the &lt;signals&gt; tag</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vias</span> <span class="o">=</span> <span class="n">signalstag</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//via&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">via</span> <span class="ow">in</span> <span class="n">vias</span><span class="p">:</span>
+            <span class="n">drill</span> <span class="o">=</span> <span class="n">eo</span><span class="o">.</span><span class="n">EagleDrill</span><span class="p">(</span>
+                <span class="nb">float</span><span class="p">(</span><span class="n">via</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;drill&quot;</span><span class="p">]),</span>
+                <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">via</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">via</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]))</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found via </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">drill</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vias</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">drill</span><span class="p">)</span>
+            
+            
+            
+    <span class="k">def</span> <span class="nf">_readMillings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plaintag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds millings to the EagleBrd object.</span>
+<span class="sd">        Millings are wires in the milling layer (46)</span>
+
+<span class="sd">        :param plaintag: XML tag object pointing to the &lt;plain&gt; tag</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># find line millings</span>
+        <span class="n">wires</span> <span class="o">=</span> <span class="n">plaintag</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//wire[@layer=&quot;46&quot;]&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">wire</span> <span class="ow">in</span> <span class="n">wires</span><span class="p">:</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="s2">&quot;curve&quot;</span> <span class="ow">in</span> <span class="n">wire</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">curve</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">wire</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;curve&quot;</span><span class="p">])</span>
+            <span class="n">milling</span> <span class="o">=</span> <span class="n">eo</span><span class="o">.</span><span class="n">EagleLineMilling</span><span class="p">(</span>
+                <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">wire</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;x1&quot;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">wire</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;y1&quot;</span><span class="p">])),</span>
+                <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">wire</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;x2&quot;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">wire</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;y2&quot;</span><span class="p">])),</span>
+                <span class="n">curve</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found line milling </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">milling</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lineMillings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">milling</span><span class="p">)</span>
+        <span class="c1"># find circle millings</span>
+        <span class="n">circles</span> <span class="o">=</span> <span class="n">plaintag</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//circle[@layer=&quot;46&quot;]&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">circle</span> <span class="ow">in</span> <span class="n">circles</span><span class="p">:</span>
+            <span class="n">milling</span> <span class="o">=</span> <span class="n">eo</span><span class="o">.</span><span class="n">EagleCircleMilling</span><span class="p">(</span>
+                <span class="nb">float</span><span class="p">(</span><span class="n">circle</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]),</span>
+                <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">circle</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">circle</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]))</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found circle milling </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">milling</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">circleMillings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">milling</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

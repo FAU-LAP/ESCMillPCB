@@ -1,0 +1,218 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Algorithms.NXUtilities &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for Algorithms.NXUtilities</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 10.02.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<div class="viewcode-block" id="nodePath"><a class="viewcode-back" href="../../_docsrc/api/Algorithms.html#Algorithms.NXUtilities.nodePath">[docs]</a><span class="k">def</span> <span class="nf">nodePath</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a list of nodes along a path in the graph.</span>
+<span class="sd">    Works only for undirected path graphs which start at node 0.</span>
+
+<span class="sd">    :param networkx.graph graph: Undirected path graph to traverse</span>
+<span class="sd">    :returns: Nodes along path</span>
+<span class="sd">    :rtype: list[int]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">edge</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">dfs_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">)):</span>
+        <span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">path</span></div>
+
+
+<div class="viewcode-block" id="randomPathGraph"><a class="viewcode-back" href="../../_docsrc/api/Algorithms.html#Algorithms.NXUtilities.randomPathGraph">[docs]</a><span class="k">def</span> <span class="nf">randomPathGraph</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param networkx.graph graph: Undirected complete graph. Edge attributes are transfered.</span>
+<span class="sd">        No changes to the original graph are made.</span>
+<span class="sd">    :returns: Random undirected path graph starting at node 0</span>
+<span class="sd">    :rtype: networkx.graph</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1"># Create random path by connecting them in a shuffled order</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
+    <span class="n">nodes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+    <span class="c1"># remove all undesired edges</span>
+    <span class="n">edgelist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">())</span>
+    <span class="n">edgelist</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">edgelist</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">edgelist</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">graph</span><span class="o">.</span><span class="n">remove_edges_from</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">graph</span></div>
+
+
+<div class="viewcode-block" id="calculateAllDistances"><a class="viewcode-back" href="../../_docsrc/api/Algorithms.html#Algorithms.NXUtilities.calculateAllDistances">[docs]</a><span class="k">def</span> <span class="nf">calculateAllDistances</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the distances between all nodes.</span>
+
+<span class="sd">    :param np.ndarray nodes: Matrix containing all node coordinates.</span>
+<span class="sd">    :returns: Matrix with entry i,j containing the distance between the i&#39;th and j&#39;th point</span>
+<span class="sd">    :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># repeat nodes array on 3rd axis len(nodes) times</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="c1"># subtract node coordinates of all nodes from each nodes array on 3rd axis </span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span> <span class="o">-</span> <span class="n">nodes</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">**</span><span class="mi">2</span>
+    <span class="c1"># add squared coordinates for each node</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">tmp</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">distances</span></div>
+
+
+<div class="viewcode-block" id="calculateAllDistancesTwoPointNodes"><a class="viewcode-back" href="../../_docsrc/api/Algorithms.html#Algorithms.NXUtilities.calculateAllDistancesTwoPointNodes">[docs]</a><span class="k">def</span> <span class="nf">calculateAllDistancesTwoPointNodes</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the distances between all nodes.</span>
+<span class="sd">    This special version allows nodes to have different start and end points. Distances are</span>
+<span class="sd">    calculated between the end point of one node and the start point of another node.</span>
+
+<span class="sd">    :param nodes: Tuple of two matrices containing (start, end) coordinates of all nodes</span>
+<span class="sd">    :type nodes: tuple[np.ndarray, np.ndarray]</span>
+<span class="sd">    :returns: Matrix with entry i,j containing the distance between the i&#39;th and j&#39;th node</span>
+<span class="sd">    :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># repeat start nodes array on 3rd axis len(nodes) times</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="c1"># subtract node end coordinates of all nodes from each node start coordinates array on 3rd axis</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span> <span class="o">-</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">][:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">**</span><span class="mi">2</span>
+    <span class="c1"># add squared coordinates for each node</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">tmp</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">distances</span> </div>
+
+
+<div class="viewcode-block" id="pathDistance"><a class="viewcode-back" href="../../_docsrc/api/Algorithms.html#Algorithms.NXUtilities.pathDistance">[docs]</a><span class="k">def</span> <span class="nf">pathDistance</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">nodeorder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the length of a path from a distances array and a node-order array.</span>
+
+<span class="sd">    :param np.ndarray distances: Matrix with entry i,j containing the distance between the i&#39;th and j&#39;th node</span>
+<span class="sd">    :param np.ndarray nodeorder: Array containing the node indices in the path order</span>
+<span class="sd">    :returns: path length</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nodeorder</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">distance</span> <span class="o">+=</span> <span class="n">distances</span><span class="p">[</span><span class="n">nodeorder</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nodeorder</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">distance</span></div>
+
+
+<div class="viewcode-block" id="pathDistanceFromNodes"><a class="viewcode-back" href="../../_docsrc/api/Algorithms.html#Algorithms.NXUtilities.pathDistanceFromNodes">[docs]</a><span class="k">def</span> <span class="nf">pathDistanceFromNodes</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">nodeorder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the length of a path from a nodes array and a node-order array.</span>
+
+<span class="sd">    :param np.ndarray nodes: (n, 2) matrix containing all node coordinates</span>
+<span class="sd">    :param np.ndarray nodeorder: Array containing the node indices in the path order</span>
+<span class="sd">    :returns: path length</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nodeorder</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">distance</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="n">nodeorder</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="n">nodes</span><span class="p">[</span><span class="n">nodeorder</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">distance</span></div>
+
+
+<div class="viewcode-block" id="pathDistanceFromTwoPointNodes"><a class="viewcode-back" href="../../_docsrc/api/Algorithms.html#Algorithms.NXUtilities.pathDistanceFromTwoPointNodes">[docs]</a><span class="k">def</span> <span class="nf">pathDistanceFromTwoPointNodes</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">nodeorder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the length of a path from a nodes array and a node-order array.</span>
+<span class="sd">    This special version allows nodes to have different start and end points. Distances are</span>
+<span class="sd">    calculated between the end point of one node and the start point of another node.</span>
+
+<span class="sd">    :param nodes: Tuple of two matrices containing (start, end) coordinates of all nodes</span>
+<span class="sd">    :type nodes: tuple(np.ndarray, np.ndarray)</span>
+<span class="sd">    :param nodeorder: Array containing the node indices in the path order</span>
+<span class="sd">    :type nodeorder: np.ndarray(int)</span>
+<span class="sd">    :returns: path length</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nodeorder</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">distance</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">nodeorder</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">nodeorder</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">distance</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

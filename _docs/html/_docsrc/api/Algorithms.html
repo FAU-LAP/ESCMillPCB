@@ -1,0 +1,414 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Algorithms package &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Base package" href="Base.html" />
+    <link rel="prev" title="ESCMillPCB" href="modules.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Base.html" title="Base package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="ESCMillPCB"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">ESCMillPCB</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="algorithms-package">
+<h1>Algorithms package<a class="headerlink" href="#algorithms-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-Algorithms.NXUtilities">
+<span id="algorithms-nxutilities-module"></span><h2>Algorithms.NXUtilities module<a class="headerlink" href="#module-Algorithms.NXUtilities" title="Permalink to this headline">¶</a></h2>
+<p>Created on 10.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="function">
+<dt id="Algorithms.NXUtilities.calculateAllDistances">
+<code class="descclassname">Algorithms.NXUtilities.</code><code class="descname">calculateAllDistances</code><span class="sig-paren">(</span><em>nodes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/NXUtilities.html#calculateAllDistances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.NXUtilities.calculateAllDistances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the distances between all nodes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nodes</strong> (<em>np.ndarray</em>) – Matrix containing all node coordinates.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Matrix with entry i,j containing the distance between the i’th and j’th point</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Algorithms.NXUtilities.calculateAllDistancesTwoPointNodes">
+<code class="descclassname">Algorithms.NXUtilities.</code><code class="descname">calculateAllDistancesTwoPointNodes</code><span class="sig-paren">(</span><em>nodes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/NXUtilities.html#calculateAllDistancesTwoPointNodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.NXUtilities.calculateAllDistancesTwoPointNodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the distances between all nodes.
+This special version allows nodes to have different start and end points. Distances are
+calculated between the end point of one node and the start point of another node.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nodes</strong> (<em>tuple</em><em>[</em><em>np.ndarray</em><em>, </em><em>np.ndarray</em><em>]</em>) – Tuple of two matrices containing (start, end) coordinates of all nodes</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Matrix with entry i,j containing the distance between the i’th and j’th node</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Algorithms.NXUtilities.nodePath">
+<code class="descclassname">Algorithms.NXUtilities.</code><code class="descname">nodePath</code><span class="sig-paren">(</span><em>graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/NXUtilities.html#nodePath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.NXUtilities.nodePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of nodes along a path in the graph.
+Works only for undirected path graphs which start at node 0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>graph</strong> (<em>networkx.graph</em>) – Undirected path graph to traverse</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Nodes along path</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list[int]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Algorithms.NXUtilities.pathDistance">
+<code class="descclassname">Algorithms.NXUtilities.</code><code class="descname">pathDistance</code><span class="sig-paren">(</span><em>distances</em>, <em>nodeorder</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/NXUtilities.html#pathDistance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.NXUtilities.pathDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the length of a path from a distances array and a node-order array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>distances</strong> (<em>np.ndarray</em>) – Matrix with entry i,j containing the distance between the i’th and j’th node</li>
+<li><strong>nodeorder</strong> (<em>np.ndarray</em>) – Array containing the node indices in the path order</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">path length</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Algorithms.NXUtilities.pathDistanceFromNodes">
+<code class="descclassname">Algorithms.NXUtilities.</code><code class="descname">pathDistanceFromNodes</code><span class="sig-paren">(</span><em>nodes</em>, <em>nodeorder</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/NXUtilities.html#pathDistanceFromNodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.NXUtilities.pathDistanceFromNodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the length of a path from a nodes array and a node-order array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nodes</strong> (<em>np.ndarray</em>) – (n, 2) matrix containing all node coordinates</li>
+<li><strong>nodeorder</strong> (<em>np.ndarray</em>) – Array containing the node indices in the path order</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">path length</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Algorithms.NXUtilities.pathDistanceFromTwoPointNodes">
+<code class="descclassname">Algorithms.NXUtilities.</code><code class="descname">pathDistanceFromTwoPointNodes</code><span class="sig-paren">(</span><em>nodes</em>, <em>nodeorder</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/NXUtilities.html#pathDistanceFromTwoPointNodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.NXUtilities.pathDistanceFromTwoPointNodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the length of a path from a nodes array and a node-order array.
+This special version allows nodes to have different start and end points. Distances are
+calculated between the end point of one node and the start point of another node.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nodes</strong> (<em>tuple</em><em>(</em><em>np.ndarray</em><em>, </em><em>np.ndarray</em><em>)</em>) – Tuple of two matrices containing (start, end) coordinates of all nodes</li>
+<li><strong>nodeorder</strong> (<em>np.ndarray</em><em>(</em><em>int</em><em>)</em>) – Array containing the node indices in the path order</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">path length</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Algorithms.NXUtilities.randomPathGraph">
+<code class="descclassname">Algorithms.NXUtilities.</code><code class="descname">randomPathGraph</code><span class="sig-paren">(</span><em>graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/NXUtilities.html#randomPathGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.NXUtilities.randomPathGraph" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>graph</strong> (<em>networkx.graph</em>) – Undirected complete graph. Edge attributes are transfered.
+No changes to the original graph are made.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Random undirected path graph starting at node 0</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">networkx.graph</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-Algorithms.TSPOptimizer">
+<span id="algorithms-tspoptimizer-module"></span><h2>Algorithms.TSPOptimizer module<a class="headerlink" href="#module-Algorithms.TSPOptimizer" title="Permalink to this headline">¶</a></h2>
+<p>Created on 09.02.2018</p>
+<p>&#64;author: christian</p>
+<dl class="function">
+<dt id="Algorithms.TSPOptimizer.greedy">
+<code class="descclassname">Algorithms.TSPOptimizer.</code><code class="descname">greedy</code><span class="sig-paren">(</span><em>nodes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/TSPOptimizer.html#greedy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.TSPOptimizer.greedy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Greedy next neighbor algorithm to find the shortest path.</p>
+<p>numpy version.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nodes</strong> (<em>np.ndarray</em><em>(</em><em>float</em><em>)</em>) – Matrix containing all node coordinates</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Array of node indices in optimized order</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray(int)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Algorithms.TSPOptimizer.greedyTwoPointNodes">
+<code class="descclassname">Algorithms.TSPOptimizer.</code><code class="descname">greedyTwoPointNodes</code><span class="sig-paren">(</span><em>nodes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/TSPOptimizer.html#greedyTwoPointNodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.TSPOptimizer.greedyTwoPointNodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Special version of the greedy next neighbor algorithm to find the shortest path.
+In this version, nodes are allowed to have different start and end coordinates and
+the vertices are connecting the end coordinates of one node to the start coordinate of the
+next node. The algorithm reorders the nodes such that the overall length of the
+vertices is minimized.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nodes</strong> (<em>tuple</em><em>(</em><em>np.ndarray</em><em>, </em><em>np.ndarray</em><em>)</em>) – Tuple of two matrices containing (start, end) coordinates of all nodes</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Array of node indices in optimized order</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray(int)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Algorithms.TSPOptimizer.twoOpt1">
+<code class="descclassname">Algorithms.TSPOptimizer.</code><code class="descname">twoOpt1</code><span class="sig-paren">(</span><em>graph</em>, <em>iterations=5</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/TSPOptimizer.html#twoOpt1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.TSPOptimizer.twoOpt1" title="Permalink to this definition">¶</a></dt>
+<dd><p>2-opt algorithm to find the shortest path.</p>
+<p>networkx version (very slow!).</p>
+<p>This algorithm implements a complete 2-opt local search which tries to minimize
+the overall path weight by swapping connections and then choosing the shorter variant.
+The idea behind this is that by doing so crossing paths are removed.
+The algorithm optimizes _iterations_ random paths and returns the best solution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>graph</strong> (<em>networkx.graph</em>) – Undirected graph to traverse. No changes are made to the original graph.
+The graph needs to be a complete graph with weighted edges.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Undirected path graph starting at node 0.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">networkx.graph</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Algorithms.TSPOptimizer.twoOpt2">
+<code class="descclassname">Algorithms.TSPOptimizer.</code><code class="descname">twoOpt2</code><span class="sig-paren">(</span><em>nodes</em>, <em>iterations=20</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/TSPOptimizer.html#twoOpt2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.TSPOptimizer.twoOpt2" title="Permalink to this definition">¶</a></dt>
+<dd><p>2-opt algorithm to find the shortest path.</p>
+<p>Numpy version (still slow!).</p>
+<p>This algorithm implements a complete 2-opt local search which tries to minimize
+the overall path weight by swapping connections and then choosing the shorter variant.
+The idea behind this is that by doing so crossing paths are removed.
+See <a class="reference external" href="https://en.wikipedia.org/wiki/2-opt">https://en.wikipedia.org/wiki/2-opt</a>
+The algorithm optimizes _iterations_ random paths and returns the best solution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nodes</strong> (<em>np.ndarray</em><em>(</em><em>float</em><em>)</em>) – (n,2) matrix containing all node coordinates</li>
+<li><strong>iterations</strong> (<em>int</em>) – Number of random start configurations</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Array of node indices in optimized order</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">np.ndarray(int)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Algorithms.TSPOptimizer.twoOpt3">
+<code class="descclassname">Algorithms.TSPOptimizer.</code><code class="descname">twoOpt3</code><span class="sig-paren">(</span><em>nodes</em>, <em>iterations=5</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Algorithms/TSPOptimizer.html#twoOpt3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Algorithms.TSPOptimizer.twoOpt3" title="Permalink to this definition">¶</a></dt>
+<dd><p>2-opt algorithm to find the shortest path.</p>
+<p>Optimized numpy version.</p>
+<p>This algorithm implements a complete 2-opt local search which tries to minimize
+the overall path weight by swapping connections and then choosing the shorter variant.
+The idea behind this is that by doing so crossing paths are removed.
+See <a class="reference external" href="https://en.wikipedia.org/wiki/2-opt">https://en.wikipedia.org/wiki/2-opt</a>
+It differs slightly from the original algorithm, because it calculates all swap possibilities
+for one given node and then picks the best one. This is then repeated for all following nodes.
+This whole process is then repeated until no further improvement of the total path length is achieved.
+The algorithm optimizes <em>iterations</em> random paths and returns the best solution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nodes</strong> (<em>np.ndarray</em><em>(</em><em>float</em><em>)</em>) – (n, 2) matrix containing all node coordinates</li>
+<li><strong>iterations</strong> (<em>int</em>) – Number of random start configurations</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Array of node indices in optimized order</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">np.ndarray(int)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-Algorithms">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Algorithms" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../docindex.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Algorithms package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-Algorithms.NXUtilities">Algorithms.NXUtilities module</a></li>
+<li><a class="reference internal" href="#module-Algorithms.TSPOptimizer">Algorithms.TSPOptimizer module</a></li>
+<li><a class="reference internal" href="#module-Algorithms">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="previous chapter">ESCMillPCB</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Base.html"
+                        title="next chapter">Base package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/_docsrc/api/Algorithms.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Base.html" title="Base package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="ESCMillPCB"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >ESCMillPCB</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

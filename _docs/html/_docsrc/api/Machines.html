@@ -1,0 +1,868 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Machines package &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="conf module" href="conf.html" />
+    <link rel="prev" title="EagleImport package" href="EagleImport.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="conf.html" title="conf module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="EagleImport.html" title="EagleImport package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">ESCMillPCB</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="machines-package">
+<h1>Machines package<a class="headerlink" href="#machines-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-Machines.TinyG">
+<span id="machines-tinyg-module"></span><h2>Machines.TinyG module<a class="headerlink" href="#module-Machines.TinyG" title="Permalink to this headline">¶</a></h2>
+<p>Created on 24.02.2018</p>
+<p>&#64;author: Christian Ott</p>
+<dl class="class">
+<dt id="Machines.TinyG.TinyG">
+<em class="property">class </em><code class="descclassname">Machines.TinyG.</code><code class="descname">TinyG</code><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="Base.html#Base.MachineBase.MachineBase" title="Base.MachineBase.MachineBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.MachineBase.MachineBase</span></code></a></p>
+<p>Implementation of MachineBase to control a TinyG board.</p>
+<p>The TinyG board directly understands the g-code language but can only hold up to 8 lines of code.
+Therefore the g-code program has to be spooled to the board.</p>
+<p>Workflow of executing the g-code program:
+- directly send the fist maxlines commands to the board, initialize linesToSend to 0
+- for each {r:…} response increment linesToSend by 1
+- as long as freelines &gt; 0, send lines and decrement freelines
+- do this until the whole programm has been spooled</p>
+<p>Sending of commands and recieving responses is done asynchronously.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigCommand</td>
+<td>Emitted when a command is to be sent by the active TinyGSender object.
+This signal’s purpose is to pass commands to the active TinyGSender
+object which runs in a separate thread.
+Carries a dictionary containing the command with parameters.</td>
+</tr>
+<tr class="row-odd"><td>sigQuery</td>
+<td>Emitted when a query command is to be sent by the active TinyGSender object.
+This signal’s purpose is to pass query commands to the active TinyGSender
+object which runs in a separate thread.
+Carries a dictionary containing the command with parameters.</td>
+</tr>
+<tr class="row-even"><td>sigFeedhold</td>
+<td>Emitted when a feedhold is to be performed by the active TinyGSender object.
+This signal’s purpose is to pass commands to the active TinyGSender
+object which runs in a separate thread.</td>
+</tr>
+<tr class="row-odd"><td>sigResume</td>
+<td>Emitted when a resume command is to be sent by the active TinyGSender object.
+This signal’s purpose is to pass commands to the active TinyGSender
+object which runs in a separate thread.</td>
+</tr>
+<tr class="row-even"><td>sigStop</td>
+<td>Emitted when the current cycle is to be stopped by the active TinyGSender object.
+This will cause the TinyGSender object to flush its buffers and the buffers of the
+machine.
+This signal’s purpose is to pass commands to the active TinyGSender
+object which runs in a separate thread.</td>
+</tr>
+<tr class="row-odd"><td>sigReset</td>
+<td>Emitted when the machine is to be reset by the active TinyGSender object.
+This will cause the TinyGSender object to flush its buffers and the buffers of the
+machine.
+This signal’s purpose is to pass commands to the active TinyGSender
+object which runs in a separate thread.</td>
+</tr>
+<tr class="row-even"><td>sigInitialize</td>
+<td>Connection to TinyG board is opened.</td>
+</tr>
+<tr class="row-odd"><td>sigFinalize</td>
+<td>Connection to TinyG board is to be closed.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.applyParameters">
+<code class="descname">applyParameters</code><span class="sig-paren">(</span><em>params</em>, <em>hiddenparams=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.applyParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.applyParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the given machine parameters to the hardware.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>params</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the machine parameters</li>
+<li><strong>hiddenparams</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the hidden parameters</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.calculateMaxSteps">
+<code class="descname">calculateMaxSteps</code><span class="sig-paren">(</span><em>directions</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.calculateMaxSteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.calculateMaxSteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the maximal possible step per direction (in mm) without exceeding soft limits.
+This is needed for continuous jogging.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directions</strong> (<em>tuple</em><em>(</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>)</em>) – Tuple of directions (1: positive, -1: negative, 0: not included) for (x, y, z) axis</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">maximal possible step (in mm) in the given directions</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple(float, float, float)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Machines.TinyG.TinyG.checksum">
+<em class="property">static </em><code class="descname">checksum</code><span class="sig-paren">(</span><em>rawmsg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.checksum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.checksum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes a checksum for given received response message string.
+See <a class="reference external" href="https://en.wikipedia.org/wiki">https://en.wikipedia.org/wiki</a>/Java_hashCode()</p>
+<p>TODO</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.executeCommand">
+<code class="descname">executeCommand</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.executeCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.executeCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a single command asynchonously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>command</strong> (<em>dict</em>) – Command to send</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.executeCycle">
+<code class="descname">executeCycle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.executeCycle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.executeCycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.executeCycle´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.executeQuery">
+<code class="descname">executeQuery</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.executeQuery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.executeQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a single command and returns the response (as dict) synchronously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>command</strong> (<em>dict</em>) – Command to send</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Response</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.feedhold">
+<code class="descname">feedhold</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.feedhold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.feedhold" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.feedhold´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.finalize">
+<code class="descname">finalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.finalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.finalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deinitalizes the hardware and finalizes the communication interface.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.finalizePlanner">
+<code class="descname">finalizePlanner</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.finalizePlanner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.finalizePlanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.finalizePlanner´</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Machines.TinyG.TinyG.getComParameters">
+<em class="property">static </em><code class="descname">getComParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.getComParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.getComParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.getComParameters´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.getMachineMenu">
+<code class="descname">getMachineMenu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.getMachineMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.getMachineMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.getMachineMenu´</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Machines.TinyG.TinyG.getParameters">
+<em class="property">static </em><code class="descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.getParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.getParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.getParameters´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.getPosition">
+<code class="descname">getPosition</code><span class="sig-paren">(</span><em>absolute=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.getPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.getPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.getPosition´</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Machines.TinyG.TinyG.getStatusMessage">
+<em class="property">static </em><code class="descname">getStatusMessage</code><span class="sig-paren">(</span><em>msgtype</em>, <em>code</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.getStatusMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.getStatusMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a readable message string for the given status report code.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Supported types</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>footer</td>
+<td>Response footer status code</td>
+</tr>
+<tr class="row-odd"><td>error</td>
+<td>Error message error code</td>
+</tr>
+<tr class="row-even"><td>stat</td>
+<td>Machine state</td>
+</tr>
+<tr class="row-odd"><td>momo</td>
+<td>Gcode motion mode</td>
+</tr>
+<tr class="row-even"><td>unit</td>
+<td>Gcode units</td>
+</tr>
+<tr class="row-odd"><td>macs</td>
+<td>Raw machine state</td>
+</tr>
+<tr class="row-even"><td>cycs</td>
+<td>Cycle state</td>
+</tr>
+<tr class="row-odd"><td>mots</td>
+<td>Motion state</td>
+</tr>
+<tr class="row-even"><td>hold</td>
+<td>Feedhold state</td>
+</tr>
+<tr class="row-odd"><td>coor</td>
+<td>Gcode coordinate system</td>
+</tr>
+<tr class="row-even"><td>plan</td>
+<td>Gcode arc plane</td>
+</tr>
+<tr class="row-odd"><td>path</td>
+<td>Gcode path control mode</td>
+</tr>
+<tr class="row-even"><td>dist</td>
+<td>Gcode distance mode</td>
+</tr>
+<tr class="row-odd"><td>frmo</td>
+<td>Gcode feed rate mode</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>msgtype</strong> (<em>str</em>) – (string) type of status message</li>
+<li><strong>code</strong> (<em>int</em>) – (int) status report code</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">message</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.goTo">
+<code class="descname">goTo</code><span class="sig-paren">(</span><em>position</em>, <em>absolute=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.goTo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.goTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.goTo´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.homingCycle">
+<code class="descname">homingCycle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.homingCycle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.homingCycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.homingCycle´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>comparams</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize TinyG communication and settings.
+Default communication parameters: 115200 baud, 8 data bits, no parity, 1 stop bit, XonXoff flow control</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>comparams</strong> (<em>pyqtgraph.GroupParameter</em>) – GroupParameter containing the communication parameters</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.isHomed">
+<code class="descname">isHomed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.isHomed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.isHomed" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.isHomed´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.isInitialized">
+<code class="descname">isInitialized</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.isInitialized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.isInitialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.isInitialized´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.jog">
+<code class="descname">jog</code><span class="sig-paren">(</span><em>directions</em>, <em>stepsize=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.jog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.jog" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.jog´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.mnuTinyGClear_triggered">
+<code class="descname">mnuTinyGClear_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.mnuTinyGClear_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.mnuTinyGClear_triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slot triggered when the clear menu entry is clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.mnuTinyGReset_triggered">
+<code class="descname">mnuTinyGReset_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.mnuTinyGReset_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.mnuTinyGReset_triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slot triggered when the reset menu entry is clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.mnuTinyGTestpanel_triggered">
+<code class="descname">mnuTinyGTestpanel_triggered</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.mnuTinyGTestpanel_triggered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.mnuTinyGTestpanel_triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slot triggered when the testpanel menu entry is clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.planInfeed">
+<code class="descname">planInfeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.planInfeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.planInfeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.planInfeed´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.planJog">
+<code class="descname">planJog</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.planJog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.planJog" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.planJog´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.planMill">
+<code class="descname">planMill</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.planMill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.planMill" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.planMill´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.planMillArc">
+<code class="descname">planMillArc</code><span class="sig-paren">(</span><em>startposition</em>, <em>endposition</em>, <em>center</em>, <em>ccw=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.planMillArc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.planMillArc" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.planMillArc´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.planOutfeed">
+<code class="descname">planOutfeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.planOutfeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.planOutfeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.planOutfeed´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.preparePlanner">
+<code class="descname">preparePlanner</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.preparePlanner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.preparePlanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.preparePlanner´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.receive">
+<code class="descname">receive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.receive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function which receives messages from the TinyG.
+Returns a dictionary with the received message or None on timeout.
+Only the currently active TinyGReceiver object should call this function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Recieved message (or None on timeout)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.receiver_sigStatusReportReceived">
+<code class="descname">receiver_sigStatusReportReceived</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.receiver_sigStatusReportReceived"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.receiver_sigStatusReportReceived" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slot triggered when a status report is received.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<em>dict</em>) – status report</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the TinyG board.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TinyG version information</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.resume">
+<code class="descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.resume´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.retrieveParameters">
+<code class="descname">retrieveParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.retrieveParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.retrieveParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="Base.html#Base.MachineBase.MachineBase.retrieveParameters" title="Base.MachineBase.MachineBase.retrieveParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Base.MachineBase.MachineBase.retrieveParameters()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a command dictionary {command:value} to the TinyG.
+Only the currently active TinyGSender object should call this function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>command</strong> (<em>dict</em>) – command to send</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.sendRaw">
+<code class="descname">sendRaw</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.sendRaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.sendRaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function to send a raw message to the TinyG.
+Only the currently active TinyGSender object should call this function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em>) – Message to send</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.setDefaultOrigin">
+<code class="descname">setDefaultOrigin</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.setDefaultOrigin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.setDefaultOrigin" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.setDefaultOrigin´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.setLaserCrosshair">
+<code class="descname">setLaserCrosshair</code><span class="sig-paren">(</span><em>enable</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.setLaserCrosshair"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.setLaserCrosshair" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.setLaserCrosshair´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.setSpindle">
+<code class="descname">setSpindle</code><span class="sig-paren">(</span><em>enable</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.setSpindle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.setSpindle" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.setSpindle´</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.setWorkpieceOrigin">
+<code class="descname">setWorkpieceOrigin</code><span class="sig-paren">(</span><em>offset=(0</em>, <em>0)</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.setWorkpieceOrigin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.setWorkpieceOrigin" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.setWorkpieceOrigin´</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyG.sigCommand">
+<code class="descname">sigCommand</code><a class="headerlink" href="#Machines.TinyG.TinyG.sigCommand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyG.sigFeedhold">
+<code class="descname">sigFeedhold</code><a class="headerlink" href="#Machines.TinyG.TinyG.sigFeedhold" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyG.sigFinalize">
+<code class="descname">sigFinalize</code><a class="headerlink" href="#Machines.TinyG.TinyG.sigFinalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyG.sigInitialize">
+<code class="descname">sigInitialize</code><a class="headerlink" href="#Machines.TinyG.TinyG.sigInitialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyG.sigQuery">
+<code class="descname">sigQuery</code><a class="headerlink" href="#Machines.TinyG.TinyG.sigQuery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyG.sigReset">
+<code class="descname">sigReset</code><a class="headerlink" href="#Machines.TinyG.TinyG.sigReset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyG.sigResume">
+<code class="descname">sigResume</code><a class="headerlink" href="#Machines.TinyG.TinyG.sigResume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyG.sigStop">
+<code class="descname">sigStop</code><a class="headerlink" href="#Machines.TinyG.TinyG.sigStop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyG.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.stop´</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Machines.TinyG.TinyG.updateComParameters">
+<em class="property">static </em><code class="descname">updateComParameters</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyG.updateComParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyG.updateComParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>See :meth:´Base.MachineBase.MachineBase.updateComParameters´</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Machines.TinyG.TinyGReceiver">
+<em class="property">class </em><code class="descclassname">Machines.TinyG.</code><code class="descname">TinyGReceiver</code><span class="sig-paren">(</span><em>tinyg</em>, <em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyGReceiver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyGReceiver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtCore.QObject</span></code></p>
+<p>Worker class which receives responses from the TinyG board. Will be run in a separate thread.</p>
+<p>Until the thread is stopped, this class waits for received messages and passes the answers to the
+sender thread where they will be processed and eventually passed to the main thread.</p>
+<p>Inherits from QObject to support Qt’s threading and signal/slot mechanisms.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigResponseReceived</td>
+<td>Emitted when a response is received from the TinyG board.
+This signal’s purpose is to pass the raw responses to the active TinyGSender
+object which runs in a separate thread.
+Carries a dictionary containing the response.</td>
+</tr>
+<tr class="row-odd"><td>sigSystemReadyReceived</td>
+<td>Emitted when a system ready response is received.
+Carries a dictionary containing the response.</td>
+</tr>
+<tr class="row-even"><td>sigStatusReportReceived</td>
+<td>Emitted when a status report is received from the TinyG board.
+Carries a dictionary containing the status report.</td>
+</tr>
+<tr class="row-odd"><td>sigQueueReportReceived</td>
+<td>Emitted when a queue report is received from the TinyG board.
+Carries a dictionary containing the queue report.</td>
+</tr>
+<tr class="row-even"><td>sigUnknownMessageReceived</td>
+<td>Emitted when a unknown message is received.
+Carries a dictionary containing the message.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyGReceiver.sigQueueReportReceived">
+<code class="descname">sigQueueReportReceived</code><a class="headerlink" href="#Machines.TinyG.TinyGReceiver.sigQueueReportReceived" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyGReceiver.sigResponseReceived">
+<code class="descname">sigResponseReceived</code><a class="headerlink" href="#Machines.TinyG.TinyGReceiver.sigResponseReceived" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyGReceiver.sigStatusReportReceived">
+<code class="descname">sigStatusReportReceived</code><a class="headerlink" href="#Machines.TinyG.TinyGReceiver.sigStatusReportReceived" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyGReceiver.sigSystemReadyReceived">
+<code class="descname">sigSystemReadyReceived</code><a class="headerlink" href="#Machines.TinyG.TinyGReceiver.sigSystemReadyReceived" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyGReceiver.sigUnknownMessageReceived">
+<code class="descname">sigUnknownMessageReceived</code><a class="headerlink" href="#Machines.TinyG.TinyGReceiver.sigUnknownMessageReceived" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Machines.TinyG.TinyGSender">
+<em class="property">class </em><code class="descclassname">Machines.TinyG.</code><code class="descname">TinyGSender</code><span class="sig-paren">(</span><em>tinyg</em>, <em>receiver</em>, <em>maxlines=4</em>, <em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyGSender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyGSender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtCore.QObject</span></code></p>
+<p>Worker class which sends commands to the TinyG board. Will be run in a separate thread.</p>
+<p>This class manages a command buffer to implement TinyG’s linemode protocol.
+(See <a class="reference external" href="https://github.com/synthetos/TinyG/wiki/Tinyg-Communications-Programming">https://github.com/synthetos/TinyG/wiki/Tinyg-Communications-Programming</a>)</p>
+<p>Inherits from QObject to support Qt’s threading and signal/slot mechanisms.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Signals</strong></th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sigQueryReceived</td>
+<td>Emitted when the answer to a query command is received.
+Carries a command response dictionary.</td>
+</tr>
+<tr class="row-odd"><td>sigBufferChanged</td>
+<td>Emitted when the output buffer content changed.
+Carries a dictionary {‘sendbuffersize’, ‘usedlines’}</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Machines.TinyG.TinyGSender.appendCommand">
+<code class="descname">appendCommand</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyGSender.appendCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyGSender.appendCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a simple command to the command buffer.
+Not meant to be called directly, commands should be passed by the <a class="reference internal" href="#Machines.TinyG.TinyG.sigCommand" title="Machines.TinyG.TinyG.sigCommand"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TinyG.sigCommand</span></code></a> signal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<em>dict</em>) – command</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyGSender.appendQuery">
+<code class="descname">appendQuery</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyGSender.appendQuery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyGSender.appendQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a query command to the command buffer.
+Queries can only be processed one at a time - use <a class="reference internal" href="#Machines.TinyG.TinyG.executeQuery" title="Machines.TinyG.TinyG.executeQuery"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TinyG.executeQuery()</span></code></a> for synchronous processing.
+The answer to queries is returned via the sigQueryReceived signal and also stored in the
+lastQueryResult field.</p>
+<p>Not meant to be called directly, commands should be passed by the <a class="reference internal" href="#Machines.TinyG.TinyG.sigQuery" title="Machines.TinyG.TinyG.sigQuery"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TinyG.sigQuery</span></code></a> signal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Parmam dict cmd:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">command</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyGSender.feedhold">
+<code class="descname">feedhold</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyGSender.feedhold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyGSender.feedhold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a feedhold command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyGSender.getLastQueryResult">
+<code class="descname">getLastQueryResult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyGSender.getLastQueryResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyGSender.getLastQueryResult" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">result of the last successful query</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyGSender.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyGSender.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyGSender.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a reset command and resets output buffers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyGSender.resume">
+<code class="descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyGSender.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyGSender.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a resume command.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyGSender.sigBufferChanged">
+<code class="descname">sigBufferChanged</code><a class="headerlink" href="#Machines.TinyG.TinyGSender.sigBufferChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Machines.TinyG.TinyGSender.sigQueryReceived">
+<code class="descname">sigQueryReceived</code><a class="headerlink" href="#Machines.TinyG.TinyGSender.sigQueryReceived" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyGSender.signalReceived">
+<code class="descname">signalReceived</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyGSender.signalReceived"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyGSender.signalReceived" title="Permalink to this definition">¶</a></dt>
+<dd><p>When a response is received by the <a class="reference internal" href="#Machines.TinyG.TinyGReceiver" title="Machines.TinyG.TinyGReceiver"><code class="xref py py-class docutils literal notranslate"><span class="pre">TinyGReceiver</span></code></a> object it is then passed to this slot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<em>dict</em>) – message</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Machines.TinyG.TinyGSender.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/Machines/TinyG.html#TinyGSender.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Machines.TinyG.TinyGSender.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a stop command and resets output buffers.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Machines">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Machines" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../docindex.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Machines package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-Machines.TinyG">Machines.TinyG module</a></li>
+<li><a class="reference internal" href="#module-Machines">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="EagleImport.html"
+                        title="previous chapter">EagleImport package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="conf.html"
+                        title="next chapter">conf module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/_docsrc/api/Machines.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="conf.html" title="conf module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="EagleImport.html" title="EagleImport package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >ESCMillPCB</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

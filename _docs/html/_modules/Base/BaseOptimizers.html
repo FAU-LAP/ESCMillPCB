@@ -1,0 +1,471 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Base.BaseOptimizers &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for Base.BaseOptimizers</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 04.02.2018</span>
+
+<span class="sd">@author: Christian Ott</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1">#initialize logging</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pyqtgraph.parametertree.parameterTypes</span> <span class="k">as</span> <span class="nn">ptypes</span>
+<span class="kn">from</span> <span class="nn">Algorithms</span> <span class="k">import</span> <span class="n">TSPOptimizer</span> <span class="k">as</span> <span class="n">tsp</span>
+<span class="kn">from</span> <span class="nn">Algorithms</span> <span class="k">import</span> <span class="n">NXUtilities</span> <span class="k">as</span> <span class="n">nxutil</span>
+
+
+<div class="viewcode-block" id="MachiningOptimizer"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MachiningOptimizer">[docs]</a><span class="k">class</span> <span class="nc">MachiningOptimizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for optimizers, not meant to be used directly.</span>
+<span class="sd">    Optimizers are used to adjust machining objects, e.g. reorder, adjust sizes, etc.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+    
+    
+<div class="viewcode-block" id="MachiningOptimizer.optimize"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MachiningOptimizer.optimize">[docs]</a>    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">machiningObject</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param Base.MachiningObjects.MachiningObject machiningObject: MachiningObject to optimize</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+    
+    
+<div class="viewcode-block" id="MachiningOptimizer.getName"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MachiningOptimizer.getName">[docs]</a>    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :returns: Optimizer&#39;s name</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span></div>
+    
+    
+<div class="viewcode-block" id="MachiningOptimizer.updateParameters"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MachiningOptimizer.updateParameters">[docs]</a>    <span class="k">def</span> <span class="nf">updateParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called when the optimizer&#39;s parameters have changed. Updates the optimizers internal state.</span>
+
+<span class="sd">        :param pyqtgraph.GroupParameter params: GroupParameter containing the settings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    
+<div class="viewcode-block" id="MachiningOptimizer.getParameters"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MachiningOptimizer.getParameters">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getParameters</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Static method returning the optimizer&#39;s available parameters as a pyqtgraph ParameterGroup.</span>
+<span class="sd">        :returns: Optimizer parameters or None if there are no available parameters</span>
+<span class="sd">        :rtype: pyqtgraph.GroupParameter</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span></div></div>
+
+
+
+<div class="viewcode-block" id="HoleOrderOptimizer"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.HoleOrderOptimizer">[docs]</a><span class="k">class</span> <span class="nc">HoleOrderOptimizer</span><span class="p">(</span><span class="n">MachiningOptimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Optimizer for HoleLists, minimizes the hole path.</span>
+
+<span class="sd">    +----------------+-----------------------------------------------------------------------------------------+</span>
+<span class="sd">    | **Options**    |                                                                                         |</span>
+<span class="sd">    +================+=========================================================================================+</span>
+<span class="sd">    | **algorithm**  | (string) Default: 2opt                                                                  |</span>
+<span class="sd">    |                +--------+--------------------------------------------------------------------------------+</span>
+<span class="sd">    |                | 2opt   | 2opt algorithm starting from random start configurations                       |</span>
+<span class="sd">    |                |        | Relatively fast with good results.                                             |</span>
+<span class="sd">    |                |        | Number of iterations defines the number of optimized start configurations,     |</span>
+<span class="sd">    |                |        | best result is chosen. More iterations is slower but                           |</span>
+<span class="sd">    |                |        | statistically yields better results                                            |</span>
+<span class="sd">    |                +--------+--------------------------------------------------------------------------------+</span>
+<span class="sd">    |                | greedy | Greedy next neighbor algorithm. Fast but moderate results.                     |</span>
+<span class="sd">    +----------------+--------+--------------------------------------------------------------------------------+</span>
+<span class="sd">    | **iterations** | (int) Number of iterations depending on the algorithm. Default: 5                       |</span>
+<span class="sd">    |                +--------+--------------------------------------------------------------------------------+</span>
+<span class="sd">    |                | 2opt   | Number of random start configurations.                                         |</span>
+<span class="sd">    |                +--------+--------------------------------------------------------------------------------+</span>
+<span class="sd">    |                | greedy | Not used.                                                                      |</span>
+<span class="sd">    +----------------+--------+--------------------------------------------------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;active&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span><span class="s1">&#39;2opt&#39;</span><span class="p">,</span> <span class="s1">&#39;iterations&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    
+    
+<div class="viewcode-block" id="HoleOrderOptimizer.optimize"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.HoleOrderOptimizer.optimize">[docs]</a>    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">holelist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param Base.MachiningObjects.HoleList holelist: HoleList to optimize</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">holelist</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running hole order optimization (algorithm </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2"> iterations)...&quot;</span><span class="p">,</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;iterations&#39;</span><span class="p">])</span>
+        <span class="c1"># fetch all center positions of all holes</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">hole</span><span class="o">.</span><span class="n">center</span> <span class="k">for</span> <span class="n">hole</span> <span class="ow">in</span> <span class="n">holelist</span><span class="p">])</span>
+        <span class="c1"># optimize graph</span>
+        <span class="n">optimized</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;2opt&#39;</span><span class="p">:</span>
+            <span class="n">optimized</span> <span class="o">=</span> <span class="n">tsp</span><span class="o">.</span><span class="n">twoOpt3</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;iterations&#39;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;greedy&#39;</span><span class="p">:</span>
+            <span class="n">optimized</span> <span class="o">=</span> <span class="n">tsp</span><span class="o">.</span><span class="n">greedy</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+        <span class="c1"># reorder holes in list</span>
+        <span class="n">holelist</span><span class="o">.</span><span class="n">reorder</span><span class="p">(</span><span class="n">optimized</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Final optimized path length: </span><span class="si">%.3f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">nxutil</span><span class="o">.</span><span class="n">pathDistanceFromNodes</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">optimized</span><span class="p">))</span></div>
+        
+    
+<div class="viewcode-block" id="HoleOrderOptimizer.updateParameters"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.HoleOrderOptimizer.updateParameters">[docs]</a>    <span class="k">def</span> <span class="nf">updateParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :meth:`MachiningOptimizer.updateParameters`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;Active&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;Algorithm&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;iterations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">()</span></div>
+    
+    
+<div class="viewcode-block" id="HoleOrderOptimizer.getParameters"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.HoleOrderOptimizer.getParameters">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getParameters</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :meth:`MachiningOptimizer.getParameters`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;HoleOrderOptimizer&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Hole order optimization&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">:[</span>
+                <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Active&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;values&#39;</span><span class="p">:[</span><span class="s1">&#39;2opt&#39;</span><span class="p">,</span> <span class="s1">&#39;greedy&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="s1">&#39;2opt&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;2opt&#39;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Iterations&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mi">20</span><span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span></div></div>
+    
+    
+
+<div class="viewcode-block" id="MillingCombinationOptimizer"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MillingCombinationOptimizer">[docs]</a><span class="k">class</span> <span class="nc">MillingCombinationOptimizer</span><span class="p">(</span><span class="n">MachiningOptimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Combines adjacent millings to a single milling path.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;active&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    
+    
+<div class="viewcode-block" id="MillingCombinationOptimizer.optimize"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MillingCombinationOptimizer.optimize">[docs]</a>    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">millinglist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Path combination: Start at first milling, go to end, search point in milling list which is equal</span>
+<span class="sd">        to the end point and then add the path to the milling, repeat until there is no follow up point.</span>
+<span class="sd">        Then start a new milling and repeat the procedure.</span>
+
+<span class="sd">        :param Base.MachiningObjects.MillingList millinglist: MillingList to optimize</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">millinglist</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No millings to combine.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Combining adjacent milling paths from </span><span class="si">%s</span><span class="s2"> millings...&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">millinglist</span><span class="p">))</span>
+        <span class="n">currentmill</span> <span class="o">=</span> <span class="n">millinglist</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">newmillings</span> <span class="o">=</span> <span class="p">[</span><span class="n">currentmill</span><span class="p">,]</span>
+        <span class="c1"># repeat until all millings are transfered to the new list</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">millinglist</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Millings to process: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">millinglist</span><span class="p">))</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># go through all remaining millings to find adjacent millings</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">mill</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">millinglist</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Step </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">currentmill</span><span class="o">.</span><span class="n">getEnd</span><span class="p">()</span> <span class="o">==</span> <span class="n">mill</span><span class="o">.</span><span class="n">getEnd</span><span class="p">()):</span>
+                    <span class="c1"># reverse adjacent milling if necessary</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Reversing milling.&quot;</span><span class="p">)</span>
+                    <span class="n">mill</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">currentmill</span><span class="o">.</span><span class="n">getEnd</span><span class="p">()</span> <span class="o">==</span> <span class="n">mill</span><span class="o">.</span><span class="n">getStart</span><span class="p">()):</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found adjacent milling.&quot;</span><span class="p">)</span>
+                    <span class="c1"># append paths to currently processed milling</span>
+                    <span class="n">currentmill</span><span class="o">.</span><span class="n">appendMilling</span><span class="p">(</span><span class="n">mill</span><span class="p">)</span>
+                    <span class="c1"># remove milling from old milling list</span>
+                    <span class="n">millinglist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="c1"># if no adjacent milling has been found and still millings remaining, start new milling</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">millinglist</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found no adjacent milling, continuing with new milling.&quot;</span><span class="p">)</span>
+                <span class="n">currentmill</span> <span class="o">=</span> <span class="n">millinglist</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">newmillings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">currentmill</span><span class="p">)</span>
+        <span class="n">millinglist</span><span class="o">.</span><span class="n">appendList</span><span class="p">(</span><span class="n">newmillings</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Remaining separate millings: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">millinglist</span><span class="p">))</span></div>
+    
+    
+<div class="viewcode-block" id="MillingCombinationOptimizer.updateParameters"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MillingCombinationOptimizer.updateParameters">[docs]</a>    <span class="k">def</span> <span class="nf">updateParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :meth:`MachiningOptimizer.updateParameters`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="s1">&#39;Active&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">()</span></div>
+        
+        
+<div class="viewcode-block" id="MillingCombinationOptimizer.getParameters"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MillingCombinationOptimizer.getParameters">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getParameters</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :meth:`MachiningOptimizer.getParameters`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;MillingCombinationOptimizer&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Combine adjacent millings&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;children&#39;</span><span class="p">:[</span>
+                <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Active&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span></div></div>
+    
+    
+<div class="viewcode-block" id="BreakoutOptimizer"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.BreakoutOptimizer">[docs]</a><span class="k">class</span> <span class="nc">BreakoutOptimizer</span><span class="p">(</span><span class="n">MachiningOptimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adds breakouts to millings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Active&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;Distance&#39;</span><span class="p">:</span><span class="mf">100.0</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">:</span><span class="mf">2.0</span><span class="p">,</span> <span class="s1">&#39;Min_number&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Min_cut_length&#39;</span><span class="p">:</span><span class="mf">40.0</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    
+    
+<div class="viewcode-block" id="BreakoutOptimizer.optimize"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.BreakoutOptimizer.optimize">[docs]</a>    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">millinglist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Insert breakout bars into closed milling paths according to the following algorithm:</span>
+<span class="sd">        First, find closed milling paths (cut-outs) that are longer than Min_cut_length.</span>
+<span class="sd">        Then check if the path is longer than Min_number * (Distance + Size),</span>
+<span class="sd">        otherwise divide the cut equally. If it is longer, set a breakout bar after every</span>
+<span class="sd">        (Distance + Size) distance. Ignore the last possible breakout bar.</span>
+
+<span class="sd">        :param Base.MachiningObjects.MillingList millinglist: MillingList to optimize</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;Active&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">millinglist</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Inserting breakout bars into cut-outs...&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Breakout parameters: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+        
+        <span class="c1"># find cut-outs</span>
+        <span class="n">cutouts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">millinglist</span><span class="p">))):</span>
+            <span class="n">milling</span> <span class="o">=</span> <span class="n">millinglist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">milling</span><span class="o">.</span><span class="n">getStart</span><span class="p">()</span> <span class="o">==</span> <span class="n">milling</span><span class="o">.</span><span class="n">getEnd</span><span class="p">()):</span>
+                <span class="k">continue</span> 
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">milling</span><span class="o">.</span><span class="n">pathLength</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;Min_cut_length&#39;</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found cut-out (length: </span><span class="si">%s</span><span class="s2">).&quot;</span><span class="p">,</span> <span class="n">milling</span><span class="o">.</span><span class="n">pathLength</span><span class="p">())</span>
+            <span class="n">millinglist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">cutouts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">milling</span><span class="p">)</span>
+            
+        <span class="c1"># process cut-outs</span>
+        <span class="n">newMillings</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">cutout</span> <span class="ow">in</span> <span class="n">cutouts</span><span class="p">:</span>
+            <span class="n">curlen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;Distance&#39;</span><span class="p">]</span>
+            <span class="n">ba_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;Size&#39;</span><span class="p">]</span>
+            <span class="n">num_bas</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">cutout</span><span class="o">.</span><span class="n">pathLength</span><span class="p">()</span><span class="o">/</span><span class="p">(</span><span class="n">curlen</span> <span class="o">+</span> <span class="n">ba_size</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">num_bas</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;Min_number&#39;</span><span class="p">]:</span>
+                <span class="n">num_bas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;Min_number&#39;</span><span class="p">]</span>
+                <span class="n">curlen</span> <span class="o">=</span> <span class="n">cutout</span><span class="o">.</span><span class="n">pathLength</span><span class="p">()</span> <span class="o">/</span> <span class="n">num_bas</span> <span class="o">-</span> <span class="n">ba_size</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Split milling of length </span><span class="si">%s</span><span class="s2"> into </span><span class="si">%s</span><span class="s2"> parts with length </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">cutout</span><span class="o">.</span><span class="n">pathLength</span><span class="p">(),</span> <span class="n">num_bas</span><span class="p">,</span> <span class="n">curlen</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_bas</span><span class="p">):</span>
+                <span class="n">splitMilling</span> <span class="o">=</span> <span class="n">cutout</span><span class="o">.</span><span class="n">splitMilling</span><span class="p">(</span><span class="n">curlen</span><span class="p">,</span> <span class="n">ba_size</span><span class="p">)</span>
+                <span class="n">newMillings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cutout</span><span class="p">)</span>
+                <span class="n">cutout</span> <span class="o">=</span> <span class="n">splitMilling</span>
+            <span class="k">if</span> <span class="n">cutout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">newMillings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cutout</span><span class="p">)</span>
+            
+        <span class="c1"># update milling list</span>
+        <span class="n">millinglist</span><span class="o">.</span><span class="n">appendList</span><span class="p">(</span><span class="n">newMillings</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Added breakout bars to </span><span class="si">%s</span><span class="s2"> cut-outs.&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cutouts</span><span class="p">))</span></div>
+            
+            
+            
+<div class="viewcode-block" id="BreakoutOptimizer.updateParameters"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.BreakoutOptimizer.updateParameters">[docs]</a>    <span class="k">def</span> <span class="nf">updateParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :meth:`MachiningOptimizer.updateParameters`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">value</span><span class="p">()</span></div>
+                        
+    
+<div class="viewcode-block" id="BreakoutOptimizer.getParameters"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.BreakoutOptimizer.getParameters">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getParameters</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :meth:`MachiningOptimizer.getParameters`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;BreakoutOptimizer&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Add breakouts to millings&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;children&#39;</span><span class="p">:[</span>
+                <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Active&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Breakout distance (mm)&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="mf">100.0</span><span class="p">,</span> 
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mf">100.0</span><span class="p">,</span> 
+                    <span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mi">0</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Size&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Breakout size (mm)&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="mf">2.0</span><span class="p">,</span> 
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mf">2.0</span><span class="p">,</span> 
+                    <span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mi">0</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Min_number&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Minimal number of breakouts per cut-out&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+                    <span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mi">0</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Min_cut_length&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Minimal cut-out length for breakouts (mm)&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mf">40.0</span><span class="p">,</span>
+                    <span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mi">0</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span></div></div>
+    
+
+<div class="viewcode-block" id="MillingOrderOptimizer"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MillingOrderOptimizer">[docs]</a><span class="k">class</span> <span class="nc">MillingOrderOptimizer</span><span class="p">(</span><span class="n">MachiningOptimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Minimizes the jog path between the millings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
+        
+        
+<div class="viewcode-block" id="MillingOrderOptimizer.optimize"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MillingOrderOptimizer.optimize">[docs]</a>    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">millinglist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimizes the milling order to achieve a minimal jog path length.</span>
+<span class="sd">        This optimizer uses a simple nearest neighbor approach.</span>
+
+<span class="sd">        :param Base.MachiningObjects.MillingList: MillingList to optimize</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">millinglist</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running milling order optimization...&quot;</span><span class="p">)</span>
+        <span class="c1"># fetch all start and end positions of all millings</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">milling</span><span class="o">.</span><span class="n">getStart</span><span class="p">()</span> <span class="k">for</span> <span class="n">milling</span> <span class="ow">in</span> <span class="n">millinglist</span><span class="p">]),</span> 
+                 <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">milling</span><span class="o">.</span><span class="n">getEnd</span><span class="p">()</span> <span class="k">for</span> <span class="n">milling</span> <span class="ow">in</span> <span class="n">millinglist</span><span class="p">]))</span>
+        <span class="c1"># optimize graph</span>
+        <span class="n">optimized</span> <span class="o">=</span> <span class="n">tsp</span><span class="o">.</span><span class="n">greedyTwoPointNodes</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+        <span class="c1"># reorder holes in list</span>
+        <span class="n">millinglist</span><span class="o">.</span><span class="n">reorder</span><span class="p">(</span><span class="n">optimized</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Optimized path length: </span><span class="si">%.3f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">nxutil</span><span class="o">.</span><span class="n">pathDistanceFromTwoPointNodes</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">optimized</span><span class="p">))</span></div>
+    
+    
+<div class="viewcode-block" id="MillingOrderOptimizer.updateParameters"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MillingOrderOptimizer.updateParameters">[docs]</a>    <span class="k">def</span> <span class="nf">updateParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :meth:`MachiningOptimizer.updateParameters`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;Active&#39;</span><span class="p">]</span></div>
+    
+    
+<div class="viewcode-block" id="MillingOrderOptimizer.getParameters"><a class="viewcode-back" href="../../_docsrc/api/Base.html#Base.BaseOptimizers.MillingOrderOptimizer.getParameters">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getParameters</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :meth:`MachiningOptimizer.getParameters`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;MillingOrderOptimizer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;Milling order optimization&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;group&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;children&#39;</span><span class="p">:[</span>
+                <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Active&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ptypes</span><span class="o">.</span><span class="n">GroupParameter</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span></div></div>
+        
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Building ESCMillPCB &#8212; ESCMillPCB  documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Qt Resources" href="qtresources.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qtresources.html" title="Qt Resources"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="Overview"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="building-escmillpcb">
+<h1>Building ESCMillPCB<a class="headerlink" href="#building-escmillpcb" title="Permalink to this headline">¶</a></h1>
+<p>Building the programm into an executable file is easily possible by running <em>build.bat</em> in the source base
+directory. This invokes the complete toolchain including building the documentation and copying ressource
+files to the build destination directory <em>_dist</em>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="https://www.pyinstaller.org/">PyInstaller</a> is used for the build, so make sure PyInstaller is installed in your python distribution.
+Also it may be necessary to run <em>build.bat</em> from the Anaconda promt, if you are using the Anaconda distribution.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The current version of PyInstaller (v3.5) has a bug associated with German localization. On a German Windows, it may be
+necessary to add a work around to <em>&lt;pythondir&gt;/Lib/site-packages/PyInstaller/compat.py</em>:
+Locate the function <em>exec_command</em> and change <em>out = out.decode(encoding)</em> to out = <em>out.decode(encoding, errors=’replace’)</em>.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The documentation is created with <a class="reference external" href="https://www.sphinx-doc.org/en/master/index.html">Sphinx</a>,
+so make shure Sphinx is installed in your python distribution.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please increase the build number in the version string of the <a class="reference internal" href="../api/Base.html#module-Base.AppBase" title="Base.AppBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base.AppBase</span></code></a> class. If the program
+was significantly changed (e.g. features added), also increase the version itself.</p>
+</div>
+<div class="section" id="build-internals">
+<h2>Build internals<a class="headerlink" href="#build-internals" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.pyinstaller.org/">PyInstaller</a> is used to pack the programm into a single executable file.
+The build spec file <em>ESCMillPCB.spec</em> with the build settings is located in the source base directory.</p>
+<p>PyQt’s system for promoting widgets to custom widgets in QtDesigner leads to hidden imports not
+visible to PyInstaller. Therefore it is necessary to inform PyInstaller about these modules in the spec file.
+When extending the software with new widgets which are not directly included in the code, remember to
+extend the <em>hiddenimports</em> list accordingly.</p>
+<p>Unfortunatelly, the single executable file does not work completely out of the box.
+A few resource files need to be included in the <em>_dist</em> directory next to the executable:</p>
+<ul class="simple">
+<li>The files in the <em>_platforms</em> directory, which need to be placed in <em>_dist/platforms</em> and contains necessary Qt DLLs.</li>
+<li>The <em>_docs</em> directory which contains this documentation.</li>
+</ul>
+<p>This is automatically done when using <em>build.bat</em>.</p>
+</div>
+<div class="section" id="building-the-documentation">
+<h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline">¶</a></h2>
+<p>This documentation is created using <a class="reference external" href="https://www.sphinx-doc.org/en/master/index.html">Sphinx</a>. The documentation
+source files are located in the <em>_docsrc</em> folder. It can be build using <em>makedocs.bat html</em> (it may be necessary
+to run this from the Anaconda prompt). Note that the output directory is <em>_docs</em>, the <em>_dist/_docs</em> directory
+is not updated.</p>
+<p>API documentation is created automatically by extracting docstrings from the source codes. This sis done using the
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html">Autodoc</a> plugin and it’s <em>automodule</em>
+directive. Adding new modules to the project will require to add them also the corresponding module index file
+of the documentation sources. This can be automated using <a class="reference external" href="https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html">apidoc</a>.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Maybe add apidoc to the build toolchain.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../docindex.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Building ESCMillPCB</a><ul>
+<li><a class="reference internal" href="#build-internals">Build internals</a></li>
+<li><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="overview.html"
+                        title="previous chapter">Overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="qtresources.html"
+                        title="next chapter">Qt Resources</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/_docsrc/developerdocs/build.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qtresources.html" title="Qt Resources"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="Overview"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../docindex.html">ESCMillPCB  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Christian Ott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

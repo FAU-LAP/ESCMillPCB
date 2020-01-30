@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>797</width>
+    <height>653</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>ESCMillPCB</string>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>11</number>
+    </property>
+    <property name="topMargin">
+     <number>11</number>
+    </property>
+    <property name="rightMargin">
+     <number>11</number>
+    </property>
+    <property name="bottomMargin">
+     <number>11</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QSplitter" name="splitterRight">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="childrenCollapsible">
+       <bool>false</bool>
+      </property>
+      <widget class="QSplitter" name="splitterBottom">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="childrenCollapsible">
+        <bool>false</bool>
+       </property>
+       <widget class="WorkpieceWidget" name="workpieceViewer">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>500</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="lstLog"/>
+      </widget>
+      <widget class="QWidget" name="verticalLayoutWidget">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tabControl">
+           <attribute name="title">
+            <string>Control</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="ControlWidget" name="wdgControl" native="true">
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tabCoordSetup">
+           <attribute name="title">
+            <string>Setup</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="CoordinatesSetupWidget" name="wdgCoordinateSetup" native="true">
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnStartCycle">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Start Cycle</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>797</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menufile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="mnuOpenEagleBrd"/>
+    <addaction name="separator"/>
+    <addaction name="mnuQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="mnuInitMachine"/>
+    <addaction name="mnuApplyMachineParams"/>
+    <addaction name="actionRun_homing_cycle"/>
+    <addaction name="mnuCloseMachine"/>
+    <addaction name="separator"/>
+    <addaction name="mnuSettings"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="mnuDocumentation"/>
+    <addaction name="separator"/>
+    <addaction name="mnuAbout"/>
+    <addaction name="mnuAboutQt"/>
+   </widget>
+   <addaction name="menufile"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="mnuAbout">
+   <property name="text">
+    <string>About...</string>
+   </property>
+  </action>
+  <action name="mnuSettings">
+   <property name="text">
+    <string>Settings...</string>
+   </property>
+  </action>
+  <action name="mnuOpenEagleBrd">
+   <property name="text">
+    <string>Open Eagle Board...</string>
+   </property>
+  </action>
+  <action name="mnuQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="mnuAboutQt">
+   <property name="text">
+    <string>About Qt...</string>
+   </property>
+  </action>
+  <action name="mnuInitMachine">
+   <property name="text">
+    <string>(Re-)Initialize machine</string>
+   </property>
+  </action>
+  <action name="mnuApplyMachineParams">
+   <property name="text">
+    <string>(Re-)Apply machine settings</string>
+   </property>
+  </action>
+  <action name="mnuCloseMachine">
+   <property name="text">
+    <string>Close machine connection</string>
+   </property>
+  </action>
+  <action name="actionRun_homing_cycle">
+   <property name="text">
+    <string>Run homing cycle</string>
+   </property>
+  </action>
+  <action name="mnuDocumentation">
+   <property name="text">
+    <string>Documentation</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WorkpieceWidget</class>
+   <extends>QGraphicsView</extends>
+   <header>ui.WorkpieceWidget</header>
+  </customwidget>
+  <customwidget>
+   <class>ControlWidget</class>
+   <extends>QWidget</extends>
+   <header>ui.ControlWidget</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CoordinatesSetupWidget</class>
+   <extends>QWidget</extends>
+   <header>ui.CoordinatesSetupWidget</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

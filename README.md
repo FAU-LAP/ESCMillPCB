@@ -1,2 +1,2 @@
 # ESCMillPCB
-Mill PCBs with TinyG!
+Milling PCBs with TinyG
